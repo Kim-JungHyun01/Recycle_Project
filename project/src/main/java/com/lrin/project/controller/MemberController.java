@@ -10,18 +10,21 @@ public class MemberController {
     public String login(Model model) {
         model.addAttribute("cssPath", "member/login");
         model.addAttribute("pageTitle", "로그인");
+        model.addAttribute("jsPath", "member/member");
         return "member/login";
     }
     @GetMapping(value = "/signup")
     public String signup(Model model) {
         model.addAttribute("cssPath", "member/signup");
         model.addAttribute("pageTitle", "회원가입");
+        model.addAttribute("jsPath", "member/member");
         return "member/signup";
     }
     @GetMapping(value = "/mypage")
     public String mypage(Model model) {
         model.addAttribute("cssPath", "member/mypage");
         model.addAttribute("pageTitle", "마이페이지");
+        model.addAttribute("jsPath", "member/member");
         return "member/mypage";
     }
 }

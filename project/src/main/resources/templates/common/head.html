@@ -21,7 +21,7 @@
       <script src="/js/common/common.js"></script>
       <script src="/js/common/header.js"></script>
       <script src="/js/common/popup.js"></script>
-      <script src="/js/common/load.js"></script>
+      <script th:src="@{'/js/'+${jsPath}+'.js'}"></script>
     </th:block>
   </head>
 </html>
