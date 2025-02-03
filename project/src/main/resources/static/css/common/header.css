@@ -7,7 +7,7 @@
     top: 0;
     left: 0;
     z-index: 1;
-    background-color: var(--lite-green);
+    background-color: rgb(var(--lite-yellow));
 }
 .header_top{
     position: relative;
@@ -40,7 +40,7 @@
     max-width: 100%;
     font-size: 18px;
     line-height: 27px;
-    color: var(--all-white);
+    color: rgb(var(--deep2-yellow));
 }
 .header_back{
     display: none;
@@ -61,7 +61,7 @@
     margin-right: 10px;
 }
 .header_back p{
-    color: var(--bg-white);
+    color: rgb(var(--bg-white));
 }
 .header_hamburger{
     position: relative;
@@ -85,11 +85,11 @@
     top: 4px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--all-white);
+    background-color: rgb(var(--deep2-yellow));
     transition: 0.5s;
 }
 .header_hamburger span:nth-child(2){
-    top: 12px;
+    top: 11.5px;
 }
 .header_hamburger span:last-child{
     top: auto;
@@ -97,7 +97,7 @@
 }
 .header_on .header_hamburger span{
     transition: 0.5s;
-    background-color: var(--point-color);
+    background-color: rgb(var(--deep-yellow));
 }
 .header_on .header_hamburger span:nth-child(1){
     top: 50%;
@@ -119,7 +119,7 @@
     max-width: 310px;
     min-height: calc(100vh - 40px);
     padding: 20px;
-    background-color: var(--all-white);
+    background-color: rgb(var(--real-white));
     top: 0;
     left: calc(100vw + 300px);
     transition: 1.5s;
@@ -139,33 +139,21 @@
 .header_side .display_flex a{
     display: block;
     height: 25px;
-    color: var(--ddp-gray);
+    color: rgb(var(--deep2-yellow));
     padding-bottom: 5px;
     border-bottom: 1px solid var(--bg-none);
     transition: 0.2s;
     margin-right: 10px;
 }
-.header_side .display_flex a#cart{
-    margin-right: 4px;
-}
-.header_side .display_flex a#cart span{
-    display: inline-block;
-    min-width: 25px;
-    width: 25px;
-    height: 25px;
-    background: url('/image/icon/recipe/cart-bu.png') no-repeat;
-    background-size: contain;
-    margin: 0;
-}
 .header_side .display_flex a:last-child{
     margin-right: 0;
 }
 .header_side .display_flex a:hover{
-    border-color: var(--dp-gray);
+    border-color: rgb(var(--deep-yellow));
     transition: 0.2s;
 }
 .header_side .display_flex a span{
-    color: var(--ddp-gray);
+    color: rgb(var(--deep2-yellow));
     margin-right: 2px;
 }
 /*nav*/
@@ -181,12 +169,12 @@
 .header_a::-webkit-scrollbar{
     width: 5px;
     height: auto;
-    background-color: var(--lite-blue);
+    background-color: rgb(var(--lite-yellow));
 }
 .header_a::-webkit-scrollbar-thumb{
     width: 5px;
     height: auto;
-    background-color: var(--md-blue);
+    background-color: rgb(var(--md-yellow));
 }
 a.header_link{
     display: flex;
@@ -199,7 +187,7 @@ a.header_link{
     transition: 0.2s;
 }
 a.header_link:hover{
-    border-color: var(--md-blue);
+    border-color: rgb(var(--md-yellow));
     transition: 0.2s;
 }
 a.header_link + a.header_link{
@@ -212,6 +200,7 @@ a.header_link span{
     height: 40px;
     margin-left: 5px;
 }
+/*
 a.header_link#header_recipe:hover span{
     min-width: 30px;
     width: 30px;
@@ -260,14 +249,15 @@ a.link_on#header_info:hover span{
     background: url('/image/icon/common/link-icon4.png') no-repeat;
     background-size: contain;
 }
+*/
 a.link_on{
-    color: var(--point-color)!important;
-    border-color: var(--point-color)!important;
-	cursor: url('../../image/icon/common/cursor-default.png'), default!important;
+    color: rgb(var(--origin-yellow))!important;
+    border-color: rgb(var(--origin-yellow))!important;
 }
 @media(min-width: 1024px){
     .header_section .w_display_flex{
         width: calc(100% - 40px);
+        max-width: 1200px;
         margin: 0 auto;
     }
     .header_top{
@@ -287,7 +277,7 @@ a.link_on{
         min-height: auto;
         height: 40px;
         padding: 0;
-        background-color: var(--bg-none);
+        background-color: rgb(var(--bg-none));
         top: auto;
         left: auto;
         transition: none;
@@ -301,17 +291,10 @@ a.link_on{
         height: 18px;
         padding-bottom: 16px;
         margin-bottom: -2px;
-        color: var(--lt-gray);
-    }
-    .header_side .display_flex a:hover{
-        border-color: var(--lite-blue);
+        color: rgb(var(--deep2-yellow));
     }
     .header_side .display_flex a span{
-        color: var(--lt-gray);
-    }
-    .header_side .display_flex a#cart span{
-        background: url('/image/icon/recipe/cart-wh.png') no-repeat;
-        background-size: contain;
+        color: rgb(var(--lite-yellow));
     }
     .header_side .display_flex a + a{
         margin-left: 20px;
@@ -329,7 +312,7 @@ a.link_on{
     }
     a.header_link{
         min-width: max-content;
-        color: var(--md-blue);
+        color: rgb(var(--md-yellow));
         padding: 0 25px 10px 25px;
     }
     a.header_link + a.header_link{
@@ -339,8 +322,8 @@ a.link_on{
         display: none;
     }
     a.link_on{
-        color: var(--all-white)!important;
-        border-color: var(--lite-blue)!important;
+        color: rgb(var(--real-white))!important;
+        border-color: rgb(var(--lite-yellow))!important;
     }
 }
 @media (min-width: 1400px){

@@ -6,17 +6,9 @@
     <div class="header_top">
       <div class="display_flex flex_between flex_align_c">
         <button type="button" onclick="goHome()" class="header_logo">
-<!--          <img src="" alt="로고 아직 없음">-->
-          <p>Recyle Project</p>
+          <img src="/img/logo/logo_dk.svg" alt="RecyclePic logo">
+          <p>RecyclePic</p>
         </button>
-<!--        <div class="header_back">-->
-<!--          <div class="display_flex flex_start flex_align_c">-->
-<!--            <button type="button" onclick="history.back(-1)">-->
-<!--              <img src="/image/icon/common/arrow-prev-lt.png">-->
-<!--            </button>-->
-<!--            <p th:text="${pageTitle}">페이지제목</p>-->
-<!--          </div>-->
-<!--        </div>-->
         <button type="button" onclick="goMenu()" class="header_hamburger">
           <span></span>
           <span></span>
@@ -29,14 +21,12 @@
         <!--로그인 전(로그인 구현 후 수정)-->
         <a href="/login" id="header_login"><span></span>로그인</a>
         <a href="/signup" id="header_signup"><span></span>회원가입</a>
-        <a href="javascript:void(0)" onclick="mypageChk()"><span id="header_mypage"></span>님</a>
+        <a href="/mypage"><span id="header_mypage"></span>님</a>
         <a href="/logout"><span id="header_logout"></span>로그아웃</a>
       </div>
       <nav class="header_a">
-        <a href="/recipe/list" id="header_recipe" class="header_link">메뉴1<span></span></a>
-        <a href="/community/list" id="header_community" class="header_link">메뉴2<span></span></a>
-        <a href="/random/list" id="header_random" class="header_link">메뉴3<span></span></a>
-        <a href="/info/list" id="header_info" class="header_link">메뉴4<span></span></a>
+        <a href="" id="header_recycle" class="header_link">수거<span></span></a>
+        <a href="" id="header_community" class="header_link">게시판<span></span></a>
       </nav>
     </aside>
   </div>
