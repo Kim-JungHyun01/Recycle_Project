@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:fragment="head">
+  <head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle}">타이틀</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/img/icon/common/favicon.ico">
+    <th:block layout:fragment="css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+      <link rel="stylesheet" href="/css/common/reset.css">
+      <link rel="stylesheet" href="/css/common/common.css">
+      <link rel="stylesheet" href="/css/common/header.css">
+      <link rel="stylesheet" href="/css/common/footer.css">
+      <link rel="stylesheet" href="/css/common/popup.css">
+      <!-- 각 페이지의 css -->
+      <link rel="stylesheet" th:href="@{'/css/'+${cssPath}+'.css'}" />
+    </th:block>
+    <th:block layout:fragment="javascript">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script src="/js/common/common.js"></script>
+      <script src="/js/common/header.js"></script>
+      <script src="/js/common/popup.js"></script>
+      <script src="/js/common/load.js"></script>
+    </th:block>
+  </head>
+</html>
