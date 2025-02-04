@@ -9,8 +9,14 @@ public class HomeController {
     @GetMapping(value = "/")
     public String index(Model model) {
         model.addAttribute("cssPath", "home/index");
-        model.addAttribute("pageTitle", "메인페이지");
+        model.addAttribute("pageTitle", "메인");
         model.addAttribute("jsPath", "home/index");
         return "home/index";
+    }
+    @GetMapping(value = "/price")
+    public String price(Model model) {
+        model.addAttribute("cssPath", "home/price");
+        model.addAttribute("pageTitle", "수거 가격표");
+        return "home/price";
     }
 }
