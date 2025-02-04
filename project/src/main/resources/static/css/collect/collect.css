@@ -1,0 +1,27 @@
+.title {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.search-box {
+    margin: 15px 0;
+}
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+.item-btn {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+.item-btn:hover {
+    background-color: #e2e6ea;
+}
+.select-btn {
+    margin-top: 20px;
+    width: 100%;
+}
