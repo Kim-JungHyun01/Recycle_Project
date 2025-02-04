@@ -5,6 +5,19 @@
     margin: 0 auto;
     background: rgba(var(--deep2-yellow),0.1);
 }
+.footer_section *{
+    margin: 0;
+	padding: 0;
+    border: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: rgb(var(--lite-black));
+    font-style: normal;
+    text-decoration: none;
+    outline: none;
+    background-color: rgb(var(--bg-none));
+}
 .footer_inner{
     width: calc(100% - 40px);
     max-width: 1200px;
