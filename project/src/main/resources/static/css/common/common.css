@@ -35,7 +35,7 @@
 /*전체 페이지 공통*/
 .main_whole{
     width: 100vw;
-    min-height: calc(100vh - 110px);
+    min-height: 100vh;
     height: auto;
     padding: 50px 0 60px 0;
 }
@@ -112,7 +112,7 @@
     width: 100%;
     max-width: 150px;
     height: 40px;
-    border: 1px solid rgb(var(--bg-none));
+    border: 1px solid var(--bg-none);
     border-radius: 5px;
     background-color: rgb(var(--all-white));
 }
@@ -120,20 +120,18 @@
     margin-left: 10px;
 }
 .btn_flex button.btn_prev{
-    color: rgb(var(--origin-yellow));
+    color: rgb(var(--deep-yellow));
     border-color: rgb(var(--origin-yellow));
 }
 .btn_flex button.btn_prev:hover{
-    color: rgb(var(--deep-yellow));
-    border-color: rgb(var(--deep-yellow));
-    background-color: rgb(var(--lite-yellow));
+    background-color: rgba(var(--lite-yellow),0.1);
 }
 .btn_flex button.btn_submit{
-    color: rgb(var(--all-white));
-    background-color: rgb(var(--origin-yellow));
+    color: rgb(var(--deep2-yellow));
+    background-color: rgb(var(--lite-yellow));
 }
 .btn_flex button.btn_submit:hover{
-    background-color: rgb(var(--deep-yellow));
+    background-color: rgb(var(--origin-yellow));
 }
 /*데이터 없을 때*/
 .no_data_txt{
@@ -176,7 +174,6 @@
         display: flex;
     }
     .main_whole{
-        min-height: calc(100vh - 100px);
         padding: 50px 0;
     }
 }
