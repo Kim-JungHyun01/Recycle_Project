@@ -7,26 +7,15 @@
   --deep2-yellow: 90,78,46;
   --origin-red: 187,0,0;
   --real-white: 255,255,255;
+  --lite-gray: 225,225,225;
   --lite-black: 51,51,51;
   --real-black: 0,0,0;
   --bg-none: transparent;
 }
 *{
-    margin: 0;
-	padding: 0;
-    border: 0;
 	cursor: default;
-    list-style: none;
     font-family: 'Pretendard Variable';
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
-    color: rgb(var(--lite-black));
-    font-style: normal;
-    text-decoration: none;
-    outline: 0;
     word-break: auto-phrase;
-    background-color: var(--bg-none);
 }
 /* reset */
 .bold_title{
@@ -41,7 +30,7 @@ body{
     width: 100%;
     height: auto;
     margin: 0;
-    background-color: rgba(var(--origin-yellow),0.1);
+    background-color: rgb(var(--bg-none));
 }
 body::-webkit-scrollbar{
     display: none;

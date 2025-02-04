@@ -13,7 +13,7 @@
       <link rel="stylesheet" href="/css/common/footer.css">
       <link rel="stylesheet" href="/css/common/popup.css">
       <!-- 각 페이지의 css -->
-      <link rel="stylesheet" th:href="@{'/css/'+${cssPath}+'.css'}" />
+      <link rel="stylesheet" th:if="${cssPath != null}" th:href="@{'/css/'+${cssPath}+'.css'}" />
     </th:block>
     <th:block layout:fragment="javascript">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
