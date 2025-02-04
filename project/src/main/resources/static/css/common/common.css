@@ -127,11 +127,11 @@
     background-color: rgba(var(--lite-yellow),0.1);
 }
 .btn_flex button.btn_submit{
-    color: rgb(var(--deep2-yellow));
-    background-color: rgb(var(--lite-yellow));
+    color: rgb(var(--real-white));
+    background-color: rgb(var(--origin-yellow));
 }
 .btn_flex button.btn_submit:hover{
-    background-color: rgb(var(--origin-yellow));
+    background-color: rgb(217,177,68);
 }
 /*데이터 없을 때*/
 .no_data_txt{
