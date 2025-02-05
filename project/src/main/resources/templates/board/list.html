@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}"
+      layout:fragment="content">
+    <div class="index_whole">
+        <p class="bold_title">커뮤니티 리스트</p>
+    </div>
+    <body>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                </tr>
+            </thead>
+        </table>
+        <button onclick="window.location.href='/write'">글쓰기</button>
+    </body>
+</html>
