@@ -3,7 +3,78 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{common/layout}"
       layout:fragment="content">
-    <div class="mypage_whole">
-        <p class="bold_title">마이페이지</p>
+    <div class="member_whole">
+        <!-- 비밀번호, 주소, 이름, 전화번호 -->
+        <div class="member_title">
+            <h1>마이페이지</h1>
+            <p>
+                수정할 정보를 입력해주세요.
+                <br/>
+                아이디, 이름을 제외한 정보를 수정하실 수 있습니다.
+            </p>
+        </div>
+        <div class="member_inner">
+            <form th:action="@{/myUpdate}" method="post" id="memberForm" modelAttribute="memberdto" th:object="${memberDTO}">
+                <div class="member_row">
+                    <p>아이디</p>
+                    <input type="text" id="id" name="id" th:value="${member.id}" readonly>
+                </div>
+                <button type="button" class="pw_change_btn" id="pw_change_btn" data-id="pw_change_btn" data-type="off" onclick="pwChangeShow(this)">비밀번호 수정</button>
+                <div class="member_row common_pw">
+                    <p>비밀번호</p>
+                    <div class="member_pw display_flex">
+                        <input type="password" id="pw" name="pw" maxlength="16" onkeyup="pwChange()" placeholder="비밀번호 입력">
+                        <button type="button" data-id="pw" onclick="pwTxtPw(this)">
+                            <img src="/img/icon/common/eye_open.png" alt="비밀번호 숨기기/보여주기 버튼">
+                        </button>
+                    </div>
+                    <span id="pwchk1"><span><img src="/img/icon/member/id_no.png">비밀번호를 확인해주세요. 비밀번호는 영어 대/소문자,숫자,특수기호 포함 8~16자 이내입니다.</span></span>
+                    <input type="hidden" id="pwcheck" value="no">
+                </div>
+                <div class="member_row common_pw">
+                    <p>비밀번호 확인</p>
+                    <div class="member_pw display_flex">
+                        <input type="password" id="pw2" maxlength="16" onkeyup="pwChange(this)" placeholder="비밀번호 다시 입력">
+                        <button type="button" data-id="pw2" onclick="pwTxtPw(this)">
+                            <img src="/img/icon/common/eye_open.png" alt="비밀번호 숨기기/보여주기 버튼">
+                        </button>
+                    </div>
+                    <span id="pwchk2"><span><img src="/img/icon/member/id_no.png">비밀번호가 일치하지 않습니다. 확인해주세요.</span></span>
+                </div>
+                <div class="member_row">
+                    <p>이름</p>
+                    <input type="text" id="name" name="name" th:value="${member.name}" maxlength="10" onkeyup="nameChk()" placeholder="이름 입력" readonly>
+                </div>
+                <div class="member_row">
+                    <p>주소</p>
+                    <div class="member_address">
+                        <div class="address_row display_flex">
+                            <input type="text" id="addr" name="addr" th:value="${member.addr}" maxlength="10" onchange="detailAddrWrite()" placeholder="우편번호" readonly>
+                            <button type="button" class="row_btn" id="addr_btn" onclick="execDaumPostcode()">우편번호 찾기</button>
+                        </div>
+                        <input type="text" id="streetaddr" name="streetaddr" th:value="${member.streetaddr}" maxlength="40" onchange="detailAddrWrite()" placeholder="기본 주소를 입력하세요" required readonly>
+                        <input type="text" id="detailaddr" name="detailaddr" th:value="${member.detailaddr}" maxlength="40" onkeyup="detailAddrWrite()" placeholder="상세 주소를 입력하세요" required readonly>
+                        <input type="hidden" id="addresscheck" value="ok">
+                    </div>
+                </div>
+                <div class="member_row">
+                    <p>전화번호</p>
+                    <div class="tel_row display_flex flex_align_c">
+                        <input type="number" id="tel1" data-id="tel1" onkeyup="telWrite(this)" placeholder="전화번호 앞자리">
+                        <p>-</p>
+                        <input type="number" id="tel2" data-id="tel2" onkeyup="telWrite(this)" placeholder="전화번호 중간자리">
+                        <p>-</p>
+                        <input type="number" id="tel3" data-id="tel3" onkeyup="telWrite(this)" placeholder="전화번호 뒷자리">
+                    </div>
+                    <span id="telchk"><span><img src="/img/icon/member/id_no.png">전화번호를 모두 입력해주세요.</span></span>
+                    <input type="hidden" id="tel_whole" name="tel" th:value="${member.tel}">
+                    <input type="hidden" id="telcheck" value="ok">
+                </div>
+                <div class="btn_flex">
+                    <button type="button" class="btn_prev" onclick="history.back(-1)">뒤로</button>
+                    <button type="button" class="btn_submit" onclick="myWholeChk()">정보 수정</button>
+                </div>
+            </form>
+        </div>
     </div>
 </html>

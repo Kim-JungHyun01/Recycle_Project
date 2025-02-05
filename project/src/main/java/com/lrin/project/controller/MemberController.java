@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -46,8 +47,8 @@ public class MemberController {
     @PostMapping(value = "/memberSave")
     public String memberSave(
             @ModelAttribute("memberDTO") @Valid MemberDTO memberDTO, BindingResult bindingResult) {
-        MemberEntity mentity = memberDTO.toEntity();
-        memberService.memberSave(mentity);
+        MemberEntity memberEntity = memberDTO.toEntity();
+        memberService.memberSave(memberEntity);
         return "redirect:/";
     }
     @PostMapping(value = "/idpwChk")
@@ -59,11 +60,38 @@ public class MemberController {
         boolean chk = passwordEncoder.matches(pw,result);
         prw.print(chk);
     }
+    @GetMapping(value = "/mypage/list")
+    public String mypageList(Model model) {
+        model.addAttribute("cssPath", "member/mylist");
+        model.addAttribute("pageTitle", "마이페이지 메인");
+        model.addAttribute("jsPath", "member/member");
+        return "member/mylist";
+    }
     @GetMapping(value = "/mypage")
-    public String mypage(Model model) {
+    public String mypage(Model model, Principal principal) {
         model.addAttribute("cssPath", "member/mypage");
         model.addAttribute("pageTitle", "마이페이지");
         model.addAttribute("jsPath", "member/member");
+        MemberEntity dto = memberService.memberInfo(principal.getName());
+        model.addAttribute("member", dto);
         return "member/mypage";
+    }
+    @PostMapping(value = "/myUpdate")
+    public String myUpdate(
+            @ModelAttribute("memberDTO") @Valid MemberDTO memberDTO, BindingResult bindingResult) {
+        String id = memberDTO.getId();
+        String pw = memberDTO.getPw();
+        String addr = memberDTO.getAddr();
+        String streetaddr = memberDTO.getStreetaddr();
+        String detailaddr = memberDTO.getDetailaddr();
+        String tel = memberDTO.getTel();
+        if(pw == null || pw.isEmpty()){
+            memberService.mySomeSave(addr,streetaddr,detailaddr,tel,id);
+        }
+        else{
+            MemberEntity memberEntity = memberDTO.toEntity();
+            memberService.memberSave(memberEntity);
+        }
+        return "redirect:/";
     }
 }

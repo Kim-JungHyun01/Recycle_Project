@@ -24,13 +24,23 @@ public class MemberServiceImple implements MemberService {
     }
 
     @Override
-    public void memberSave(MemberEntity mentity) {
-        mentity.setPw(bCryptPasswordEncoder.encode(mentity.getPw()));
-        memberRepository.save(mentity);
+    public void memberSave(MemberEntity memberEntity) {
+        memberEntity.setPw(bCryptPasswordEncoder.encode(memberEntity.getPw()));
+        memberRepository.save(memberEntity);
     }
 
     @Override
     public String idPwChk(String id) {
         return memberRepository.idPwChk(id);
+    }
+
+    @Override
+    public MemberEntity memberInfo(String id) {
+        return memberRepository.memberInfo(id);
+    }
+
+    @Override
+    public void mySomeSave(String addr, String streetaddr, String detailaddr, String tel, String id) {
+        memberRepository.myUpdate(addr, streetaddr, detailaddr, tel, id);
     }
 }

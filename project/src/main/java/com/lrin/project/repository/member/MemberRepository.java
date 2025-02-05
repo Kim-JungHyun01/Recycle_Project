@@ -1,16 +1,10 @@
 package com.lrin.project.repository.member;
 
-import com.lrin.project.dto.member.MemberDTO;
 import com.lrin.project.entity.member.MemberEntity;
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, String> {
@@ -24,11 +18,20 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
     @Query(value = "select pw from member where id = :id", nativeQuery = true)
     String idPwChk(@Param("id") String id);
 
-    //로그인 시 아이디, 비밀번호
+    @Query(value = "select id, pw, name, addr, streetaddr, detailaddr, tel, reg_time, update_time, created_by, modified_by from member where id = :id", nativeQuery = true)
+    MemberEntity memberInfo(@Param("id") String id);
 
-//    @Transactional
-//    @Modifying
-//    @Query(value = "select name, id, pw, email_id, email_domain, tel1,tel2,tel3, jumin1, jumin2, streetaddr, addr, DETAILADDR from member" +
-//            " where name=:name AND tel1 || '-' || tel2 || '-' || tel3=:tel AND email_id || '@' || email_domain  =:email", nativeQuery = true)
-//    List<MemberEntity> findID(@Param("name") String name, @Param("tel") String tel, @Param("email") String email);
+    @Query(value = "UPDATE member SET " +
+            "addr = :addr, " +
+            "streetaddr = :streetaddr, " +
+            "detailaddr = :detailaddr, " +
+            "tel = :tel " +
+            "WHERE id = :id", nativeQuery = true)
+    void myUpdate(
+            @Param(value = "addr") String addr,
+            @Param(value = "streetaddr") String streetaddr,
+            @Param(value = "detailaddr") String detailaddr,
+            @Param(value = "tel") String tel,
+            @Param(value = "id") String id
+    );
 }
