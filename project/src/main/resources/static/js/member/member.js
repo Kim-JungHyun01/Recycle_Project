@@ -31,12 +31,13 @@ function idChk(){
             async: true,
             data: {"id":id},
             success:function(data){
+                $('#id_none').hide();
                 if(data == null || data == "null" || data == ""){
-                    alertShow('중복확인',"사용가능한 아이디 입니다.");
-                    $('#idcheck').val("yes");
+                    $('#id_ok').show();
+                    $('#idcheck').val("ok");
                 }
                 else{
-                    alertShow('중복확인',"이미 사용중인 아이디 입니다.");
+                    $('#id_no').show();
                     $('#idcheck').val("no");
                 }
             },
@@ -49,6 +50,8 @@ function idChk(){
 /*아이디 입력 시 중복확인 리셋*/
 function idChkReset(){
     $('#idcheck').attr('value', 'no');
+    $('#id_ok').hide();
+    $('#id_none').show();
 }
 /*비밀번호 타입 변경*/
 function pwTxtPw(ths){
@@ -56,9 +59,11 @@ function pwTxtPw(ths){
     var pw_type = $('#'+pw_id).attr('type');
     if(pw_type == 'password'){
         $('#'+pw_id).attr('type', 'text');
+        $('#'+pw_id).next('button').find('img').attr('src', '/img/icon/common/eye_close.png');
     }
     else{
         $('#'+pw_id).attr('type', 'password');
+        $('#'+pw_id).next('button').find('img').attr('src', '/img/icon/common/eye_open.png');
     }
 }
 /*비밀번호 유효성 검사*/
@@ -91,7 +96,7 @@ function nameChk(){
     }
     else{
         $('#namechk').show();
-        $("#namechk").attr('value', "no");
+        $("#namecheck").attr('value', "no");
     }
 }
 /*주소*/
@@ -127,7 +132,9 @@ function execDaumPostcode(){
             document.getElementById("streetaddr").value += extraAddr;
             // 우편번호 + 주소 입력이 완료되었음으로 상세주소로 포커스 이동
             document.getElementById("detailaddr").focus();
+            $('#detailaddr').val('');
             $("#detailaddr").prop('readonly', false);
+            $('#addresscheck').attr('value', 'no');
         }
     }).open();
 }
@@ -153,10 +160,12 @@ function telWrite(ths){
     if(checkTel.test(tel_whole)){
         $('#telchk').hide();
         $("#telcheck").attr('value', "ok");
+        $('#tel_whole').attr('value', tel_whole);
     }
     else{
         $('#telchk').show();
         $("#telcheck").attr('value', "no");
+        $('#tel_whole').attr('value', '');
     }
 }
 /*확인 버튼 클릭시 */
@@ -166,4 +175,143 @@ function memWholeChk(){
     let namecheck = $('#namecheck').val();
     let addresscheck = $('#addresscheck').val();
     let telcheck = $('#telcheck').val();
+    if(idcheck == 'ok'
+    && pwcheck == 'ok'
+    && namecheck == 'ok'
+    && addresscheck == 'ok'
+    && telcheck == 'ok'){
+        $('#memberForm').submit();
+    }else{
+        alertShow("회원가입 오류", "모든 내용을 적어주세요.");
+    }
+}
+
+//로그인
+function loginWrite (object){
+    let object_id = object.dataset.id;
+    let object_type = object.dataset.type;
+    let object_val = $('#'+object_id).val();
+    if(object_val != ''){
+        $('#'+object_type).addClass('keyon');
+    }
+    else{
+        $('#'+object_type).removeClass('keyon');
+    }
+}
+function idPwChk(){
+    let id_val = $('#id').val();
+    let pw_val = $('#pw').val();
+    $.ajax({
+        type: "post",
+        url: "/idpwChk",
+        async: true,
+        data: {"id":id_val,"pw":pw_val},
+        success:function(data){
+            console.log(data);
+            if(data){
+                if(data=='true'){
+                    standbyShow("로그인 성공", "성공적으로 로그인 되었습니다.<br/>잠시만 기다려주세요.");
+                    setTimeout(function(){
+                        $('#memberLogin').submit();
+                    },1500);
+                }else{
+                    alertShow("로그인 실패","아이디 혹은 비밀번호가 다릅니다.");
+                    return false;
+                }
+            }
+        },
+        error:function(data){
+            alertShow("로그인 오류","다시 한 번 시도해주세요.");
+            return false;
+        }
+    });
+}
+
+/*마이페이지*/
+/*정보 수정 시 비밀번호 확인*/
+function mypageGo(){
+    let my_id = $('#header_mypage').text();
+    let my_pw = $('#pw').val();
+    if(my_pw == '' || my_pw == null){
+        alertShow('입력 오류', '비밀번호를 입력해주세요.');
+        return false;
+    }
+    $.ajax({
+        type: "post",
+        url: "/idpwChk",
+        async: true,
+        data: {"id":my_id,"pw":my_pw},
+        success:function(data){
+            console.log(data);
+            if(data){
+                if(data=='true'){
+                    standbyShow("확인 성공", "정보 수정 페이지로 이동합니다.<br/>잠시만 기다려주세요.");
+                    setTimeout(function(){
+                        window.location.href='/mypage';
+                    },1500);
+                }else{
+                    alertShow("확인 실패","비밀번호가 다릅니다.");
+                    return false;
+                }
+            }
+        },
+        error:function(data){
+            alertShow("확인 오류","다시 한 번 시도해주세요.");
+            return false;
+        }
+    });
+}
+function mypagePwShow(){
+    $('body').css('overflow', 'hidden');
+    $('.pwchkpop_whole').show();
+}
+function mypagePwHide(){
+    $('body').css('overflow', 'auto');
+    $('.pwchkpop_whole').hide();
+}
+function pwChangeShow(ths){
+    let pw_id = ths.dataset.id;
+    let pw_type = ths.dataset.type;
+    if(pw_type == 'off'){
+        $('.common_pw').show();
+        $('#'+pw_id).text('수정 취소');
+        $('#'+pw_id).attr('data-type', 'on');
+    }
+    else{
+        $('.common_pw').hide();
+        $('#'+pw_id).text('비밀번호 수정');
+        $('#'+pw_id).attr('data-type', 'off');
+    }
+}
+function myWholeChk(){
+    let pwcheck = $('#pwcheck').val();
+    let addresscheck = $('#addresscheck').val();
+    let telcheck = $('#telcheck').val();
+    let pw_change_val = $('#pw_change_btn').attr('data-type');
+    if(pw_change_val == 'off'){
+        if(addresscheck == 'ok' && telcheck == 'ok'){
+            alertShow('수정중', '');
+//            $('#memberForm').submit();
+        }
+        else{
+            alertShow('수정 실패', '아이디, 이름, 비밀번호를 제외한 정보를 입력해주세요.');
+        }
+    }
+    else{
+        if(pwcheck == 'ok' && addresscheck == 'ok' && telcheck == 'ok'){
+            alertShow('수정중', '');
+//            $('#memberForm').submit();
+        }
+        else{
+            alertShow('수정 실패', '아이디, 이름을 제외한 정보를 입력해주세요.');
+        }
+    }
+}
+if(win_path.includes('/mypage') && win_path != ('/mypage/list')){
+    $(document).ready(function(){
+        let my_tel_whole = $('#tel_whole').val().split('-');
+        $('#tel1').val(my_tel_whole[0]);
+        $('#tel2').val(my_tel_whole[1]);
+        $('#tel3').val(my_tel_whole[2]);
+    });
 }

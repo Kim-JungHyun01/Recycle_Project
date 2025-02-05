@@ -309,9 +309,6 @@ a.link_on{
         margin-bottom: -2px;
         color: rgb(var(--deep2-yellow));
     }
-    .header_side .display_flex a span{
-        color: rgb(var(--lite-yellow));
-    }
     .header_side .display_flex a + a{
         margin-left: 20px;
     }

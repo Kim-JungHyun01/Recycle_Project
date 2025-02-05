@@ -4,7 +4,6 @@
       layout:decorate="~{common/layout}"
       layout:fragment="content">
     <div class="member_whole">
-        <!-- 아이디, 비밀번호, 주소, 이름, 전화번호 -->
         <div class="member_title">
             <h1>회원가입</h1>
             <p>
@@ -14,15 +13,16 @@
             </p>
         </div>
         <div class="member_inner">
-            <form action="/signupSave" method="post">
+            <form th:action="@{/memberSave}" method="post" id="memberForm" modelAttribute="memberdto" th:object="${memberDTO}">
                 <div class="member_row">
                     <p>아이디</p>
                     <div class="display_flex">
-                        <input type="text" id="id" name="id" maxlength="15" placeholder="아이디 입력(5~15자 이내)" onchange="idChkReset()">
+                        <input type="text" id="id" name="id" maxlength="15" onkeyup="idChkReset()" placeholder="아이디 입력(5~15자 이내)">
                         <button type="button" class="row_btn" onclick="idChk()">중복확인</button>
                     </div>
-                    <span id="id_ok">사용 가능한 아이디입니다.</span>
-                    <span id="id_no">이미 존재하는 아이디입니다.</span>
+                    <span id="id_ok"><span><img src="/img/icon/member/id_ok.png">사용 가능한 아이디입니다.</span></span>
+                    <span id="id_none"><span><img src="/img/icon/member/id_no.png">아이디 중복확인 해주세요.</span></span>
+                    <span id="id_no"><span><img src="/img/icon/member/id_no.png">이미 사용 중인 아이디입니다.</span></span>
                     <input type="hidden" id="idcheck" value="no">
                 </div>
                 <div class="member_row">
@@ -33,7 +33,7 @@
                             <img src="/img/icon/common/eye_open.png" alt="비밀번호 숨기기/보여주기 버튼">
                         </button>
                     </div>
-                    <span id="pwchk1">비밀번호를 확인해주세요. 비밀번호는 영어 대/소문자,숫자,특수기호 포함 8~16자 이내입니다.</span>
+                    <span id="pwchk1"><span><img src="/img/icon/member/id_no.png">비밀번호를 확인해주세요. 비밀번호는 영어 대/소문자,숫자,특수기호 포함 8~16자 이내입니다.</span></span>
                     <input type="hidden" id="pwcheck" value="no">
                 </div>
                 <div class="member_row">
@@ -44,23 +44,23 @@
                             <img src="/img/icon/common/eye_open.png" alt="비밀번호 숨기기/보여주기 버튼">
                         </button>
                     </div>
-                    <span id="pwchk2">비밀번호가 일치하지 않습니다. 확인해주세요.</span>
+                    <span id="pwchk2"><span><img src="/img/icon/member/id_no.png">비밀번호가 일치하지 않습니다. 확인해주세요.</span></span>
                 </div>
                 <div class="member_row">
                     <p>이름</p>
-                    <input type="text" id="name" onkeyup="nameChk()" name="name" maxlength="10" placeholder="이름 입력">
-                    <span id="namechk">이름은 한글, 영어로만 2~10자 이내로 적어주세요.</span>
+                    <input type="text" id="name" name="name" maxlength="10" onkeyup="nameChk()" placeholder="이름 입력">
+                    <span id="namechk"><span><img src="/img/icon/member/id_no.png">이름은 한글, 영어로만 2~10자 이내로 적어주세요.</span></span>
                     <input type="hidden" id="namecheck" value="no">
                 </div>
                 <div class="member_row">
                     <p>주소</p>
                     <div class="member_address">
                         <div class="address_row display_flex">
-                            <input type="text" id="addr" name="addr" maxlength="10" placeholder="우편번호" readonly>
+                            <input type="text" id="addr" name="addr" maxlength="10" onchange="detailAddrWrite()" placeholder="우편번호" readonly>
                             <button type="button" class="row_btn" id="addr_btn" onclick="execDaumPostcode()">우편번호 찾기</button>
                         </div>
-                        <input type="text" name="streetaddr" id="streetaddr" maxlength="40" placeholder="기본 주소를 입력하세요" required readonly>
-                        <input type="text" name="detailaddr" id="detailaddr" maxlength="40" onkeyup="detailAddrWrite()" placeholder="상세 주소를 입력하세요" required readonly>
+                        <input type="text" id="streetaddr" name="streetaddr" maxlength="40" onchange="detailAddrWrite()" placeholder="기본 주소를 입력하세요" required readonly>
+                        <input type="text" id="detailaddr" name="detailaddr" maxlength="40" onkeyup="detailAddrWrite()" placeholder="상세 주소를 입력하세요" required readonly>
                         <input type="hidden" id="addresscheck" value="no">
                     </div>
                 </div>
@@ -73,11 +73,12 @@
                         <p>-</p>
                         <input type="number" id="tel3" data-id="tel3" onkeyup="telWrite(this)" placeholder="전화번호 뒷자리">
                     </div>
-                    <span id="telchk">전화번호를 모두 입력해주세요.</span>
+                    <span id="telchk"><span><img src="/img/icon/member/id_no.png">전화번호를 모두 입력해주세요.</span></span>
                     <input type="hidden" id="telcheck" value="no">
+                    <input type="hidden" id="tel_whole" name="tel" value="">
                 </div>
                 <div class="btn_flex">
-                    <button type="button" class="btn_prev" onclick="">뒤로</button>
+                    <button type="button" class="btn_prev" onclick="history.back(-1)">뒤로</button>
                     <button type="button" class="btn_submit" onclick="memWholeChk()">회원가입</button>
                 </div>
             </form>

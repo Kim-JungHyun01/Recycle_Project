@@ -31,7 +31,25 @@ input[type="date"]{
     padding: 4px 10px;
     border: 1px solid rgb(var(--lite-gray));
     border-radius: 5px;
-    background-color: rgb(var(--real-white));
+    background: rgb(var(--real-white))!important;
+    background-color: rgb(var(--real-white))!important;
+    caret-color: rgb(215,172,52);
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    box-shadow: 0 0 0px 1000px #fff inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    box-shadow: 0 0 0px 1000px #fff inset;
+    transition: background-color 5000s ease-in-out 0s;
 }
 input[type="text"]:hover,
 input[type="password"]:hover,
@@ -89,11 +107,23 @@ input:read-only:focus{
     margin: 0 auto 5px auto;
 }
 .member_row span{
+    display: none;
     font-size: 14px;
     line-height: 20px;
     color: rgb(var(--origin-red));
     margin-top: 5px;
-    display: none;
+}
+.member_row span span{
+    display: flex;
+}
+.member_row span#id_ok,
+.member_row span#id_ok *{
+    color: rgb(34,172,74);
+}
+.member_row span img{
+    min-width: 20px;
+    width: 20px;
+    margin-right: 5px;
 }
 .member_row div{
     width: 100%;
