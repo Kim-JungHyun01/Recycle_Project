@@ -1,1 +1,58 @@
 @charset "UTF-8";
+/*멤버 카테고리 공통*/
+.member_whole{
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 0 auto;
+}
+.member_whole *{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: rgb(var(--lite-black));
+    font-style: normal;
+    text-decoration: none;
+    outline: 0;
+    word-break: auto-phrase;
+    background-color: var(--bg-none);
+}
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="date"]{
+    width: 100%;
+    height: auto;
+    line-height: 30px;
+    padding: 4px 10px;
+    border: 1px solid rgb(var(--lite-gray));
+    border-radius: 5px;
+    background-color: rgb(var(--real-white));
+}
+input[type="text"]:hover,
+input[type="password"]:hover,
+input[type="number"]:hover,
+input[type="date"]:hover{
+    border-color: rgb(var(--origin-yellow));
+    box-shadow: 0 0 10px rgba(var(--real-black),0.05);
+}
+input:read-only:hover{
+    border-color: rgb(var(--lite-gray));
+    box-shadow: none;
+}
+input{
+	cursor: text!important;
+}
+input:focus{
+    border-color: rgb(var(--origin-yellow));
+}
+input:read-only{
+    opacity: 0.7;
+}
+input:read-only:focus{
+    border-color: rgb(var(--lite-gray));
+}

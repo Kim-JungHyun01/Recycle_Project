@@ -41,7 +41,7 @@ p.common_pop_title{
     font-size: 22px;
     line-height: 29px;
     font-weight: bold;
-    color: var(--bg-black);
+    color: rgb(var(--real-black));
 }
 p.common_pop_subtitle{
     font-size: 17px;
@@ -64,31 +64,31 @@ p.common_pop_subtitle{
     line-height: 27px;
     border: 1px solid transparent;
     border-radius: 5px;
-    color: var(--bg-black);
+    color: rgb(var(--real-black));
 }
 .common_btn + .common_btn{
     margin-left: 10px;
 }
 .common_btn.btn_hide{
-    color: var(--point-color);
-    border-color: var(--point-color);
-    background-color: var(--all-white);
+    color: rgb(var(--origin-yellow));
+    border-color: rgb(var(--origin-yellow));
+    background-color: rgb(var(--all-white));
 }
 .common_btn.btn_confirm{
-    color: var(--bg-white);
-    background-color: var(--point-color);
+    color: rgb(var(--real-white));
+    background-color: rgb(var(--deep2-yellow));
 }
 .common_btn.btn_confirm:hover{
-    background-color: var(--second-color);
+    background-color: rgb(var(--real-black));
 }
 /*standby*/
 .standby_loader {
   min-width: 100px;
   width: 100px;
   height: 100px;
-  border: 6px solid var(--all-white);
-  border-right-color: var(--point-color);
-  border-top-color: var(--point-color);
+  border: 6px solid rgb(var(--all-white));
+  border-right-color: rgb(var(--origin-yellow));
+  border-top-color: rgb(var(--origin-yellow));
   border-radius: 100px;
   animation: spin 1.8s infinite linear;
   margin: 5% auto;
