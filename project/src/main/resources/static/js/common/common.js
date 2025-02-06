@@ -6,6 +6,10 @@ function pageReload(){
     location.reload(true);
 }
 
+const token_content = $("meta[name='_csrf']").attr("content")
+const token_header = $("meta[name='_csrf_header']").attr("content");
+const token_name = $("#header_mypage").text();
+
 /*나중에 활성화 필수(url로 직접적인 접근하는 것을 막아줌*/
 //$(document).ready(function (){
 //    if (document.referrer == '' || document.referrer == null){

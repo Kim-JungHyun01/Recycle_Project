@@ -44,6 +44,9 @@ function idChk(){
             },
             error:function(){
                 alertShow('에러','아이디를 다시 입력해주세요');
+            },
+            beforeSend : function(xhr) {
+                xhr.setRequestHeader(token_header, token_content);
             }
         });
     };
@@ -223,6 +226,9 @@ function idPwChk(){
         error:function(data){
             alertShow("로그인 오류","다시 한 번 시도해주세요.");
             return false;
+        },
+        beforeSend : function(xhr) {
+            xhr.setRequestHeader(token_header, token_content);
         }
     });
 }
@@ -257,7 +263,10 @@ function mypageGo(){
         error:function(data){
             alertShow("확인 오류","다시 한 번 시도해주세요.");
             return false;
-        }
+        },
+         beforeSend : function(xhr) {
+             xhr.setRequestHeader(token_header, token_content);
+         }
     });
 }
 function mypagePwShow(){
@@ -339,7 +348,7 @@ function memFindChk(){
                         alertShow("확인 결과", "등록된 정보가 없습니다.");
                     }
                     else{
-                        standbyShow("확인 결과", "비밀번호 재설정 페이지로 이동합니다.<br/>잠시만 기다려주세요.");
+                        standbyShow("확인 완료", "비밀번호 재설정 페이지로 이동합니다.<br/>잠시만 기다려주세요.");
                         setTimeout(function(){
                             window.location.href='/password?id='+data;
                         },1500);
@@ -348,6 +357,9 @@ function memFindChk(){
                 error:function(data){
                     alertShow("확인 오류","다시 한 번 시도해주세요.");
                     return false;
+                },
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader(token_header, token_content);
                 }
             });
         }else{
@@ -371,11 +383,14 @@ function memFindChk(){
                         alertShow("확인 결과", "등록된 정보가 없습니다.");
                     }
                     else{
-                        alertShow("확인 결과", "회원님의 아이디는 "+data+" 입니다.");
+                        alertShow("확인 완료", "회원님의 아이디는 "+data+" 입니다.");
                     }
                 },
                 error:function(){
                     alertShow("확인 오류","다시 한 번 시도해주세요.");
+                },
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader(token_header, token_content);
                 }
             });
         }else{
