@@ -5,3 +5,17 @@ let win_search = window.location.search;//페이지 ?a=b에 대한 경로
 function pageReload(){
     location.reload(true);
 }
+
+const token_content = $("meta[name='_csrf']").attr("content")
+const token_header = $("meta[name='_csrf_header']").attr("content");
+const token_name = $("#header_mypage").text();
+
+/*나중에 활성화 필수(url로 직접적인 접근하는 것을 막아줌*/
+//$(document).ready(function (){
+//    if (document.referrer == '' || document.referrer == null){
+//        standbyShow('접근 오류','잘못된 방식으로 접근하셨습니다.');
+//        setTimeout(function(){
+//            document.location.href = '/';
+//        },1000);
+//    }
+//});

@@ -5,8 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class CollectController {
+public class OrderController {
 
+    // 수거 페이지로 가기
     @GetMapping(value = "/collect")
     public String index(Model model) {
         model.addAttribute("cssPath", "collect/collect");
@@ -14,5 +15,10 @@ public class CollectController {
         model.addAttribute("jsPath", "collect/collect");
         return "collect/collect";
     }
+
+
+
+
+
 
 }

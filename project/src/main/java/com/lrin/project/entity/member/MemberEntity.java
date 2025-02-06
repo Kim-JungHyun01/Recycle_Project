@@ -1,5 +1,6 @@
 package com.lrin.project.entity.member;
 
+import com.lrin.project.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +9,8 @@ import lombok.Builder;
 @Entity
 @NoArgsConstructor
 @Data
-@Table(name = "usermember")
-public class MemberEntity {
+@Table(name = "member")
+public class MemberEntity extends BaseEntity {
     @Id
     @Column
     private String id;

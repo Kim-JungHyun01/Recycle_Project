@@ -95,6 +95,42 @@ input:read-only:focus{
     height: auto;
     margin: 40px auto 0 auto;
 }
+/*탭 css*/
+.find_tab{
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto 20px auto;
+}
+.find_tab a{
+    display: block;
+    width: 100%;
+    max-width: 150px;
+    height: 40px;
+    line-height: 40px;
+    background-color: var(--bg-none);
+    border: 1px solid rgb(var(--lite-yellow));
+    text-align: center;
+}
+.find_tab a + a{
+    margin-left: -1px;
+}
+.find_tab a:first-child{
+    border-radius: 5px 0 0 5px;
+}
+.find_tab a:last-child{
+    border-radius: 0 5px 5px 0;
+}
+.find_tab a:hover{
+    font-weight: 500;
+    background-color: rgba(var(--lite-yellow),0.1);
+}
+.find_tab a.find_on{
+    font-weight: bold;
+    color: rgb(var(--deep2-yellow));
+    background-color: rgb(var(--lite-yellow));
+}
+/*입력창*/
 .member_row{
     width: 100%;
     height: auto;
@@ -102,6 +138,9 @@ input:read-only:focus{
 }
 .member_row + .member_row{
     margin-top: 30px;
+}
+.find_pw{
+    display: none;
 }
 .member_row p{
     margin: 0 auto 5px auto;
