@@ -43,4 +43,20 @@ public class MemberServiceImple implements MemberService {
     public void mySomeSave(String addr, String streetaddr, String detailaddr, String tel, String id) {
         memberRepository.myUpdate(addr, streetaddr, detailaddr, tel, id);
     }
+
+    @Override
+    public String idFind(String name, String tel) {
+        return memberRepository.idFind(name,tel);
+    }
+
+    @Override
+    public String pwFind(String id, String name, String tel) {
+        return memberRepository.pwFind(id,name,tel);
+    }
+
+    @Override
+    public void pwSetting(String id, String pw) {
+        pw = bCryptPasswordEncoder.encode(pw);
+        memberRepository.pwSetting(id, pw);
+    }
 }

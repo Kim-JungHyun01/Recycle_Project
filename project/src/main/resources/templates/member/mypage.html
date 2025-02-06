@@ -4,7 +4,6 @@
       layout:decorate="~{common/layout}"
       layout:fragment="content">
     <div class="member_whole">
-        <!-- 비밀번호, 주소, 이름, 전화번호 -->
         <div class="member_title">
             <h1>마이페이지</h1>
             <p>
@@ -14,7 +13,8 @@
             </p>
         </div>
         <div class="member_inner">
-            <form th:action="@{/myUpdate}" method="post" id="memberForm" modelAttribute="memberdto" th:object="${memberDTO}">
+            <form th:action="@{/myUpdate}" method="post" id="myForm" modelAttribute="memberdto" th:object="${memberDTO}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 <div class="member_row">
                     <p>아이디</p>
                     <input type="text" id="id" name="id" th:value="${member.id}" readonly>
@@ -60,11 +60,11 @@
                 <div class="member_row">
                     <p>전화번호</p>
                     <div class="tel_row display_flex flex_align_c">
-                        <input type="number" id="tel1" data-id="tel1" onkeyup="telWrite(this)" placeholder="전화번호 앞자리">
+                        <input type="number" id="tel1" onkeyup="telWrite()" placeholder="전화번호 앞자리">
                         <p>-</p>
-                        <input type="number" id="tel2" data-id="tel2" onkeyup="telWrite(this)" placeholder="전화번호 중간자리">
+                        <input type="number" id="tel2" onkeyup="telWrite()" placeholder="전화번호 중간자리">
                         <p>-</p>
-                        <input type="number" id="tel3" data-id="tel3" onkeyup="telWrite(this)" placeholder="전화번호 뒷자리">
+                        <input type="number" id="tel3" onkeyup="telWrite()" placeholder="전화번호 뒷자리">
                     </div>
                     <span id="telchk"><span><img src="/img/icon/member/id_no.png">전화번호를 모두 입력해주세요.</span></span>
                     <input type="hidden" id="tel_whole" name="tel" th:value="${member.tel}">
@@ -72,7 +72,7 @@
                 </div>
                 <div class="btn_flex">
                     <button type="button" class="btn_prev" onclick="history.back(-1)">뒤로</button>
-                    <button type="button" class="btn_submit" onclick="myWholeChk()">정보 수정</button>
+                    <button type="button" class="btn_submit" onclick="myAllChk()">정보 수정</button>
                 </div>
             </form>
         </div>

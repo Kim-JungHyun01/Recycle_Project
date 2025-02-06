@@ -8,4 +8,7 @@ public interface MemberService {
     String idPwChk(String id);
     MemberEntity memberInfo(String name);
     void mySomeSave(String addr, String streetaddr, String detailaddr, String tel,String id);
+    String idFind(String name, String tel);
+    String pwFind(String id, String name, String tel);
+    void pwSetting(String id, String pw);
 }
