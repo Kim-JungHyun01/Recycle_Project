@@ -1,5 +1,6 @@
 if(win_href.includes('/signup')
-|| win_href.includes('/mypage')){
+|| win_href.includes('/mypage')
+|| win_href.includes('/find')){
         $('head').append('<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>');
 }
 
@@ -152,20 +153,20 @@ function detailAddrWrite(){
     }
 }
 /*전화번호 유효성 검사*/
-function telWrite(ths){
+function telWrite(){
     let tel_val1 = $('#tel1').val();
     let tel_val2 = $('#tel2').val();
     let tel_val3 = $('#tel3').val();
     let tel_whole = tel_val1 + '-' + tel_val2 + '-' + tel_val3;
     if(checkTel.test(tel_whole)){
         $('#telchk').hide();
-        $("#telcheck").attr('value', "ok");
         $('#tel_whole').attr('value', tel_whole);
+        $("#telcheck").attr('value', "ok");
     }
     else{
         $('#telchk').show();
-        $("#telcheck").attr('value', "no");
         $('#tel_whole').attr('value', '');
+        $("#telcheck").attr('value', "no");
     }
 }
 /*확인 버튼 클릭시 */
@@ -207,7 +208,6 @@ function idPwChk(){
         async: true,
         data: {"id":id_val,"pw":pw_val},
         success:function(data){
-            console.log(data);
             if(data){
                 if(data=='true'){
                     standbyShow("로그인 성공", "성공적으로 로그인 되었습니다.<br/>잠시만 기다려주세요.");
@@ -242,7 +242,6 @@ function mypageGo(){
         async: true,
         data: {"id":my_id,"pw":my_pw},
         success:function(data){
-            console.log(data);
             if(data){
                 if(data=='true'){
                     standbyShow("확인 성공", "정보 수정 페이지로 이동합니다.<br/>잠시만 기다려주세요.");
@@ -272,6 +271,14 @@ function mypagePwHide(){
 function pwChangeShow(ths){
     let pw_id = ths.dataset.id;
     let pw_type = ths.dataset.type;
+    $('#pw').val('');
+    $('#pw2').val('');
+    $('#pw').attr('type', 'password');
+    $('#pw2').attr('type', 'password');
+    $('#pwchk1').hide();
+    $('#pwchk2').hide();
+    $('.member_pw').find('img').attr('src', '/img/icon/common/eye_open.png');
+    $('#pwcheck').attr('value', 'no');
     if(pw_type == 'off'){
         $('.common_pw').show();
         $('#'+pw_id).text('수정 취소');
@@ -283,35 +290,124 @@ function pwChangeShow(ths){
         $('#'+pw_id).attr('data-type', 'off');
     }
 }
-function myWholeChk(){
+function myAllChk(){
+    let pw_change_val = $('#pw_change_btn').attr('data-type');
     let pwcheck = $('#pwcheck').val();
     let addresscheck = $('#addresscheck').val();
     let telcheck = $('#telcheck').val();
-    let pw_change_val = $('#pw_change_btn').attr('data-type');
     if(pw_change_val == 'off'){
-        if(addresscheck == 'ok' && telcheck == 'ok'){
-            alertShow('수정중', '');
-//            $('#memberForm').submit();
-        }
-        else{
+        if(addresscheck != 'ok'
+        || telcheck != 'ok'
+        ){
             alertShow('수정 실패', '아이디, 이름, 비밀번호를 제외한 정보를 입력해주세요.');
+            return false;
         }
     }
     else{
-        if(pwcheck == 'ok' && addresscheck == 'ok' && telcheck == 'ok'){
-            alertShow('수정중', '');
-//            $('#memberForm').submit();
-        }
-        else{
+        if(addresscheck != 'ok'
+        || telcheck != 'ok'
+        || pwcheck != 'ok'
+        ){
             alertShow('수정 실패', '아이디, 이름을 제외한 정보를 입력해주세요.');
+            return false;
+        }
+    }
+    standbyShow("정보 수정 중", "정보를 수정 중입니다.<br/>잠시만 기다려주세요.");
+    $('#myForm').submit();
+}
+//아이디/비밀번호 찾기
+function memFindChk(){
+    let val_id = $('#id').val();
+    let val_name = $('#name').val();
+    let val_tel_whole = $('#tel_whole').val();
+    if(win_href.includes('?type=pw')){
+        if(val_id != ''
+        && val_name != ''
+        && val_tel_whole != ''
+        ){
+            $.ajax({
+                type: "post",
+                url: "/pwFind",
+                async: true,
+                data: {
+                    "id":val_id,
+                    "name":val_name,
+                    "tel":val_tel_whole
+                },
+                success:function(data){
+                    if(data == null || data == "null" || data == ""){
+                        alertShow("확인 결과", "등록된 정보가 없습니다.");
+                    }
+                    else{
+                        standbyShow("확인 결과", "비밀번호 재설정 페이지로 이동합니다.<br/>잠시만 기다려주세요.");
+                        setTimeout(function(){
+                            window.location.href='/password?id='+data;
+                        },1500);
+                    }
+                },
+                error:function(data){
+                    alertShow("확인 오류","다시 한 번 시도해주세요.");
+                    return false;
+                }
+            });
+        }else{
+            alertShow("확인 실패","모든 정보를 입력해주세요.");
+        }
+    }
+    else{
+        if(val_name != ''
+        && val_tel_whole != ''
+        ){
+            $.ajax({
+                type: "post",
+                url: "/idFind",
+                async: true,
+                data: {
+                    "name":val_name,
+                    "tel":val_tel_whole
+                },
+                success:function(data){
+                    if(data == null || data == "null" || data == ""){
+                        alertShow("확인 결과", "등록된 정보가 없습니다.");
+                    }
+                    else{
+                        alertShow("확인 결과", "회원님의 아이디는 "+data+" 입니다.");
+                    }
+                },
+                error:function(){
+                    alertShow("확인 오류","다시 한 번 시도해주세요.");
+                }
+            });
+        }else{
+            alertShow("확인 실패","모든 정보를 입력해주세요.");
         }
     }
 }
-if(win_path.includes('/mypage') && win_path != ('/mypage/list')){
-    $(document).ready(function(){
+function pwOkChk(){
+    let pw_chk_val = $('#pwcheck').val();
+    if(pw_chk_val == 'no'){
+        alertShow("비밀번호 오류","비밀번호를 확인해주세요.");
+        return false;
+    }
+    standbyShow("비밀번호 재설정 중", "비밀번호를 재설정 중입니다.<br/>잠시만 기다려주세요.");
+    $('#pwSetting').submit();
+}
+$(document).ready(function(){
+    if(win_path.includes('/mypage') && win_path != ('/mypage/list')){
         let my_tel_whole = $('#tel_whole').val().split('-');
         $('#tel1').val(my_tel_whole[0]);
         $('#tel2').val(my_tel_whole[1]);
         $('#tel3').val(my_tel_whole[2]);
-    });
-}
+    }
+    else if(win_path.includes('/find')){
+        $('.find_link').removeClass('find_on');
+        if(win_href.includes('?type=pw')){
+            $('.find_link2').addClass('find_on');
+            $('.find_pw').show();
+        }
+        else{
+            $('.find_link1').addClass('find_on');
+            $('.find_pw').hide();
+        }
+    }
+});

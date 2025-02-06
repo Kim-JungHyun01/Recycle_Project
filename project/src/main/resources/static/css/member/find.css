@@ -70,7 +70,6 @@ input:focus{
 }
 input:read-only{
     opacity: 0.7;
-    background-color: rgba(var(--lite-yellow), 0.1)!important;
 }
 input:read-only:focus{
     border-color: rgb(var(--lite-gray));
@@ -94,12 +93,54 @@ input:read-only:focus{
 .member_inner{
     width: 100%;
     height: auto;
-    margin: 0 auto;
+    margin: 40px auto 0 auto;
 }
+/*탭 css*/
+.find_tab{
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto 20px auto;
+}
+.find_tab a{
+    display: block;
+    width: 100%;
+    max-width: 150px;
+    height: 40px;
+    line-height: 40px;
+    background-color: var(--bg-none);
+    border: 1px solid rgb(var(--lite-yellow));
+    text-align: center;
+}
+.find_tab a + a{
+    margin-left: -1px;
+}
+.find_tab a:first-child{
+    border-radius: 5px 0 0 5px;
+}
+.find_tab a:last-child{
+    border-radius: 0 5px 5px 0;
+}
+.find_tab a:hover{
+    font-weight: 500;
+    background-color: rgba(var(--lite-yellow),0.1);
+}
+.find_tab a.find_on{
+    font-weight: bold;
+    color: rgb(var(--deep2-yellow));
+    background-color: rgb(var(--lite-yellow));
+}
+/*입력창*/
 .member_row{
     width: 100%;
     height: auto;
-    margin: 30px auto 0 auto;
+    margin: 0 auto;
+}
+.member_row + .member_row{
+    margin-top: 30px;
+}
+.find_pw{
+    display: none;
 }
 .member_row p{
     margin: 0 auto 5px auto;
@@ -128,22 +169,6 @@ input:read-only:focus{
     height: auto;
 }
 /*비밀번호*/
-.pw_change_btn{
-    display: inline-block;
-    min-width: 150px;
-    width: 150px;
-    height: 40px;
-    background-color: rgb(var(--lite-yellow));
-    border-radius: 5px;
-    margin-top: 30px;
-}
-.pw_change_btn:hover{
-    background-color: rgb(var(--origin-yellow));
-}
-.common_pw{
-    display: none;
-    margin-top: 30px;
-}
 .member_row div.member_pw{
     position: relative;
     width: 100%;

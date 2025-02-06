@@ -10,13 +10,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.Principal;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -46,7 +44,7 @@ public class MemberController {
     }
     @PostMapping(value = "/memberSave")
     public String memberSave(
-            @ModelAttribute("memberDTO") @Valid MemberDTO memberDTO, BindingResult bindingResult) {
+            @ModelAttribute("memberDTO") @Valid MemberDTO memberDTO) {
         MemberEntity memberEntity = memberDTO.toEntity();
         memberService.memberSave(memberEntity);
         return "redirect:/";
@@ -78,7 +76,8 @@ public class MemberController {
     }
     @PostMapping(value = "/myUpdate")
     public String myUpdate(
-            @ModelAttribute("memberDTO") @Valid MemberDTO memberDTO, BindingResult bindingResult) {
+            @ModelAttribute("memberDTO") @Valid MemberDTO memberDTO) {
+        MemberEntity memberEntity = memberDTO.toEntity();
         String id = memberDTO.getId();
         String pw = memberDTO.getPw();
         String addr = memberDTO.getAddr();
@@ -89,9 +88,46 @@ public class MemberController {
             memberService.mySomeSave(addr,streetaddr,detailaddr,tel,id);
         }
         else{
-            MemberEntity memberEntity = memberDTO.toEntity();
             memberService.memberSave(memberEntity);
         }
         return "redirect:/";
+    }
+    @GetMapping(value = "/find")
+    public String find(Model model) {
+        model.addAttribute("cssPath", "member/find");
+        model.addAttribute("pageTitle", "아이디/비밀번호 찾기");
+        model.addAttribute("jsPath", "member/member");
+        return "member/find";
+    }
+    @PostMapping(value = "/idFind")
+    public void idFind(@RequestParam("name") String name,
+                        @RequestParam("tel") String tel,
+                         HttpServletResponse response) throws IOException {
+        String result = memberService.idFind(name, tel);
+        PrintWriter pp = response.getWriter();
+        pp.print(result);
+    }
+    @PostMapping(value = "/pwFind")
+    public void pwFind(@RequestParam("id") String id,
+                        @RequestParam("name") String name,
+                        @RequestParam("tel") String tel,
+                       HttpServletResponse response) throws IOException {
+        String result = memberService.pwFind(id, name, tel);
+        PrintWriter pp = response.getWriter();
+        pp.print(result);
+    }
+    @GetMapping(value = "password")
+    public String password(@RequestParam("id") String id, Model model){
+        model.addAttribute("cssPath", "member/password");
+        model.addAttribute("pageTitle", "비밀번호 재설정");
+        model.addAttribute("jsPath", "member/member");
+        model.addAttribute("id", id);
+        return "member/password";
+    }
+    @PostMapping(value = "pwSetting")
+    public String pwSetting(@RequestParam("id") String id,
+                            @RequestParam("pw") String pw){
+        memberService.pwSetting(id, pw);
+        return  "redirect:/login";
     }
 }
