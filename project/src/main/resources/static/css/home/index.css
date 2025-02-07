@@ -121,7 +121,7 @@ p.index_subtitle span{
 }
 .index_common{
     width: 100%;
-    max-width: 860px;
+    max-width: 900px;
     height: auto;
     margin: 80px auto 0 auto;
 }
@@ -157,7 +157,7 @@ p.index_subtitle span{
 }
 /*수거 버튼*/
 .pic_btn{
-    width: calc(100% - 350px);
+    width: calc(100% - 380px);
     height: auto;
     margin: 20px 0 0 auto;
     animation: 3s slideup;
@@ -172,8 +172,8 @@ p.index_subtitle span{
 }
 .pic_btn a{
     display: block;
-    min-width: 150px;
-    width: 150px;
+    min-width: 120px;
+    width: 120px;
     height: 40px;
     text-align: center;
     line-height: 40px;
@@ -210,7 +210,7 @@ p.index_subtitle span{
     transform: translateX(-50%);
     margin-top: 100px;
     background-color: rgba(var(--lite-yellow),0.1);
-    padding: 50px 0;
+    padding: 50px 20px;
 }
 .info_whole .index_common{
     margin-top: 0;
@@ -218,25 +218,143 @@ p.index_subtitle span{
 .info_whole p + p{
     margin-top: 15px;
 }
+/*커뮤니티*/
+.index_board_title{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+.index_board_title p + p{
+    font-weight: 300;
+    color: rgb(var(--deep2-yellow));
+    text-align: end;
+    margin-left: 5px;
+}
+.index_board_title a{
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    margin: 0 0 -8px auto;
+    text-decoration: underline;
+}
+.index_board_title a:hover{
+    font-weight: bold;
+    color: rgb(var(--deep2-yellow));
+}
+.board_inner{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+.board_title{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding: 7px 0 6px 0;
+    border-top: 2px solid rgba(var(--lite-black),0.2);
+    border-bottom: 1px solid rgb(var(--lite-gray));
+    margin-top: 5px;
+    background-color: rgba(var(--lite-yellow),0.3)!important;
+}
+.board_title p,
+.board_row p{
+    width: 100%;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.board_title p:first-child,
+.board_row p:first-child{
+    text-align: center;
+    max-width: 50px;
+    margin-right: 10px;
+}
+.board_title p:last-child,
+.board_row p:last-child{
+    text-align: center;
+    max-width: 90px;
+    margin: 0 10px;
+}
+.board_row_whole{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+.board_row{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding: 8px 0 7px 0;
+}
+.board_row:hover{
+    background-color: rgba(var(--lite-gray),0.1)!important;
+}
+.board_row:hover p{
+    font-weight: 500;
+}
+.board_row span{
+    position: absolute;
+    display: block;
+    min-width: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 10px;
+    background-color: rgb(var(--lite-yellow));
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+}
+.board_row:hover span{
+    opacity: 1;
+}
+.board_row_whole .board_row{
+    border-bottom: 1px solid rgb(var(--lite-gray));
+}
+.board_row_whole .board_row:nth-child(2n){
+    background-color: rgba(var(--lite-yellow),0.05);
+}
+
 @media (min-width: 900px){
     .index_pic .pic_flex{
         display: flex;
         flex-wrap: wrap;
     }
     .pic_box + p{
-        margin-top: 0;
+        margin: 0 auto 0 0;
     }
     .pic_btn,
     .pic_btn a{
         margin-top: 0;
     }
+    .board_title p,
+    .board_row p{
+        font-size: 16px;
+        line-height: 24px;
+    }
+    /*커뮤니티*/
+    .board_row span{
+        min-width: 10px;
+        width: 10px;
+        height: 10px;
+        left: -20px;
+    }
 }
 @media (max-width: 899px){
     .pic_btn{
         width: 100%;
+        justify-content: center;
     }
 }
 @media (max-width: 359px){
+    .index_whole *{
+        font-size: 14px;
+        line-height: 20px;
+    }
     .index_title p{
         font-size: 15px;
         line-height: 27px;
@@ -250,5 +368,14 @@ p.index_subtitle span{
     }
     .title_flex p{
         opacity: 0;
+    }
+    .pic_btn{
+        display: block;
+    }
+    .pic_btn a{
+        margin: 10px auto 0 auto;
+    }
+    .pic_btn a + a{
+        margin-left: auto;
     }
 }

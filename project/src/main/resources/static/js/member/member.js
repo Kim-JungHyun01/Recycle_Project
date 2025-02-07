@@ -55,6 +55,7 @@ function idChk(){
 function idChkReset(){
     $('#idcheck').attr('value', 'no');
     $('#id_ok').hide();
+    $('#id_no').hide();
     $('#id_none').show();
 }
 /*비밀번호 타입 변경*/
