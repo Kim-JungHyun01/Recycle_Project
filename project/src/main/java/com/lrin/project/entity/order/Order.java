@@ -2,7 +2,6 @@ package com.lrin.project.entity.order;
 
 import com.lrin.project.constant.OrderStatus;
 import com.lrin.project.entity.BaseEntity;
-import com.lrin.project.entity.item.Item;
 import com.lrin.project.entity.member.MemberEntity;
 import jakarta.persistence.*;
 import lombok.Data;

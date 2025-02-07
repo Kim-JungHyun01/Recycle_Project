@@ -12,34 +12,21 @@
     <input type="text" class="form-control search-box" placeholder="여기로 검색하세요!">
 
     <div class="item-grid">
-      <div class="item-btn" id="Oven_Range" data-price="10001">오븐 + 전자레인지</div>
-      <div class="item-btn" id="Air_Purifier" data-price="10002">공기청정기</div>
-      <div class="item-btn" id="Refrigerator" data-price="10003">냉장고</div>
-      <div class="item-btn" id="Printer" data-price="10004">복사기 + 팩스기</div>
-      <div class="item-btn" id="Washing_Machine" data-price="10005">세탁기</div>
-      <div class="item-btn" id="Air_Conditioner" data-price="10006">에어컨</div>
-      <div class="item-btn" id="Audio" data-price="10007">오디오</div>
-      <div class="item-btn" id="Heater" data-price="10008">전기난로</div>
-      <div class="item-btn" id="Desktop_Computer" data-price="10009">컴퓨터본체</div>
-      <div class="item-btn" id="Keyboard" data-price="10010">키보드</div>
-      <div class="item-btn" id="Monitor" data-price="10011">TV + 모니터</div>
-      <div class="item-btn" id="Rice_Cooker" data-price="10012">전기밥솥</div>
-      <div class="item-btn" id="Fan" data-price="10013">선풍기</div>
-      <div class="item-btn" id="Vacuum_Cleaner" data-price="10014">청소기</div>
-      <div class="item-btn" id="Water_Purifier" data-price="10015">정수기</div>
-      <div class="item-btn" id="Blender" data-price="10016">믹서기</div>
-      <div class="item-btn" id="Iron" data-price="10017">다리미</div>
-      <div class="item-btn" id="Other" data-price="10018">그 외 기타</div>
+      <div th:each="item : ${items}" class="item-btn" th:id="${item.itemName}" th:data-price="${item.price}" th:text="${item.itemNameKor}">
+      </div>
     </div>
 
     <button class="btn btn-secondary select-btn">추가할 품목을 선택하세요</button>
 
     <div id="selectedItemsContainer" class="mt-4"></div> <!-- 추가된 품목들이 나올 곳 -->
 
+    <div class="total-price-container mt-4 text-end d-flex justify-content-end">
+      <p class="fw-bold mb-0 mr-3" style="font-size:24px; margin-right:20px;">총 금액: <span id="orderTotalPrice">0원</span></p>
+      <button class="btn btn-primary fw-bold" id="collectBtn">수거 신청</button>
+    </div>
+
   </div>
 
-
-
-
 </div>
+
 </html>

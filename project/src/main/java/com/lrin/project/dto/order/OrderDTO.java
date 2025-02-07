@@ -2,10 +2,11 @@ package com.lrin.project.dto.order;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class OrderDTO {
 
-    private String itemName;
+    private List<OrderItemDTO> orderItems;
 
-    private int count;
 }
