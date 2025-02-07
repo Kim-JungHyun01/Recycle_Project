@@ -280,7 +280,7 @@ a.link_on{
         display: flex;
         align-items: center;
         width: calc(100% - 40px);
-        max-width: 1200px;
+        max-width: 1000px;
         margin: 0 auto;
     }
     .header_top{
