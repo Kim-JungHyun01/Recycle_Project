@@ -61,40 +61,31 @@
         <div class="index_common board_whole">
             <div class="index_board_title display_flex flex_start flex_align_c">
                 <p class="index_subtitle">공지사항<span></span></p>
-                <p>(0)</p>
+                <p th:text="'('+${boardEntityList.size()+')'}">(0)</p>
                 <a href="/board/list">더보기</a>
             </div>
             <div class="board_inner">
-                <div class="board_title">
-                    <div class="display_flex flex_align_c">
-                        <p>번호</p>
-                        <p>제목</p>
-                        <p>날짜</p>
-                    </div>
-                </div>
-                <div class="board_row_whole">
-                    <!--board_row 반복(최대 5개)-->
-                    <div class="board_row">
-                        <span></span>
-                        <a href="" target="_blank">
-                            <div class="display_flex flex_align_c">
-                                <p>0</p>
-                                <p>제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목</p>
-                                <p>0000.00.00</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="board_row">
-                        <span></span>
-                        <a href="" target="_blank">
-                            <div class="display_flex flex_align_c">
-                                <p>0</p>
-                                <p>제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목</p>
-                                <p>0000.00.00</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                <table class="board_table">
+                    <thead class="board_title">
+                        <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>작성일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="board : ${boardEntityList}">
+                            <td><span></span><p th:text="${board.id}"></p></td>
+                            <td><a th:href="@{|/board/detail/${board.id}|}" th:text="${board.title}" target="_blank"></a></td>
+                            <td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
+                        </tr>
+                        <tr th:if="${boardEntityList == null} or ${boardEntityList.size() == 0}">
+                            <td colspan="3">
+                                <p class="no_data_txt">등록된 공지사항이 없습니다.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
