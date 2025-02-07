@@ -1,4 +1,10 @@
 @charset "UTF-8";
+@font-face {
+    font-family: 'Tenada';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 .header_section{
     position: fixed;
     width: 100vw;
@@ -24,7 +30,7 @@
 }
 .header_top{
     position: relative;
-    width: calc(100% - 40px);
+    width: 100%;
     height: auto;
     padding: 10px 20px;
 }
@@ -49,11 +55,13 @@
     margin-right: 10px;
 }
 .header_logo p{
+    font-family: 'Tenada';
     width: max-content;
     max-width: 100%;
     font-size: 18px;
     line-height: 27px;
     color: rgb(var(--deep2-yellow));
+    margin-bottom: -4px;
 }
 .header_back{
     display: none;

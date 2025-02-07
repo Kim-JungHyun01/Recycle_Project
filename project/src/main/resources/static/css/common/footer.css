@@ -78,3 +78,29 @@
     margin: 10px auto 0 auto;
     text-align: center;
 }
+
+@media (max-width: 499px){
+    .footer_top{
+        display: block;
+    }
+    .footer_top .display_flex{
+        display: block;
+        margin-top: 5px;
+    }
+    .footer_top .display_flex a{
+        display: block;
+        text-align: end;
+    }
+    .footer_top .display_flex a + a{
+        margin-left: 0;
+    }
+    .footer_bottom{
+        display: block;
+    }
+    .footer_bottom p{
+        margin: 0 auto;
+    }
+    .footer_bottom p + p{
+        margin-top: 10px;
+    }
+}
