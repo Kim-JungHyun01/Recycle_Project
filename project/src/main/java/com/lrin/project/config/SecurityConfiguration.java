@@ -51,6 +51,7 @@ public class SecurityConfiguration {
             "/password",
             "/pwSetting",
             "/mypage",
+            "/price",
             "/collect",
             "/board/list"
         };
