@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}"
+      layout:fragment="content">
+
+    <div class="index_whole">
+        <p class="bold_title">커뮤니티 리스트</p>
+    </div>
+
+    <body>
+        <div class="btn-container">
+            <a href="/board/write" class="btn">글 작성</a>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="board : ${boardEntityList}">
+                    <td th:text="${board.id}"></td>
+                    <td><a th:href="@{|/board/detail/${board.id}|}" th:text="${board.title}"></a></td>
+                    <td th:text="${board.writer}"></td>
+                    <td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <!-- 이전 -->
+            <a th:if="${currentPage > 0}" th:href="@{/board/list(page=${currentPage - 1})}">이전</a>
+            <!-- 페이지 번호 -->
+            <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                <a th:href="@{/board/list(page=${i})}" th:text="${i + 1}"
+                   th:class="${i == currentPage} ? 'active' : ''"></a>
+            </span>
+            <!-- 다음 버튼 -->
+            <a th:if="${currentPage + 1 < totalPages}" th:href="@{/board/list(page=${currentPage + 1})}">다음</a>
+        </div>
+    </body>
+</html>
