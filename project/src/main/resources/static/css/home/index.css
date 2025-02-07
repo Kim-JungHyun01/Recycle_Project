@@ -182,11 +182,11 @@ p.index_subtitle span{
     margin: 0;
 }
 .pic_btn a.pic_register{
-    background-color: rgba(var(--lite-yellow),0.5);
+    background-color: rgba(var(--lite-yellow),0.9);
 }
 .pic_btn a.pic_money{
     border-color: rgb(var(--lite-yellow));
-    background-color: rgb(var(--real-white),0.5);
+    background-color: rgba(var(--real-white),0.2);
 }
 .pic_btn a + a{
     margin-left: 15px;
@@ -209,7 +209,7 @@ p.index_subtitle span{
     left: 50%;
     transform: translateX(-50%);
     margin-top: 100px;
-    background-color: rgba(var(--lite-yellow),0.1);
+    background-color: rgba(var(--lite-gray),0.2);
     padding: 50px 20px;
 }
 .info_whole .index_common{
@@ -324,19 +324,25 @@ p.index_subtitle span{
         display: flex;
         flex-wrap: wrap;
     }
+    .index_title span:first-child{
+        margin: 0 5px 0 10px;
+    }
+    .index_title span:last-child{
+        margin: 0 10px 0 5px;
+    }
     .pic_box + p{
-        margin: 0 auto 0 0;
+        margin: -5px auto 0 0;
     }
     .pic_btn,
     .pic_btn a{
         margin-top: 0;
     }
+    /*커뮤니티*/
     .board_title p,
     .board_row p{
         font-size: 16px;
         line-height: 24px;
     }
-    /*커뮤니티*/
     .board_row span{
         min-width: 10px;
         width: 10px;
