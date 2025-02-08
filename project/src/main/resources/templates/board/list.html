@@ -3,45 +3,51 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{common/layout}"
       layout:fragment="content">
-    <div class="board_whole">
-        <p class="bold_title">공지사항(<span th:text="${boardEntityList.size()}"></span>)</p>
-        <!--
-        <a href="/board/write" class="btn" sec:authorize="hasAuthority('ADMIN')">공지사항 작성</a>
-        -->
-        <a href="/board/write" class="btn">공지사항 작성</a>
-        <div class="board_inner">
-            <table class="board_table">
-                <thead class="board_title">
-                    <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>작성일</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="board : ${boardEntityList}">
-                        <td><span></span><p th:text="${board.id}"></p></td>
-                        <td><a th:href="@{|/board/detail/${board.id}|}" th:text="${board.title}" target="_blank"></a></td>
-                        <td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
-                    </tr>
-                    <tr th:if="${boardEntityList == null} or ${boardEntityList.size() == 0}">
-                        <td colspan="3">
-                            <p class="no_data_txt">등록된 공지사항이 없습니다.</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="pagination" th:if="${boardEntityList != null} and ${boardEntityList.size() != 0}">
-            <!-- 이전 -->
-            <a th:if="${currentPage > 0}" th:href="@{/board/list(page=${currentPage - 1})}">이전</a>
-            <!-- 페이지 번호 -->
-            <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                <a th:href="@{/board/list(page=${i})}" th:text="${i + 1}"
-                   th:class="${i == currentPage} ? 'active' : ''"></a>
-            </span>
-            <!-- 다음 버튼 -->
-            <a th:if="${currentPage + 1 < totalPages}" th:href="@{/board/list(page=${currentPage + 1})}">다음</a>
-        </div>
+<div class="board_whole">
+    <p class="bold_title">공지사항(<span th:text="${boardEntityList.size()}"></span>)</p>
+    <!--
+    <a href="/board/write" class="btn" sec:authorize="hasAuthority('ADMIN')">공지사항 작성</a>
+    -->
+    <a href="/board/write" class="btn">공지사항 작성</a>
+    <div class="board_inner">
+        <table class="board_table">
+            <thead class="board_title">
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>수정일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="board :  ${boardPage.content}">
+                <td><span></span><p th:text="${board.id}"></p></td>
+                <td><a th:href="@{|/board/detail/${board.id}|}" th:text="${board.title}" target="_blank"></a></td>
+                <td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
+                <td th:text="${#temporals.format(board.updateTime, 'yyyy-MM-dd')}"></td>
+            </tr>
+            <tr th:if="${boardEntityList == null} or ${boardEntityList.size() == 0}">
+                <td colspan="4">
+                    <p class="no_data_txt">등록된 공지사항이 없습니다.</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+
+    <!-- 페이징 처리 -->
+    <div class="pagination" th:if="${boardPage.totalPages > 0}">
+        <!-- 맨 처음 버튼 -->
+        <a th:if="${currentPage > 1}" th:href="@{/board/list(page=1)}">Start</a>
+
+        <!-- 페이지 번호 -->
+        <span th:each="i : ${#numbers.sequence(1, boardPage.totalPages)}">
+            <a th:href="@{/board/list(page=${i})}" th:text="${i}"
+               th:class="${i == currentPage} ? 'active' : ''"></a>
+        </span>
+
+        <!-- 맨 마지막 버튼 -->
+        <a th:if="${currentPage < boardPage.totalPages}" th:href="@{/board/list(page=${boardPage.totalPages})}">End</a>
+    </div>
+</div>
 </html>

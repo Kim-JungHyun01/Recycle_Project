@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,12 +33,10 @@ public class BoardController {
 
     // 게시글 목록 페이지
     @GetMapping(value = "/board/list")
-    public String boardList(Model model
-                            , @RequestParam(defaultValue = "0") Integer page, // 현재 페이지
-                            @RequestParam(defaultValue = "15") Integer size) { // 한 페이지당 보여줄 갯수
-
-        Pageable pageable = PageRequest.of(page, size); // 페이징 객체
-        Page<BoardEntity> boardPage = boardRepository.findAll(pageable); // 데이터 조회
+    public String boardList(Model model, @RequestParam(defaultValue = "1") int page) {
+        int pageSize = 3; // 한 페이지당 보여줄 갯수
+        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Order.desc("id"))); // id 기준 내림차순 정렬
+        Page<BoardEntity> boardPage = boardService.getBoardList(pageable);
 
         List<BoardEntity> boardEntityList = this.boardRepository.findAll();
         model.addAttribute("boardEntityList", boardEntityList);
@@ -49,7 +48,7 @@ public class BoardController {
         // 모델에 필요한 데이터 추가
         model.addAttribute("cssPath", "board/list");   // CSS 경로 설정
         model.addAttribute("pageTitle", "게시판 목록"); // 페이지 타이틀 설정
-        model.addAttribute("jsPath", "/board/board");   // JavaScript 경로 설정
+        model.addAttribute("jsPath", "board/board");   // JavaScript 경로 설정
         return "board/list"; // board/list.html (Thymeleaf 템플릿)
     }
 
@@ -61,7 +60,7 @@ public class BoardController {
 
         model.addAttribute("cssPath", "board/detail");
         model.addAttribute("pageTitle", "게시글 상세보기");
-        model.addAttribute("jsPath", "/board/board");
+        model.addAttribute("jsPath", "board/board");
         // 모델에 게시글 데이터 추가 (예시)
         model.addAttribute("board", board);
 
@@ -74,7 +73,7 @@ public class BoardController {
         // 관리자만 접근할 수 있도록 권한 체크 추가 가능
         model.addAttribute("cssPath", "board/write");
         model.addAttribute("pageTitle", "게시글 작성");
-        model.addAttribute("jsPath", "/board/board");
+        model.addAttribute("jsPath", "board/board");
         return "board/write"; // board/write.html (Thymeleaf 템플릿)
     }
 
@@ -84,4 +83,35 @@ public class BoardController {
         this.boardService.create(title, content, writer);
         return "redirect:/board/list"; // 작성 후 목록으로 이동
     }
+
+    // 게시글 수정 페이지
+    @GetMapping(value = "/board/update/{id}")
+    public String boardUpdate(@PathVariable("id") Long id, Model model) {
+        // 게시글 정보 가져오기
+        BoardEntity board = this.boardService.getListById(id);
+        model.addAttribute("board", board);
+
+        model.addAttribute("cssPath", "board/update");
+        model.addAttribute("pageTitle", "게시글 수정");
+        model.addAttribute("jsPath", "board/board");
+
+        return "board/update"; // board/update.html (수정 페이지)
+    }
+
+    // 게시글 수정 기능
+    @PostMapping("/board/update/{id}")
+    public String boardUpdateSubmit(@PathVariable("id") Long id,
+                                    @RequestParam("title") String title,
+                                    @RequestParam("content") String content) {
+        boardService.updateBoard(id, title, content);
+        return "redirect:/board/detail/" + id; // 수정 후 상세 페이지로 이동
+    }
+
+    // 게시글 삭제 기능
+    @PostMapping("/board/delete/{id}")
+    public String boardDelete(@PathVariable("id") Long id) {
+        boardService.deleteBoard(id);
+        return "redirect:/board/list"; //
+    }
+
 }
