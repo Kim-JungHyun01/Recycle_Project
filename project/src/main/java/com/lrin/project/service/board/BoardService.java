@@ -51,6 +51,7 @@ public class BoardService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
         board.setTitle(title);
         board.setContent(content);
+        board.setUpdateTime(LocalDateTime.now());
         boardRepository.save(board); // DB에 저장
     }
 

@@ -34,7 +34,7 @@ public class BoardController {
     // 게시글 목록 페이지
     @GetMapping(value = "/board/list")
     public String boardList(Model model, @RequestParam(defaultValue = "1") int page) {
-        int pageSize = 3; // 한 페이지당 보여줄 갯수
+        int pageSize = 15; // 한 페이지당 보여줄 갯수
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Order.desc("id"))); // id 기준 내림차순 정렬
         Page<BoardEntity> boardPage = boardService.getBoardList(pageable);
 
