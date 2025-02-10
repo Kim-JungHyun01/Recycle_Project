@@ -192,7 +192,7 @@ function memWholeChk(){
 }
 
 //로그인
-function loginWrite (object){
+function loginWrite(object, e){
     let object_id = object.dataset.id;
     let object_type = object.dataset.type;
     let object_val = $('#'+object_id).val();
@@ -201,6 +201,10 @@ function loginWrite (object){
     }
     else{
         $('#'+object_type).removeClass('keyon');
+    }
+    $('#'+object_id).parents('.member_row').find('.common_input').addClass('focus_on');
+    if(object_id == 'pw' && e.keyCode == '13'){
+        $('.btn_submit').click();
     }
 }
 function idPwChk(){
@@ -236,6 +240,11 @@ function idPwChk(){
 
 /*마이페이지*/
 /*정보 수정 시 비밀번호 확인*/
+function pwChkKeyup(e){
+    if(e.keyCode == '13'){
+        $('.btn_submit').click();
+    }
+}
 function mypageGo(){
     let my_id = $('#header_mypage').text();
     let my_pw = $('#pw').val();

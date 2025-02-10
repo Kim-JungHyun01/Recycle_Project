@@ -10,7 +10,16 @@
         </div>
         <div class="mypage_box">
             <div class="mypage_list">
-                <a href="javascript:void(0)" onclick="mypagePwShow()" class="mypage_row mypage_row1">
+                <a href="javascript:void(0)" th:if="${#authentication.name} != 'admin'" onclick="mypagePwShow()" class="mypage_row mypage_row1">
+                    <div class="display_flex flex_between flex_align_c">
+                        <div class="display_flex flex_align_c">
+                            <span></span>
+                            <p>정보 수정</p>
+                        </div>
+                        <img src="/img/icon/common/arrow_next.png">
+                    </div>
+                </a>
+                <a href="/mypage" th:if="${#authentication.name} == 'admin'" class="mypage_row mypage_row1">
                     <div class="display_flex flex_between flex_align_c">
                         <div class="display_flex flex_align_c">
                             <span></span>
@@ -42,7 +51,7 @@
                     <p class="pwchkpop_title_subtxt">안전한 정보수정을 위해<br/>비밀번호를 입력해주세요.</p>
                 </div>
                 <div class="pwchkpop_pw display_flex">
-                    <input type="password" id="pw" maxlength="16" placeholder="비밀번호">
+                    <input type="password" id="pw" onkeyup="pwChkKeyup(event)" maxlength="16" placeholder="비밀번호">
                     <button type="button" data-id="pw" onclick="pwTxtPw(this)">
                         <img src="/img/icon/common/eye_open.png" alt="비밀번호 숨기기/보여주기 버튼">
                     </button>
