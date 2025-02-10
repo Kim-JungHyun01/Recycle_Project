@@ -26,6 +26,9 @@ public class MemberServiceImple implements MemberService {
     @Override
     public void memberSave(MemberEntity memberEntity) {
         memberEntity.setPw(bCryptPasswordEncoder.encode(memberEntity.getPw()));
+        if(memberEntity.getRole().equals("") || memberEntity.getRole().equals(null)){
+            memberEntity.setRole("user");
+        }
         memberRepository.save(memberEntity);
     }
 
@@ -58,5 +61,10 @@ public class MemberServiceImple implements MemberService {
     public void pwSetting(String id, String pw) {
         pw = bCryptPasswordEncoder.encode(pw);
         memberRepository.pwSetting(id, pw);
+    }
+
+    @Override
+    public boolean existsById(String admin) {
+        return memberRepository.existsById(admin);
     }
 }

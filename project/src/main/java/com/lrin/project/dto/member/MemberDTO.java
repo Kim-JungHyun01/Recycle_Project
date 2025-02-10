@@ -16,6 +16,7 @@ public class MemberDTO {
     private String streetaddr;
     private String detailaddr;
     private String tel;
+    private String role;
 
     public MemberEntity toEntity() {
         return MemberEntity.builder()
@@ -26,6 +27,7 @@ public class MemberDTO {
             .streetaddr(streetaddr)
             .detailaddr(detailaddr)
             .tel(tel)
+            .role(role)
             .build();
     }
 }
