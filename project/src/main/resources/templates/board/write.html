@@ -19,9 +19,9 @@
             <div id="contentError" class="text-danger" style="display:none;">내용을 입력하세요.</div>
         </div>
         <div class="board_row">
-            <input type="file" name="file" accept="image/*" onchange="previewImage(event)"/>
+            <input type="file" name="file" accept="image/*" multiple onchange="previewImages(event)" />
             <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
-            <img id="imagePreview" src="#" alt="이미지 미리보기" style="max-width: 300px; display: none;" />
+            <div id="imagePreviews"></div>
         </div>
         <div class="btn_flex">
             <button type="button" class="btn_prev" onclick="goBack()">뒤로</button>
@@ -31,14 +31,24 @@
 </div>
 
 <script>
-    function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            var imagePreview = document.getElementById('imagePreview');
-            imagePreview.src = reader.result;
-            imagePreview.style.display = 'block';
-        };
-        reader.readAsDataURL(event.target.files[0]);
+    function previewImages(event) {
+        var files = event.target.files;
+        var previewContainer = document.getElementById('imagePreviews');
+        previewContainer.innerHTML = ''; // 이전 미리보기 삭제
+
+        // 선택한 이미지마다 미리보기 생성
+        for (var i = 0; i < files.length; i++) {
+            var reader = new FileReader();
+            reader.onload = (function(file) {
+                return function(e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.margin = '10px';    // 이미지 사이 간격 추가
+                    previewContainer.appendChild(img);
+                };
+            })(files[i]);
+            reader.readAsDataURL(files[i]);
+        }
     }
 
     function validateForm() {
