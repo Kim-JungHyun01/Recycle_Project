@@ -12,6 +12,11 @@
                 <p><img src="/img/icon/board/calendar_dyl.png" alt="작성일"><span th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd HH:mm')}"></span></p>
             </div>
             <p class="board_content" th:text="${board.content}"></p>
+
+            <!-- 파일이 존재하면 이미지 출력 -->
+            <div th:if="${board.fileEntity != null}">
+                <img th:if="${board.fileUrl}" th:src="${board.fileUrl}" alt="게시글 이미지">
+            </div>
         </div>
         <form th:action="@{/board/delete/{id}(id=${board.id})}" method="post" id="deleteForm">
             <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
