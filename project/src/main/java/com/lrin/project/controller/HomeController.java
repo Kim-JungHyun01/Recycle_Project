@@ -1,5 +1,6 @@
 package com.lrin.project.controller;
 
+import com.lrin.project.dto.item.ItemDTO;
 import com.lrin.project.entity.board.BoardEntity;
 import com.lrin.project.entity.item.Item;
 import com.lrin.project.repository.board.BoardRepository;
@@ -33,7 +34,7 @@ public class HomeController {
     }
     @GetMapping(value = "/price")
     public String price(Model model) {
-        List<Item> items = itemService.getItems();
+        List<ItemDTO> items = itemService.getItems();
         model.addAttribute("cssPath", "home/price");
         model.addAttribute("pageTitle", "수거 가격표");
         model.addAttribute("items", items);

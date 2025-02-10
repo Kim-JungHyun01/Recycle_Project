@@ -30,5 +30,12 @@ public class Order extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;    // 주문상태
+    
+    private int orderPrice; // 주문 총 가격
 
+
+    // 주문 취소 메서드
+    public void cancelOrder() {
+        this.orderStatus = OrderStatus.CANCEL;
+    }
 }
