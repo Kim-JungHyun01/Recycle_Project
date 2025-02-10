@@ -9,7 +9,7 @@
 </div>
 
 <div>
-    <form th:action="@{/board/write}" method="post" onsubmit="return validateForm()">
+    <form th:action="@{/board/write}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
             <input type="text" id="title" name="title" class="form-control">
@@ -17,18 +17,34 @@
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
-            <textarea id="content" name="content" rows="10" class="form-control"></textarea>
+            <textarea id="content" name="content" rows="10" class="form-control" contenteditable="true"></textarea>
             <div id="contentError" class="text-danger" style="display:none;">내용을 입력하세요.</div>
+        </div>
+        <div class="mb-3">
+            <img id="imagePreview" src="#" alt="이미지 미리보기" style="max-width: 300px; display: none;" />
         </div>
         <div class="mb-3">
             <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
         </div>
         <input type="submit" value="작성완료" class="btn btn-primary my-2">
         <a href="/board/list" class="btn btn-secondary my-2">작성취소</a>
+        <div>
+            <input type="file" name="file" accept="image/*" onchange="previewImage(event)"/>
+        </div>
     </form>
 </div>
 
 <script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var imagePreview = document.getElementById('imagePreview');
+            imagePreview.src = reader.result;
+            imagePreview.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
     function validateForm() {
         let title = document.getElementById("title").value.trim();
         let content = document.getElementById("content").value.trim();
