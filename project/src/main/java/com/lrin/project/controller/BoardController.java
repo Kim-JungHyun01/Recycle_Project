@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,16 +91,19 @@ public class BoardController {
     public String boardCreate(@RequestParam("file") MultipartFile file, @RequestParam(value="title") String title, @RequestParam(value="content") String content, @RequestParam(value="writer") String writer, Model model) {
 
         try {
-            FileEntity savedFile = fileService.saveFile(file); // 파일 저장 & DB 기록
+            // 파일 저장
+            FileEntity savedFile = fileService.saveFile(file);
 
             String filePath = (savedFile != null) ? savedFile.getFilePath() : "첨부 파일 없음";
+
+            // 파일과 함께 게시글 생성
+            boardService.create(title, content, writer, savedFile);  // 파일 엔티티와 함께 게시글 생성
 
             model.addAttribute("message", "게시글 저장 성공! " + "파일 경로: " + filePath);
         } catch (IOException e) {
             model.addAttribute("message", "파일 업로드 실패: " + e.getMessage());
         }
 
-        this.boardService.create(title, content, writer);
         return "redirect:/board/list"; // 작성 후 목록으로 이동
     }
 
