@@ -36,7 +36,7 @@ public class FirstRun implements CommandLineRunner {
                 //관리자
                 MemberEntity admin = MemberEntity.builder()
                         .id("admin")
-                        .pw("Test!234")
+                        .pw("1")
                         .name("관리자")
                         .addr("000000")
                         .streetaddr("도로명 주소")
@@ -47,8 +47,8 @@ public class FirstRun implements CommandLineRunner {
                 memberService.memberSave(admin);
                 //일반 유저
                 MemberEntity user = MemberEntity.builder()
-                        .id("test1234")
-                        .pw("Test!234")
+                        .id("test")
+                        .pw("1")
                         .name("테스터")
                         .addr("000000")
                         .streetaddr("도로명 주소")
