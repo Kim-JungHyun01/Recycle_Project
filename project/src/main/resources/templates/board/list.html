@@ -3,31 +3,16 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{common/layout}"
       layout:fragment="content">
-<style>
-    .pagination a {
-    margin: 0 5px; /* 좌우 여백 추가 */
-    }
-    .pagination a:first-of-type,
-    .pagination a:last-of-type {
-    font-weight: bold;
-    }
-    .board_table th:nth-child(2) {
-        padding-left: 130px; /* 제목 열 왼쪽 여백 추가 */
-    }s
-</style>
 <div class="board_whole">
     <p class="bold_title">공지사항(<span th:text="${boardEntityList.size()}"></span>)</p>
-    <!--
+
     <a href="/board/write" class="btn" sec:authorize="hasAuthority('ADMIN')">공지사항 작성</a>
-    -->
-    <a href="/board/write" class="btn">공지사항 작성</a>
     <div class="board_inner">
         <table class="board_table">
             <thead class="board_title">
             <tr>
                 <th>번호</th>
                 <th>제목</th>
-                <th>작성자</th>
                 <th>작성일</th>
                 <th>수정일</th>
             </tr>
@@ -36,9 +21,9 @@
             <tr th:each="board :  ${boardPage.content}">
                 <td><span></span><p th:text="${board.id}"></p></td>
                 <td><a th:href="@{|/board/detail/${board.id}|}" th:text="${board.title}" target="_blank"></a></td>
-                <td th:text="${board.writer}"></td>
                 <td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
-                <td th:text="${#temporals.format(board.updateTime, 'yyyy-MM-dd')}"></td>
+                <td th:if="${board.updateTime == null}">-</td>
+                <td th:if="${board.updateTime != null}" th:text="${#temporals.format(board.updateTime, 'yyyy-MM-dd')}"></td>
             </tr>
             <tr th:if="${boardEntityList == null} or ${boardEntityList.size() == 0}">
                 <td colspan="5">
