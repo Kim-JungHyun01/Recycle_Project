@@ -163,8 +163,8 @@
     min-width: 14px;
     font-size: 15px;
     line-height: 22px;
-    font-weight: 400;
-    color: rgb(var(--ddp-gray));
+    font-weight: 300;
+    color: rgb(var(--lite-black));
     text-align: center;
     text-decoration: none;
 }
@@ -177,6 +177,11 @@
 }
 .pagination a:hover{
     text-decoration: underline;
+}
+.pagination p.active,
+.pagination a.active{
+    font-weight: bold;
+    color: rgb(var(--deep2-yellow));
 }
 @media (min-width: 1024px){
     .w_display_flex{

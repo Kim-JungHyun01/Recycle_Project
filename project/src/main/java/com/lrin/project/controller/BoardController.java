@@ -1,8 +1,11 @@
 package com.lrin.project.controller;
 
 import com.lrin.project.entity.board.BoardEntity;
+import com.lrin.project.entity.boardfile.FileEntity;
 import com.lrin.project.repository.board.BoardRepository;
 import com.lrin.project.service.board.BoardService;
+//import com.lrin.project.service.boardfile.FileService;
+import com.lrin.project.service.boardfile.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,12 +17,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class BoardController {
+
+    @Autowired
+    private FileService fileService;
 
     @Autowired
     private BoardRepository boardRepository;
@@ -79,7 +87,18 @@ public class BoardController {
 
     // 게시글 추가 기능
     @PostMapping(value = "/board/write")
-    public String boardCreate(@RequestParam(value="title") String title, @RequestParam(value="content") String content, @RequestParam(value="writer") String writer) {
+    public String boardCreate(@RequestParam("file") MultipartFile file, @RequestParam(value="title") String title, @RequestParam(value="content") String content, @RequestParam(value="writer") String writer, Model model) {
+
+        try {
+            FileEntity savedFile = fileService.saveFile(file); // 파일 저장 & DB 기록
+
+            String filePath = (savedFile != null) ? savedFile.getFilePath() : "첨부 파일 없음";
+
+            model.addAttribute("message", "게시글 저장 성공! " + "파일 경로: " + filePath);
+        } catch (IOException e) {
+            model.addAttribute("message", "파일 업로드 실패: " + e.getMessage());
+        }
+
         this.boardService.create(title, content, writer);
         return "redirect:/board/list"; // 작성 후 목록으로 이동
     }

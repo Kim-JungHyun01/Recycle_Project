@@ -4,6 +4,7 @@ import com.lrin.project.dto.item.ItemDTO;
 import com.lrin.project.entity.board.BoardEntity;
 import com.lrin.project.entity.item.Item;
 import com.lrin.project.repository.board.BoardRepository;
+import com.lrin.project.repository.home.HomeRepository;
 import com.lrin.project.service.item.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,16 @@ public class HomeController {
     private final ItemService itemService;
 
     @Autowired
-    private BoardRepository boardRepository;
+    private HomeRepository homeRepository;
 
     @GetMapping(value = "/")
     public String index(Model model) {
-        List<BoardEntity> boardEntityList = this.boardRepository.findAll();
+        List<BoardEntity> boardEntityList = this.homeRepository.findBoardRecent();
+        List<BoardEntity> latestFive = boardEntityList.stream().limit(5).toList();
         model.addAttribute("cssPath", "home/index");
         model.addAttribute("pageTitle", "메인");
         model.addAttribute("jsPath", "home/index");
-        model.addAttribute("boardEntityList", boardEntityList);
+        model.addAttribute("boardEntityList", latestFive);
         return "home/index";
     }
     @GetMapping(value = "/price")

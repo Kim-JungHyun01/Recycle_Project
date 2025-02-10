@@ -74,9 +74,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="board : ${boardEntityList}">
+                        <tr th:each="board : ${boardEntityList}" th:onclick="'goBoardDetail('+${board.id}+')'">
                             <td><span></span><p th:text="${board.id}"></p></td>
-                            <td><a th:href="@{|/board/detail/${board.id}|}" th:text="${board.title}" target="_blank"></a></td>
+                            <td><a th:text="${board.title}" target="_blank"></a></td>
                             <td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
                         </tr>
                         <tr th:if="${boardEntityList == null} or ${boardEntityList.size() == 0}">
