@@ -6,7 +6,9 @@
 <div class="board_whole">
     <div class="board_title_txt">
         <p class="bold_title">공지사항(<span th:text="${boardEntityList.size()}"></span>)</p>
-        <a href="/board/write" class="btn" sec:authorize="hasAuthority('ADMIN')">공지사항 작성</a>
+        <div>
+            <a href="/board/write" class="btn" sec:authorize="hasAuthority('ADMIN')">공지사항 작성</a>
+        </div>
     </div>
     <div class="board_inner">
         <table class="board_table">
