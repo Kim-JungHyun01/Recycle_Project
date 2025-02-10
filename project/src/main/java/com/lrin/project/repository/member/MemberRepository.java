@@ -20,7 +20,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
     @Query(value = "select pw from member where id = :id", nativeQuery = true)
     String idPwChk(@Param("id") String id);
 
-    @Query(value = "select id, pw, name, addr, streetaddr, detailaddr, tel, reg_time, update_time, created_by, modified_by from member where id = :id", nativeQuery = true)
+    @Query(value = "select id, pw, name, addr, streetaddr, detailaddr, tel, reg_time, update_time, created_by, modified_by, role from member where id = :id", nativeQuery = true)
     MemberEntity memberInfo(@Param("id") String id);
 
     @Transactional

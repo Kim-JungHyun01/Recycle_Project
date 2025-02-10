@@ -33,8 +33,11 @@ public class MemberEntity extends BaseEntity {
     @Column
     private String tel;
 
+    @Column
+    private String role;
+
     @Builder
-    public MemberEntity(String id, String pw, String name, String addr, String streetaddr, String detailaddr, String tel) {
+    public MemberEntity(String id, String pw, String name, String addr, String streetaddr, String detailaddr, String tel, String role) {
         this.id = id;
         this.pw = pw;
         this.name = name;
@@ -42,5 +45,6 @@ public class MemberEntity extends BaseEntity {
         this.streetaddr = streetaddr;
         this.detailaddr = detailaddr;
         this.tel = tel;
+        this.role = role;
     }
 }

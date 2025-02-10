@@ -11,4 +11,5 @@ public interface MemberService {
     String idFind(String name, String tel);
     String pwFind(String id, String name, String tel);
     void pwSetting(String id, String pw);
+    boolean existsById(String admin);
 }

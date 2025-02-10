@@ -29,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String name) {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         MemberEntity memberEntity = memberRepository.findOneById(name);
-        if(Objects.equals(memberEntity.getId(), "admin")){
+        if(Objects.equals(memberEntity.getId(), "admin") && memberEntity.getRole().equals("admin")){
             grantedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
             return new User(memberEntity.getId(), memberEntity.getPw(), grantedAuthorities);
         }
