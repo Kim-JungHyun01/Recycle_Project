@@ -18,9 +18,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="board :  ${boardPage.content}">
+            <tr th:each="board :  ${boardPage.content}" th:onclick="'goBoardDetail('+${board.id}+')'">
                 <td><span></span><p th:text="${board.id}"></p></td>
-                <td><a th:href="@{|/board/detail/${board.id}|}" th:text="${board.title}" target="_blank"></a></td>
+                <td th:text="${board.title}"></td>
                 <td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
                 <td th:if="${board.updateTime == null}">-</td>
                 <td th:if="${board.updateTime != null}" th:text="${#temporals.format(board.updateTime, 'yyyy-MM-dd')}"></td>

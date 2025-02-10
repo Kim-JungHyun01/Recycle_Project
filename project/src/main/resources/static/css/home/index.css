@@ -314,6 +314,10 @@ p.index_subtitle span{
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.board_table tbody tr td,
+.board_table tbody tr td *{
+    cursor: pointer;
+}
 .board_table tbody tr td p,
 .board_table tbody tr td a{
     font-size: 14px;
