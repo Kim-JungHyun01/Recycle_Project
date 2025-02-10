@@ -4,9 +4,10 @@
       layout:decorate="~{common/layout}"
       layout:fragment="content">
 <div class="board_whole">
-    <p class="bold_title">공지사항(<span th:text="${boardEntityList.size()}"></span>)</p>
-
-    <a href="/board/write" class="btn" sec:authorize="hasAuthority('ADMIN')">공지사항 작성</a>
+    <div class="board_title_txt">
+        <p class="bold_title">공지사항(<span th:text="${boardEntityList.size()}"></span>)</p>
+        <a href="/board/write" class="btn" sec:authorize="hasAuthority('ADMIN')">공지사항 작성</a>
+    </div>
     <div class="board_inner">
         <table class="board_table">
             <thead class="board_title">
@@ -18,9 +19,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="board :  ${boardPage.content}">
+            <tr th:each="board :  ${boardPage.content}" th:onclick="'goBoardDetail('+${board.id}+')'">
                 <td><span></span><p th:text="${board.id}"></p></td>
-                <td><a th:href="@{|/board/detail/${board.id}|}" th:text="${board.title}" target="_blank"></a></td>
+                <td th:text="${board.title}"></td>
                 <td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
                 <td th:if="${board.updateTime == null}">-</td>
                 <td th:if="${board.updateTime != null}" th:text="${#temporals.format(board.updateTime, 'yyyy-MM-dd')}"></td>

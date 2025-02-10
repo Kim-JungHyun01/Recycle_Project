@@ -25,6 +25,7 @@
     font-weight: bold;
     text-align: center;
     color: rgba(var(--real-black),0.7);
+    margin: 0;
 }
 body{
     -ms-overflow-style: none;
