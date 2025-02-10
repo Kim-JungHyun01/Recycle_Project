@@ -10,9 +10,6 @@ import java.util.List;
 
 @Repository
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
-    BoardEntity findByTitle(String title);
-    BoardEntity findByTitleAndContent(String title, String content);
-    List<BoardEntity> findByTitleLike(String Title);
     Page<BoardEntity> findAll(Pageable pageable); // 페이징 처리
 
 }
