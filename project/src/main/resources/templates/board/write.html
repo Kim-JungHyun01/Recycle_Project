@@ -3,33 +3,29 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{common/layout}"
       layout:fragment="content">
-
 <div class="index_whole">
     <p class="bold_title">공지사항 작성</p>
 </div>
-
 <div>
     <form th:action="@{/board/write}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
-        <div class="mb-3">
+        <div class="board_row">
             <label for="title" class="form-label">제목</label>
-            <input type="text" id="title" name="title" class="form-control">
+            <input type="text" id="title" name="title" class="form-control" placeholder="제목 입력">
             <div id="titleError" class="text-danger" style="display:none;">제목을 입력하세요.</div>
         </div>
-        <div class="mb-3">
+        <div class="board_row">
             <label for="content" class="form-label">내용</label>
-            <textarea id="content" name="content" rows="10" class="form-control" contenteditable="true"></textarea>
+            <textarea id="content" name="content" rows="10" class="form-control" placeholder="내용 입력" contenteditable="true"></textarea>
             <div id="contentError" class="text-danger" style="display:none;">내용을 입력하세요.</div>
         </div>
-        <div class="mb-3">
+        <div class="board_row">
+            <input type="file" name="file" accept="image/*" onchange="previewImage(event)"/>
+            <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
             <img id="imagePreview" src="#" alt="이미지 미리보기" style="max-width: 300px; display: none;" />
         </div>
-        <div class="mb-3">
-            <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
-        </div>
-        <input type="submit" value="작성완료" class="btn btn-primary my-2">
-        <a href="/board/list" class="btn btn-secondary my-2">작성취소</a>
-        <div>
-            <input type="file" name="file" accept="image/*" onchange="previewImage(event)"/>
+        <div class="btn_flex">
+            <button type="button" class="btn_prev" onclick="goBack()">뒤로</button>
+            <button type="submit" class="btn_submit">작성완료</button>
         </div>
     </form>
 </div>
