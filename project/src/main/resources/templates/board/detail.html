@@ -1,38 +1,29 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{common/layout}"
       layout:fragment="content">
 
-    <div class="index_whole">
-        <p class="bold_title">공지사항 상세</p>
-    </div>
-    <div>
-        <a href="/board/list" class="btn btn-secondary my-2">뒤로가기</a>
-        <div class="mb-3">
-            <label for="title" class="form-label">제목</label>
-            <input type="text" id="title" name="title" th:value="${board.title}" class="form-control" required readonly>
+    <div class="board_whole">
+        <div class="board_inner">
+            <p class="bold_title" th:text="${board.title}"></p>
+            <div class="board_info display_flex flex_wrap flex_start flex_align_c">
+                <p><img src="/img/icon/board/writer_dyl.png" alt="작성자"><span th:text="${board.writer}"></span></p>
+                <p><img src="/img/icon/board/calendar_dyl.png" alt="작성일"><span th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd HH:mm')}"></span></p>
+            </div>
+            <p class="board_content" th:text="${board.content}"></p>
         </div>
-        <div class="mb-3">
-            <label for="content" class="form-label">내용</label>
-            <textarea id="content" name="content" rows="10" th:text="${board.content}" class="form-control" required readonly></textarea>
-        </div>
-        <div class="mb-3">
-            <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
-        </div>
-
         <form th:action="@{/board/delete/{id}(id=${board.id})}" method="post" id="deleteForm">
-            <input type="hidden" name="_method" value="delete"> <!-- DELETE 요청 설정 -->
-            <input type="button" value="수정" class="btn btn-primary my-2"
-                   th:onclick="|location.href='/board/update/${board.id}'|">
-            <button type="button" class="btn btn-danger my-2" onclick="confirmDelete()">삭제</button>
+            <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
+            <input type="hidden" name="_method" value="delete">
+            <div class="btn_flex">
+                <button type="button" onclick="goBack()" class="btn_prev">뒤로</button>
+                <button type="button" class="btn_change"
+                        th:onclick="|location.href='/board/update/${board.id}'|"
+                        sec:authorize="hasAuthority('ADMIN')">수정</button>
+                <button type="button" class="btn_update" onclick="boardDelete()"
+                        sec:authorize="hasAuthority('ADMIN')">삭제</button>
+            </div>
         </form>
     </div>
-    <script>
-        function confirmDelete() {
-            if (confirm("정말 삭제하시겠습니까?")) {
-                document.getElementById("deleteForm").submit();
-            }
-        }
-    </script>
 </html>

@@ -4,9 +4,10 @@
       layout:decorate="~{common/layout}"
       layout:fragment="content">
 <div class="board_whole">
-    <p class="bold_title">공지사항(<span th:text="${boardEntityList.size()}"></span>)</p>
-
-    <a href="/board/write" class="btn" sec:authorize="hasAuthority('ADMIN')">공지사항 작성</a>
+    <div class="board_title_txt">
+        <p class="bold_title">공지사항(<span th:text="${boardEntityList.size()}"></span>)</p>
+        <a href="/board/write" class="btn" sec:authorize="hasAuthority('ADMIN')">공지사항 작성</a>
+    </div>
     <div class="board_inner">
         <table class="board_table">
             <thead class="board_title">
