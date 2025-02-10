@@ -22,8 +22,6 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "order_id")
     private Order order;        // 한번의 주문에 여러개의 상품을 주문할 수 있음
 
-    private int orderPrice; //주문가격
-
     private int count; //수량
 
 }

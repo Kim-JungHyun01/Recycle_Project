@@ -139,7 +139,7 @@ $(document).ready(function() {
         $('.selected-item').each(function(index) {
             var itemName = $(this).find('select').val();
             var count = $(this).find('.item-count').val();
-            var price = $(this).data('price');
+            var price = $('#orderTotalPrice').text().replace(/,/g, '').replace('원', '').trim();
 
             form.append($('<input>', { type: 'hidden', name: 'orderItems[' + index + '].itemName', value: itemName }));
             form.append($('<input>', { type: 'hidden', name: 'orderItems[' + index + '].count', value: count }));
