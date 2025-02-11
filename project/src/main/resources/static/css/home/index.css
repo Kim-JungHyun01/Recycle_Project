@@ -310,7 +310,6 @@ p.index_subtitle span{
     line-height: 22px;
     color: rgb(var(--lite-black));
     border-bottom: 1px solid rgb(var(--lite-gray));
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -346,7 +345,7 @@ p.index_subtitle span{
     transform: translateY(-50%);
     opacity: 0;
 }
-.board_table tbody tr:hover tr td span{
+.board_table tbody tr:hover td span{
     opacity: 1;
 }
 

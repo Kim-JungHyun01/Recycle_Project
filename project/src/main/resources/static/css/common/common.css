@@ -137,6 +137,9 @@
 .btn_flex button.btn_submit:hover{
     background-color: rgb(217,177,68);
 }
+.btn_flex button:hover{
+    font-weight: bold;
+}
 /*데이터 없을 때*/
 .no_data_txt{
     width: 100%;

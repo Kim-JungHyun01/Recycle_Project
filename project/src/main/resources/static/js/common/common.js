@@ -15,13 +15,13 @@ const token_name = $("#header_mypage").text();
 
 /*나중에 활성화 필수(url로 직접적인 접근하는 것을 막아줌*/
 $(document).ready(function (){
-    if (document.referrer == '' || document.referrer == null){
-        $('.header_section').hide();
-        $('.footer_section').hide();
-        $('.main_inner *').remove();
-        standbyShow('접근 오류','잘못된 방식으로 접근하셨습니다.');
-        setTimeout(function(){
-            document.location.href = '/';
-        },1500);
-    }
+//    if (document.referrer == '' || document.referrer == null){
+//        $('.header_section').hide();
+//        $('.footer_section').hide();
+//        $('.main_inner *').remove();
+//        standbyShow('접근 오류','잘못된 방식으로 접근하셨습니다.');
+//        setTimeout(function(){
+//            document.location.href = '/';
+//        },1500);
+//    }
 });
