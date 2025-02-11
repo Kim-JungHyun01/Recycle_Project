@@ -91,7 +91,7 @@ public class OrderController {
         model.addAttribute("maxPage", 10);
         model.addAttribute("cssPath", "order/orderList");
         model.addAttribute("pageTitle", "주문 목록");
-        //model.addAttribute("jsPath", "order/orderList");
+        model.addAttribute("jsPath", "order/orderList");
 
         return "order/orderList";
     }
@@ -149,7 +149,7 @@ public class OrderController {
         model.addAttribute("maxPage", 10);
         model.addAttribute("cssPath", "order/orderList");   // orderList.css 사용
         model.addAttribute("pageTitle", "주문 목록 관리");
-        //model.addAttribute("jsPath", "order/orderAdmin");
+        model.addAttribute("jsPath", "order/orderAdmin");
 
         return "order/orderAdmin";
     }

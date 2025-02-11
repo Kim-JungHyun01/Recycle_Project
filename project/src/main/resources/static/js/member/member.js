@@ -203,7 +203,7 @@ function loginWrite(object, e){
         $('#'+object_type).removeClass('keyon');
     }
     $('#'+object_id).parents('.member_row').find('.common_input').addClass('focus_on');
-    if(object_id == 'pw' && e.keyCode == '13'){
+    if(e.keyCode == '13'){
         $('.btn_submit').click();
     }
 }

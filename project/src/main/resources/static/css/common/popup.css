@@ -1,4 +1,11 @@
 @charset "UTF-8";
+#common_pop_input{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -999;
+    opacity: 0;
+}
 /*alert,confirm,standby 팝업 공통*/
 .common_pop{
     position: fixed;
