@@ -1,4 +1,9 @@
 /* 컨테이너 스타일 */
+.container,
+.container-sm {
+    max-width: none;
+}
+
 .container {
     background: #FFFFFF;
     border-radius: 10px;
@@ -13,7 +18,39 @@
     text-align: center;
 }
 
+.nav-tabs{
+    border-bottom: none;
+}
+
+.nav-tabs .nav-link {
+    color: var(--bs-gray-500);
+    padding: 5px 5px 10px 5px;
+}
+
 /* 테이블 스타일 */
+.order-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: auto;
+    z-index: 1;
+    margin-top: -10px;
+}
+
+.order-container::-webkit-scrollbar {
+    width: auto;
+    height: 5px;
+    background-color: rgba(var(--origin-yellow), 0.4);
+    border-radius: 5px;
+}
+
+.order-container::-webkit-scrollbar-thumb {
+    width: auto;
+    height: 5px;
+    background-color: rgb(var(--origin-yellow));
+    border-radius: 5px;
+}
+
 .order-table {
     width: 100%;
     border-radius: 10px;
@@ -25,11 +62,81 @@
     color: #444444;
 }
 
-.order-table th, .order-table td {
-    padding: 15px;
+.order-table th,
+.order-table td {
+    padding: 10px;
     text-align: center;
     border-bottom: 1px solid #E0C97F;
     vertical-align: middle;
+}
+
+/*유저*/
+.order-table th:nth-child(1),
+.order-table td:nth-child(1) {
+    min-width: 80px;
+    width: 80px;
+    max-width: 80px;
+}
+
+.order-table th:nth-child(2),
+.order-table td:nth-child(2) {
+    min-width: 160px;
+    width: 160px;
+    max-width: 160px;
+}
+
+.order-table th:nth-child(3),
+.order-table td:nth-child(3) {
+    min-width: 300px;
+    width: 300px;
+    max-width: 300px;
+}
+
+.order-table th:nth-child(4),
+.order-table td:nth-child(4) {
+    min-width: 130px;
+    width: 130px;
+    max-width: 130px;
+}
+
+.order-table th:last-child,
+.order-table td:last-child {
+    min-width: 110px;
+    width: 110px;
+    max-width: 110px;
+}
+
+.order-table td:last-child button {
+    width: 100%;
+}
+
+/*관리자*/
+.admin .order-table th:nth-child(3),
+.admin .order-table td:nth-child(3) {
+    min-width: 160px;
+    width: 160px;
+    max-width: 160px;
+}
+
+.admin .order-table th:nth-child(4),
+.admin .order-table td:nth-child(4) {
+    min-width: 300px;
+    width: 300px;
+    max-width: 300px;
+}
+
+.admin .order-table th:nth-child(5),
+.admin .order-table td:nth-child(5) {
+    min-width: 130px;
+    width: 130px;
+    max-width: 130px;
+}
+
+.admin .order-table th:last-child,
+.admin .order-table td:last-child {
+    min-width: 120px;
+    width: 120px;
+    max-width: 120px;
 }
 
 .order-id-cell {
@@ -58,6 +165,11 @@
     background: none;
     border: none;
     font-size: 16px;
+    padding: 0;
+}
+
+.list-group-item + .list-group-item {
+    margin-top: 5px;
 }
 
 .product-name {
@@ -71,10 +183,12 @@
 }
 
 .badge-secondary {
-    background-color: #FFD042;
-    color: black;
+    min-width: 70px;
     font-weight: bold;
+    color: black;
     padding: 5px 10px;
+    margin: 0 10px 0 auto;
+    background-color: #FFD042;
 }
 
 /* 페이징 스타일 */
@@ -118,4 +232,16 @@ select.form-control {
 /* option 글자 가운데 정렬 */
 select.form-control option {
   text-align: center;
+}
+
+@media (min-width: 360px){
+    .nav-tabs .nav-link {
+        padding: 10px 8px 15px 8px;
+    }
+}
+
+@media (min-width: 500px){
+    .nav-tabs .nav-link {
+        padding: 10px 15px 15px 15px;
+    }
 }
