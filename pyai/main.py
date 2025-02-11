@@ -1,9 +1,13 @@
+from starlette.responses import JSONResponse
+
 from function import *
 import logging #로그
 logging.basicConfig(level=logging.INFO)
 
 from fastapi import FastAPI, UploadFile, File
 app = FastAPI()
+
+import shutil
 
 #적용할 모델 이름
 model_name = "tmp05"
@@ -39,44 +43,42 @@ async def image_service(file:UploadFile = File(...)):
 
 #비디오 처리
 @app.post("/video_service", response_model=DetectionResult)
-async def video_service(video_file:UploadFile = File(...)):
+async def video_service(video_file: UploadFile = File(...)):
     # 결과 json 저장
     frame_result_prev = {"prev": []}
+    logging.info("비디오 분류 시작")
 
-    # 동영상 전달여부
-    try:
-        cap = cv2.VideoCapture(video_file)
-        print("영상 전달완료")
-    except:
-        print("영상 전달실패")
-        return
+    # 비디오 파일을 임시로 저장
+    temp_file_path = f"temp_{video_file.filename}"
+    with open(temp_file_path, "wb") as buffer:
+        shutil.copyfileobj(video_file.file, buffer)
+
+    # 동영상 전달 여부
+    cap = cv2.VideoCapture(temp_file_path)
+    if not cap.isOpened():
+        logging.error("영상 전달 실패: 비디오 파일을 열 수 없음")
+        return JSONResponse(status_code=400, content={"message": "비디오 파일을 열 수 없습니다."})
 
     while True:
         ret, frame = cap.read()
 
         if not ret:
-            print("비디오 읽기 오류")
+            logging.info("비디오 읽기 완료 또는 오류 발생")
             break
-
-        # cv2.waitKey(20) #캡처 딜레이
 
         # frame 캡쳐 갯수 조정
         if int(cap.get(1)) % 10 == 0:
-            # print("frame number : ", str(int(cap.get(1))))
-
             # 모델 적용
             results, class_names = model_predict_pt(model, frame)
 
             # 결과 반환(class_name)
-            result_class_name = print_json_pt(results, class_names) #예측결과 json
-            # print(type(result_class_name))
-            # print(result_class_name)
-            frame_result_prev["prev"].append(result_class_name)     #예측결과 추가
+            result_class_name = print_json_pt(results, class_names)  # 예측 결과 json
+            frame_result_prev["prev"].append(result_class_name)  # 예측 결과 추가
 
-    cap.release()  # 메모리해제
+    cap.release()  # 메모리 해제
     cv2.destroyAllWindows()
 
-    # 결과 중복제거
+    # 결과 중복 제거
     result_json = remove_result_duplicate(frame_result_prev)
     return DetectionResult(json_data=result_json)
 

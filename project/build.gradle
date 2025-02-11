@@ -41,7 +41,8 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	//python 연결
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
+	// 동영상 전달시
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
 
 	// 추가
 	implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
