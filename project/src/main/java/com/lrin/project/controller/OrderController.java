@@ -39,6 +39,7 @@ public class OrderController {
         model.addAttribute("items", items);
         model.addAttribute("cssPath", "order/collect");
         model.addAttribute("jsPath", "order/collect");
+        model.addAttribute("pageTitle", "수거 페이지");
         return "order/collect";
     }
 
@@ -80,6 +81,7 @@ public class OrderController {
         model.addAttribute("orders", ordersListDto);
         model.addAttribute("maxPage", 10);
         model.addAttribute("cssPath", "order/orderList");
+        model.addAttribute("pageTitle", "주문 목록");
         //model.addAttribute("jsPath", "order/orderList");
 
         return "order/orderList";
@@ -98,15 +100,10 @@ public class OrderController {
     }
 
     // 주문 목록 관리 페이지로 (관리자 용)
-    @GetMapping(value = {"/orderAdmin", "/orderAdmin/{page}"})
+    @GetMapping(value = {"/admin/orderAdmin", "/admin/orderAdmin/{page}"})
     public String orderListAdmin(@PathVariable("page") Optional<Integer> page, @RequestParam("status") Optional<String> status, Principal principal, Model model){
 
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
-        String userId = principal.getName();
-
-        if (!userId.toLowerCase().equals("admin")) {
-            return "/";
-        }
 
         Page<OrderListDTO> ordersListDto;
         if (status.isPresent()) {
@@ -133,9 +130,20 @@ public class OrderController {
         model.addAttribute("orders", ordersListDto);
         model.addAttribute("maxPage", 10);
         model.addAttribute("cssPath", "order/orderList");   // orderList.css 사용
+        model.addAttribute("pageTitle", "주문 목록 관리");
         //model.addAttribute("jsPath", "order/orderAdmin");
 
         return "order/orderAdmin";
+    }
+
+    @PostMapping("/admin/orderChange") //주문 취소용 메서드 (비동기 처리)
+    public @ResponseBody ResponseEntity changeOrderStatus(@RequestBody Map<String, String> requestData, Principal principal){
+
+        Long orderId = Long.valueOf(requestData.get("orderId"));
+        OrderStatus status = OrderStatus.valueOf(requestData.get("status"));
+
+        orderService.changeOrder(orderId, status);
+        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
     }
 
 

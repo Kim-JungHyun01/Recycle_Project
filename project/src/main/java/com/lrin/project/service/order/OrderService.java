@@ -24,4 +24,6 @@ public interface OrderService {
     Page<OrderListDTO> getOrderAdminList(Pageable pageable);
 
     Page<OrderListDTO> getOrderListAdminByStatus(Pageable pageable, OrderStatus status);
+
+    void changeOrder(Long orderId, OrderStatus status);
 }
