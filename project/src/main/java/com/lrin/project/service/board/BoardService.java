@@ -1,6 +1,7 @@
 package com.lrin.project.service.board;
 
 import com.lrin.project.entity.board.BoardEntity;
+import com.lrin.project.entity.boardfile.FileEntity;
 import com.lrin.project.repository.board.BoardRepository;
 import com.lrin.project.service.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class BoardService {
     public BoardEntity getListById(Long id) {
         Optional<BoardEntity> board = this.boardRepository.findById(id);
         if (board.isPresent()) {
+            // 해당 게시글과 관련된 파일 정보를 Lazy로 로딩
+            board.get().getFileEntity();
             return board.get();
         } else {
             throw new DataNotFoundException("board not found");
@@ -36,12 +39,14 @@ public class BoardService {
     }
 
     // 게시글 추가
-    public void create(String title, String content, String writer) {
+    public void create(String title, String content, String writer, FileEntity fileEntity) {
         BoardEntity board = new BoardEntity();
         board.setTitle(title);
         board.setContent(content);
         board.setWriter(writer);
         board.setRegTime(LocalDateTime.now());
+        board.setFileEntity(fileEntity);  // 파일 엔티티 설정
+
         this.boardRepository.save(board); // DB에 저장
     }
 
@@ -59,5 +64,6 @@ public class BoardService {
     public void deleteBoard(Long id) {
         boardRepository.deleteById(id);
     }
+
 
 }

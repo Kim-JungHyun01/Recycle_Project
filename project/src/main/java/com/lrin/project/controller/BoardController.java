@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,7 +77,7 @@ public class BoardController {
     }
 
     // 게시글 작성 페이지
-    @GetMapping(value = "/board/write")
+    @GetMapping(value = "/admin/board/write")
     public String boardWrite(Model model) {
         // 관리자만 접근할 수 있도록 권한 체크 추가 가능
         model.addAttribute("cssPath", "board/write");
@@ -86,25 +87,28 @@ public class BoardController {
     }
 
     // 게시글 추가 기능
-    @PostMapping(value = "/board/write")
+    @PostMapping(value = "/admin/board/write")
     public String boardCreate(@RequestParam("file") MultipartFile file, @RequestParam(value="title") String title, @RequestParam(value="content") String content, @RequestParam(value="writer") String writer, Model model) {
 
         try {
-            FileEntity savedFile = fileService.saveFile(file); // 파일 저장 & DB 기록
+            // 파일 저장
+            FileEntity savedFile = fileService.saveFile(file);
 
             String filePath = (savedFile != null) ? savedFile.getFilePath() : "첨부 파일 없음";
+
+            // 파일과 함께 게시글 생성
+            boardService.create(title, content, writer, savedFile);  // 파일 엔티티와 함께 게시글 생성
 
             model.addAttribute("message", "게시글 저장 성공! " + "파일 경로: " + filePath);
         } catch (IOException e) {
             model.addAttribute("message", "파일 업로드 실패: " + e.getMessage());
         }
 
-        this.boardService.create(title, content, writer);
         return "redirect:/board/list"; // 작성 후 목록으로 이동
     }
 
     // 게시글 수정 페이지
-    @GetMapping(value = "/board/update/{id}")
+    @GetMapping(value = "/admin/board/update/{id}")
     public String boardUpdate(@PathVariable("id") Long id, Model model) {
         // 게시글 정보 가져오기
         BoardEntity board = this.boardService.getListById(id);
@@ -118,7 +122,7 @@ public class BoardController {
     }
 
     // 게시글 수정 기능
-    @PostMapping("/board/update/{id}")
+    @PostMapping("/admin/board/update/{id}")
     public String boardUpdateSubmit(@PathVariable("id") Long id,
                                     @RequestParam("title") String title,
                                     @RequestParam("content") String content) {
@@ -127,7 +131,7 @@ public class BoardController {
     }
 
     // 게시글 삭제 기능
-    @PostMapping("/board/delete/{id}")
+    @PostMapping("/admin/board/delete/{id}")
     public String boardDelete(@PathVariable("id") Long id) {
         boardService.deleteBoard(id);
         return "redirect:/board/list"; //

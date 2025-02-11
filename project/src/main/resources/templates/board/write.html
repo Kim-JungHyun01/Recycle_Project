@@ -7,7 +7,7 @@
     <p class="bold_title">공지사항 작성</p>
 </div>
 <div>
-    <form th:action="@{/board/write}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+    <form th:action="@{/admin/board/write}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="board_row">
             <label for="title" class="form-label">제목</label>
             <input type="text" id="title" name="title" class="form-control" placeholder="제목 입력">
@@ -21,7 +21,7 @@
         <div class="board_row">
             <input type="file" name="file" accept="image/*" onchange="previewImage(event)"/>
             <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
-            <img id="imagePreview" src="#" alt="이미지 미리보기" style="max-width: 300px; display: none;" />
+            <img id="imagePreview" src="#" alt="이미지 미리보기" style="display: none;" />
         </div>
         <div class="btn_flex">
             <button type="button" class="btn_prev" onclick="goBack()">뒤로</button>
@@ -41,28 +41,28 @@
         reader.readAsDataURL(event.target.files[0]);
     }
 
-    function validateForm() {
-        let title = document.getElementById("title").value.trim();
-        let content = document.getElementById("content").value.trim();
-        let isValid = true;
+function validateForm() {
+    let title = document.getElementById("title").value.trim();
+    let content = document.getElementById("content").value.trim();
+    let isValid = true;
 
-        // 제목 검사
-        if (title === "") {
-            document.getElementById("titleError").style.display = "block";
-            isValid = false;
-        } else {
-            document.getElementById("titleError").style.display = "none";
-        }
-
-        // 내용 검사
-        if (content === "") {
-            document.getElementById("contentError").style.display = "block";
-            isValid = false;
-        } else {
-            document.getElementById("contentError").style.display = "none";
-        }
-
-        return isValid;
+    // 제목 검사
+    if (title === "") {
+        document.getElementById("titleError").style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("titleError").style.display = "none";
     }
+
+    // 내용 검사
+    if (content === "") {
+        document.getElementById("contentError").style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("contentError").style.display = "none";
+    }
+
+    return isValid;
+}
 </script>
 </html>
