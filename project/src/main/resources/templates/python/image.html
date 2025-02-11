@@ -4,7 +4,6 @@
       layout:decorate="~{common/layout}"
       layout:fragment="content">
 <div class="collect_whole">
-
   <p class="bold_title">수거 페이지</p>
   <div>
     <div>
@@ -69,8 +68,7 @@
 
 <!--      xhr.open("POST", "http://localhost:8080/video_service", true);// 비디오 자바서버-->
       xhr.open("POST", "http://localhost:8080/image_service", true);// 이미지 자바서버
-      xhr.setRequestHeader(csrfHeader, csrfToken);
-
+      xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰 설정
       xhr.onload = function(){
           if(xhr.status >=200 && xhr.status < 300){
               console.log(xhr.responseText);
@@ -110,5 +108,5 @@
       xhr.send(form_data);
   })//end button click
 </script>
-</body>
+
 </html>

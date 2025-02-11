@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -41,10 +39,9 @@ public class BoardEntity {
 
     private LocalDateTime updateTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "file_id")
     private FileEntity fileEntity;
-
 
     public String getFileUrl() {
         return fileEntity != null ? "/uploads/" + fileEntity.getFileName() : null;

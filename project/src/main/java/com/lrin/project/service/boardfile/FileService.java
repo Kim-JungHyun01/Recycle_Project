@@ -56,9 +56,9 @@ public class FileService {
 
         // DB에 파일 정보 저장
         FileEntity fileEntity = new FileEntity(
-                originalFileName,
-                filePath.toString(),
+                fileName,
                 file.getContentType(),
+                filePath.toString(),
                 file.getSize()
         );
 

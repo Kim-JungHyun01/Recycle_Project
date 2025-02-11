@@ -78,11 +78,20 @@ public class OrderController {
             ordersListDto = orderService.getOrderList(userId, pageable);
         }
 
+        // 잘못된 페이지 요청 방지
+        int currentPage = page.orElse(0);
+        if (currentPage >= ordersListDto.getTotalPages() && ordersListDto.getTotalPages() > 0) {
+            return "redirect:/orderList";
+        }
+        if (currentPage < 0) {
+            return "redirect:/orderList";
+        }
+
         model.addAttribute("orders", ordersListDto);
         model.addAttribute("maxPage", 10);
         model.addAttribute("cssPath", "order/orderList");
         model.addAttribute("pageTitle", "주문 목록");
-        //model.addAttribute("jsPath", "order/orderList");
+        model.addAttribute("jsPath", "order/orderList");
 
         return "order/orderList";
     }
@@ -127,11 +136,20 @@ public class OrderController {
             ordersListDto = orderService.getOrderAdminList(pageable);
         }
 
+        // 잘못된 페이지 요청 방지
+        int currentPage = page.orElse(0);
+        if (currentPage >= ordersListDto.getTotalPages() && ordersListDto.getTotalPages() > 0) {
+            return "redirect:/admin/orderAdmin";
+        }
+        if (currentPage < 0) {
+            return "redirect:/admin/orderAdmin";
+        }
+
         model.addAttribute("orders", ordersListDto);
         model.addAttribute("maxPage", 10);
         model.addAttribute("cssPath", "order/orderList");   // orderList.css 사용
         model.addAttribute("pageTitle", "주문 목록 관리");
-        //model.addAttribute("jsPath", "order/orderAdmin");
+        model.addAttribute("jsPath", "order/orderAdmin");
 
         return "order/orderAdmin";
     }
