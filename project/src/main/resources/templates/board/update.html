@@ -18,6 +18,18 @@
       <textarea id="content" name="content" rows="10" class="form-control" required
                 th:text="${board.content}"></textarea>
     </div>
+
+    <div class="mb-3">
+      <label for="file" class="form-label">파일 업로드</label>
+      <input type="file" id="file" name="file" class="form-control" accept="image/*" onchange="previewImage(event)">
+    </div>
+
+    <div class="mb-3">
+      <label>현재 업로드된 파일:</label>
+      <img id="preview" th:src="${board.fileEntity != null ? '/uploads/' + board.fileEntity.fileName : ''}"
+           class="img-thumbnail" style="max-width: 200px; display: block;">
+    </div>
+
     <div class="mb-3">
       <input type="hidden" id="writer" name="writer" th:value="${board.writer}" class="form-control" required readonly>
     </div>
@@ -25,5 +37,15 @@
     <a href="javascript:history.back()" class="btn btn-secondary my-2">취소</a>
   </form>
 </div>
+
+<script>
+  function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function(){
+          document.getElementById('preview').src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+  }
+</script>
 
 </html>

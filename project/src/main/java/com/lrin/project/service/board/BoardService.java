@@ -4,16 +4,22 @@ import com.lrin.project.entity.board.BoardEntity;
 import com.lrin.project.entity.boardfile.FileEntity;
 import com.lrin.project.repository.board.BoardRepository;
 import com.lrin.project.service.DataNotFoundException;
+import com.lrin.project.service.boardfile.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 public class BoardService {
+
+    @Autowired
+    private FileService fileService;
 
     @Autowired
     private BoardRepository boardRepository;
@@ -54,13 +60,30 @@ public class BoardService {
     }
 
     // 게시글 수정
-    public void updateBoard(Long id, String title, String content) {
+    public void updateBoard(Long id, String title, String content, MultipartFile file) {
         BoardEntity board = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
         board.setTitle(title);
         board.setContent(content);
         board.setUpdateTime(LocalDateTime.now());
-        boardRepository.save(board); // DB에 저장
+
+        if (file != null && !file.isEmpty()) {
+            // 기존 파일 삭제
+            if (board.getFileEntity() != null) {
+                fileService.deleteFile(board.getFileEntity().getFilePath());
+            }
+
+            // 새 파일 저장
+            try {
+                FileEntity newFile = fileService.saveFile(file);
+                board.setFileEntity(newFile);
+            } catch (IOException e) {
+                throw new RuntimeException("파일 저장 실패", e);
+            }
+        }
+
+        boardRepository.save(board);
     }
 
     // 게시글 삭제
