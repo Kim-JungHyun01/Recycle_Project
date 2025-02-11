@@ -45,9 +45,12 @@ public class BoardService {
         board.setContent(content);
         board.setWriter(writer);
         board.setRegTime(LocalDateTime.now());
-        board.setFileEntity(fileEntity);  // 파일 엔티티 설정
 
-        this.boardRepository.save(board); // DB에 저장
+        if (fileEntity != null) {
+            board.setFileEntity(fileEntity);
+        }
+
+        boardRepository.save(board); // DB에 저장
     }
 
     // 게시글 수정
