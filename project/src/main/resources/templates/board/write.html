@@ -7,7 +7,7 @@
     <p class="bold_title">공지사항 작성</p>
 </div>
 <div>
-    <form th:action="@{/board/write}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+    <form th:action="@{/admin/board/write}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="board_row">
             <label for="title" class="form-label">제목</label>
             <input type="text" id="title" name="title" class="form-control" placeholder="제목 입력">

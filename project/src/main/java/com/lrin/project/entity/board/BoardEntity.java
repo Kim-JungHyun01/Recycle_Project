@@ -45,6 +45,7 @@ public class BoardEntity {
     @JoinColumn(name = "file_id")
     private FileEntity fileEntity;
 
+
     public String getFileUrl() {
         return fileEntity != null ? "/uploads/" + fileEntity.getFileName() : null;
     }
