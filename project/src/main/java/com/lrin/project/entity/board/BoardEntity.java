@@ -1,5 +1,6 @@
 package com.lrin.project.entity.board;
 
+import com.lrin.project.entity.boardfile.FileEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,4 +40,13 @@ public class BoardEntity {
     private LocalDateTime regTime;
 
     private LocalDateTime updateTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "file_id")
+    private FileEntity fileEntity;
+
+    public String getFileUrl() {
+        return fileEntity != null ? "/uploads/" + fileEntity.getFileName() : null;
+    }
+
 }
