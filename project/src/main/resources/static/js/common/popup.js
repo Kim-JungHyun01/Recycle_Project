@@ -14,6 +14,7 @@ function alertShow(title, subtitle){
     $('.alert_whole').show();
     $('#alert_title').html(title);
     $('#alert_subtitle').html(subtitle);
+    $('#common_pop_input').focus();
 }
 //confirm
 function confirmHide(){
@@ -26,6 +27,7 @@ function confirmShow(title, subtitle, type){
     $('#confirm_title').html(title);
     $('#confirm_subtitle').html(subtitle);
     $('#confirm_message').attr('value', type);
+    $('#common_pop_input').focus();
 }
 function popConfirm(){
     let confirm_message = $('#confirm_message').val();
@@ -47,4 +49,10 @@ function standbyShow(title, subtitle){
     $('.standby_whole').show();
     $('#standby_title').html(title);
     $('#standby_subtitle').html(subtitle);
+}
+
+function enterClick(e){
+    if(e.keyCode == '13'){
+        $('.btn_confirm').click();
+    }
 }
