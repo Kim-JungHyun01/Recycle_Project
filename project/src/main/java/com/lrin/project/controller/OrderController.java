@@ -78,6 +78,15 @@ public class OrderController {
             ordersListDto = orderService.getOrderList(userId, pageable);
         }
 
+        // 잘못된 페이지 요청 방지
+        int currentPage = page.orElse(0);
+        if (currentPage >= ordersListDto.getTotalPages() && ordersListDto.getTotalPages() > 0) {
+            return "redirect:/orderList";
+        }
+        if (currentPage < 0) {
+            return "redirect:/orderList";
+        }
+
         model.addAttribute("orders", ordersListDto);
         model.addAttribute("maxPage", 10);
         model.addAttribute("cssPath", "order/orderList");
@@ -125,6 +134,15 @@ public class OrderController {
             }
         } else {
             ordersListDto = orderService.getOrderAdminList(pageable);
+        }
+
+        // 잘못된 페이지 요청 방지
+        int currentPage = page.orElse(0);
+        if (currentPage >= ordersListDto.getTotalPages() && ordersListDto.getTotalPages() > 0) {
+            return "redirect:/admin/orderAdmin";
+        }
+        if (currentPage < 0) {
+            return "redirect:/admin/orderAdmin";
         }
 
         model.addAttribute("orders", ordersListDto);
