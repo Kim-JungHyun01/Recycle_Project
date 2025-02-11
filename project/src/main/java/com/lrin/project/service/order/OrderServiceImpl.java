@@ -144,5 +144,11 @@ public class OrderServiceImpl implements OrderService {
         return new PageImpl<OrderListDTO>(orderList, pageable, totalCount);
     }
 
+    @Override
+    public void changeOrder(Long orderId, OrderStatus status) {
+        Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
+        order.changeOrder(status);
+    }
+
 
 }
