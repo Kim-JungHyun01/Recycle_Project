@@ -18,13 +18,13 @@
                 <img th:if="${board.fileUrl}" th:src="${board.fileUrl}" alt="게시글 이미지">
             </div>
         </div>
-        <form th:action="@{/board/delete/{id}(id=${board.id})}" method="post" id="deleteForm">
+        <form th:action="@{/admin/board/delete/{id}(id=${board.id})}" method="post" id="deleteForm">
             <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
             <input type="hidden" name="_method" value="delete">
             <div class="btn_flex">
                 <button type="button" onclick="goBack()" class="btn_prev">뒤로</button>
                 <button type="button" class="btn_change"
-                        th:onclick="|location.href='/board/update/${board.id}'|"
+                        th:onclick="|location.href='/admin/board/update/${board.id}'|"
                         sec:authorize="hasAuthority('ADMIN')">수정</button>
                 <button type="button" class="btn_update" onclick="boardDelete()"
                         sec:authorize="hasAuthority('ADMIN')">삭제</button>

@@ -8,7 +8,7 @@
   <p class="bold_title">공지사항 수정</p>
 </div>
 <div>
-  <form th:action="@{/board/update/{id}(id=${board.id})}" method="post">
+  <form th:action="@{/admin/board/update/{id}(id=${board.id})}" method="post">
     <div class="mb-3">
       <label for="title" class="form-label">제목</label>
       <input type="text" id="title" name="title" th:value="${board.title}" class="form-control" required>

@@ -77,7 +77,7 @@ public class BoardController {
     }
 
     // 게시글 작성 페이지
-    @GetMapping(value = "/board/write")
+    @GetMapping(value = "/admin/board/write")
     public String boardWrite(Model model) {
         // 관리자만 접근할 수 있도록 권한 체크 추가 가능
         model.addAttribute("cssPath", "board/write");
@@ -87,7 +87,7 @@ public class BoardController {
     }
 
     // 게시글 추가 기능
-    @PostMapping(value = "/board/write")
+    @PostMapping(value = "/admin/board/write")
     public String boardCreate(@RequestParam("file") MultipartFile file, @RequestParam(value="title") String title, @RequestParam(value="content") String content, @RequestParam(value="writer") String writer, Model model) {
 
         try {
@@ -108,7 +108,7 @@ public class BoardController {
     }
 
     // 게시글 수정 페이지
-    @GetMapping(value = "/board/update/{id}")
+    @GetMapping(value = "/admin/board/update/{id}")
     public String boardUpdate(@PathVariable("id") Long id, Model model) {
         // 게시글 정보 가져오기
         BoardEntity board = this.boardService.getListById(id);
@@ -122,7 +122,7 @@ public class BoardController {
     }
 
     // 게시글 수정 기능
-    @PostMapping("/board/update/{id}")
+    @PostMapping("/admin/board/update/{id}")
     public String boardUpdateSubmit(@PathVariable("id") Long id,
                                     @RequestParam("title") String title,
                                     @RequestParam("content") String content) {
@@ -131,7 +131,7 @@ public class BoardController {
     }
 
     // 게시글 삭제 기능
-    @PostMapping("/board/delete/{id}")
+    @PostMapping("/admin/board/delete/{id}")
     public String boardDelete(@PathVariable("id") Long id) {
         boardService.deleteBoard(id);
         return "redirect:/board/list"; //
