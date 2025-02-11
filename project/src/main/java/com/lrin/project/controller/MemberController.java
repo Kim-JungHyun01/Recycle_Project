@@ -3,7 +3,6 @@ package com.lrin.project.controller;
 import com.lrin.project.dto.member.MemberDTO;
 import com.lrin.project.entity.member.MemberEntity;
 import com.lrin.project.service.member.MemberService;
-import lombok.extern.slf4j.Slf4j;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +15,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.Principal;
 
-@Slf4j
 @Controller
 public class MemberController {
     @Autowired

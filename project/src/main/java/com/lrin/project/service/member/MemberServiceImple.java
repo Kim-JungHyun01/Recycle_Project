@@ -4,6 +4,7 @@ import com.lrin.project.dto.member.MemberDTO;
 import com.lrin.project.entity.member.MemberEntity;
 import com.lrin.project.repository.member.MemberRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,10 @@ import java.util.List;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class MemberServiceImple implements MemberService {
-    @Autowired
-    MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 

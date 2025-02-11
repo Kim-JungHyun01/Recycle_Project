@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
             return new User(memberEntity.getId(), memberEntity.getPw(), grantedAuthorities);
         }
-        else if(memberEntity.getId()!=null && memberEntity.getId() != "admin"){
+        else if(memberEntity.getId()!=null && !memberEntity.getId().equals("admin")){
             grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
             return new User(memberEntity.getId(), memberEntity.getPw(), grantedAuthorities);
         }
