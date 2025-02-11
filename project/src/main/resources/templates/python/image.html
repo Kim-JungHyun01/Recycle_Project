@@ -1,38 +1,21 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-  <meta charset="UTF-8">
-  <title>1석3조:부유물 탐지 프로젝트</title>
-</head>
-<body>
-<header th:replace="~{common/header::header}"></header>
-<div>
-  <div>
-    <h1>이미지 결과 출력화면</h1>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}"
+      layout:fragment="content">
+<div class="collect_whole">
+  <div >
     <form method="post" enctype="multipart/form-data" id="fileUploadForm">
-      <div>
-        <p>이미지 파일</p>
-        <input type="file" onchange="fileChange(event)" id="data_file" name="file"/>
-      </div>
+      <p>파일</p>
+      <input type="file" id="data_file" name="file"/>
       <input type="button" value="파일 업로드"/>
     </form>
     <!--여기에 요청 결과가 출력되어야 합니다.-->
     <div id="result_json"></div>
   </div>
 </div>
-<footer th:replace="~{common/footer::footer}"></footer>
-<!--수정1 끝-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
-
-  function fileChange(event){
-      var reader = new FileReader();
-      reader.onload = function(event){
-          document.getElementById('index_img').setAttribute("src", event.target.result);
-      };
-      reader.readAsDataURL(event.target.files[0]);
-  };
-
 
   var button = document.querySelector("input[type=button]");
 
@@ -42,8 +25,11 @@
       button.disabled = true;
 
       var xhr = new XMLHttpRequest();
+      var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+      var csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
 
       xhr.open("POST", "http://localhost:8080/image_service", true);// 이미지 자바서버
+      xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰 설정
 
       xhr.onload = function(){
           if(xhr.status >=200 && xhr.status < 300){
@@ -78,5 +64,5 @@
       xhr.send(form_data);
   })//end button click
 </script>
-</body>
+
 </html>
