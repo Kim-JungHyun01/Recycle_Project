@@ -44,6 +44,11 @@ textarea.form-control{
     font-size: 14px;
     margin-top: 5px;
 }
+.board_row img{
+    width: 200px;
+    height: auto;
+    background-size: contain;
+}
 .btn-primary{
     display: inline-block;
     min-width: 100px;

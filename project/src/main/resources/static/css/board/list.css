@@ -107,6 +107,8 @@ a.btn:hover{
 .board_table tbody td:nth-child(2){
     text-align: start;
 }
+.board_table thead th:nth-child(3),
+.board_table tbody td:nth-child(3),
 .board_table thead th:last-child,
 .board_table tbody td:last-child{
     min-width: 100px;
@@ -124,7 +126,6 @@ a.btn:hover{
     line-height: 22px;
     color: rgb(var(--lite-black));
     border-bottom: 1px solid rgb(var(--lite-gray));
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -160,15 +161,15 @@ a.btn:hover{
     transform: translateY(-50%);
     opacity: 0;
 }
-.board_table tbody tr:hover tr td span{
+.board_table tbody tr:hover td span{
     opacity: 1;
 }
 @media (min-width: 360px){
     .board_table thead th:first-child,
     .board_table tbody td:first-child{
-        min-width: 70px;
-        width: 70px;
-        max-width: 70px;
+        min-width: 60px;
+        width: 60px;
+        max-width: 60px;
     }
 }
 @media (min-width: 900px){
@@ -184,16 +185,24 @@ a.btn:hover{
         height: 10px;
         left: -20px;
     }
+    .board_table thead th:nth-child(3),
+    .board_table tbody td:nth-child(3),
     .board_table thead th:last-child,
     .board_table tbody td:last-child{
-        min-width: 150px;
-        width: 150px;
-        max-width: 150px;
+        min-width: 130px;
+        width: 130px;
+        max-width: 130px;
     }
 }
 @media (min-width: 1024px){
     .bold_title{
         line-height: 40px;
         margin: 0 calc((100% - 365px) / 2) 0 auto;
+    }
+    .board_table thead th:first-child,
+    .board_table tbody td:first-child{
+        min-width: 80px;
+        width: 80px;
+        max-width: 80px;
     }
 }

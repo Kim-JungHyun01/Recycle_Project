@@ -54,9 +54,15 @@ p.board_content{
     color: rgb(var(--origin-red));
     border-color: rgb(var(--origin-red));
 }
+.btn_flex button.btn_change:hover{
+    background-color: rgba(var(--origin-red),0.1);
+}
 .btn_flex button.btn_update{
     color: rgb(var(--real-white));
     background-color: rgb(var(--origin-red));
+}
+.btn_flex button.btn_update:hover{
+    background-color: #8c0000;
 }
 @media (min-width: 1024px){
     .board_info{
