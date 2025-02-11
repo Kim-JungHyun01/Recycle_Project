@@ -4,7 +4,6 @@ import com.lrin.project.entity.board.BoardEntity;
 import com.lrin.project.entity.boardfile.FileEntity;
 import com.lrin.project.repository.board.BoardRepository;
 import com.lrin.project.service.board.BoardService;
-//import com.lrin.project.service.boardfile.FileService;
 import com.lrin.project.service.boardfile.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class BoardController {
@@ -67,6 +64,11 @@ public class BoardController {
         // 게시글 상세 조회 로직 (id로 게시글 찾기)
         BoardEntity board = this.boardService.getListById(id);
 
+        if (board.getFileEntity() != null) {
+            String fileUrl = "/uploads/" + board.getFileEntity().getFileName();
+            model.addAttribute("fileUrl", fileUrl);
+        }
+
         model.addAttribute("cssPath", "board/detail");
         model.addAttribute("pageTitle", "게시글 상세보기");
         model.addAttribute("jsPath", "board/board");
@@ -92,14 +94,15 @@ public class BoardController {
 
         try {
             // 파일 저장
-            FileEntity savedFile = fileService.saveFile(file);
+            FileEntity savedFile = null;
 
-            String filePath = (savedFile != null) ? savedFile.getFilePath() : "첨부 파일 없음";
-
+            if (file != null && !file.isEmpty()) {
+                savedFile = fileService.saveFile(file);
+            }
             // 파일과 함께 게시글 생성
             boardService.create(title, content, writer, savedFile);  // 파일 엔티티와 함께 게시글 생성
 
-            model.addAttribute("message", "게시글 저장 성공! " + "파일 경로: " + filePath);
+            model.addAttribute("message", "게시글 저장 성공! " + (savedFile != null ? "파일 경로: " + savedFile.getFilePath() : "첨부 파일 없음"));
         } catch (IOException e) {
             model.addAttribute("message", "파일 업로드 실패: " + e.getMessage());
         }
