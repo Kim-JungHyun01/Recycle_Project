@@ -19,11 +19,13 @@
 }
 /* reset */
 .bold_title{
-    font-family: 'Pretendard Variable';
+    font-family: 'Tenada';
     font-size: 24px;
     line-height: 36px;
     font-weight: bold;
-    color: rgb(var(--deep-yellow));
+    text-align: center;
+    color: rgba(var(--real-black),0.7);
+    margin: 0;
 }
 body{
     -ms-overflow-style: none;

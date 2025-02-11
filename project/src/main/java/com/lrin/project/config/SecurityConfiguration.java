@@ -1,8 +1,6 @@
 package com.lrin.project.config;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.Filter;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,21 +8,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import java.io.IOException;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
 public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
+
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -32,65 +29,74 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         String[] urlsToBePermittedAll = {
-                "/contact/**",
-                "/notices/**",
-                "/register/**",
-                "/invalidSession/**",
-                "/login/**",
-                "/logout/**",
-                "/",
-                "/css/**", // 반드시 추가할것
-                "/error/**",
-                "/img/**",
-                "/signup",
-                "/js/**",
-                "/error",
-                "/memberChk",
-                "/memberSave",
-                "/idpwChk",
-                "/mypage",
-                "/collect",
-                "/board/list"
+            "/contact/**",
+            "/notices/**",
+            "/register/**",
+            "/invalidSession/**",
+            "/login/**",
+            "/logout/**",
+            "/",
+            "/css/**", // 반드시 추가할것
+            "/error/**",
+            "/img/**",
+            "/signup",
+            "/find",
+            "/js/**",
+            "/error",
+            "/memberChk",
+            "/memberSave",
+            "/idpwChk",
+            "/idFind",
+            "/pwFind",
+            "/password",
+            "/pwSetting",
+            "/mypage",
+            "/price",
+            "/collect",
+            "/board/list"
         };
+
+        /*한글 깨짐 방지*/
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+        http.addFilterBefore(filter, CsrfFilter.class);
+
         /* @formatter:off */
-        http
-                .csrf()
-                .disable()
-                .authorizeRequests()
+        http.csrf(csrf -> csrf
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+        );
+        http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(urlsToBePermittedAll).permitAll()
                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                .anyRequest().authenticated()//위의 url 외에는 로그인하라는 뜻
-                .and()
-                .formLogin()
-                .permitAll()
+                .anyRequest().authenticated()
+        );
+        http.formLogin(form -> form
                 .loginPage("/login")
-                .loginProcessingUrl("/memberLogin") //로그인페이지 url
+                .loginProcessingUrl("/memberLogin")
                 .usernameParameter("id")
                 .passwordParameter("pw")
                 .defaultSuccessUrl("/")
-                .successHandler(new AuthenticationSuccessHandler() {
-                    @Override public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)throws IOException, ServletException {
-                        response.sendRedirect("/");
-                    }
+                .successHandler((request, response, authentication) -> {
+                    response.setCharacterEncoding("UTF-8");
+                    response.setContentType("text/html; charset=UTF-8");
+                    response.sendRedirect("/");
                 })
-                .failureHandler(new AuthenticationFailureHandler() {
-                    @Override
-                    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                        String error = "/login?error=true"; //로그인 실패시 login url에 error=true 를 보냄
-                        response.sendRedirect(error);
-                    }
+                .failureHandler((request, response, exception) -> {
+                    response.setCharacterEncoding("UTF-8");
+                    response.setContentType("text/html; charset=UTF-8");
+                    response.sendRedirect("/login?error=true");
                 })
-                .and()
-                .logout()
-                .permitAll()
+        );
+        http.logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
-                .clearAuthentication(true);
+                .clearAuthentication(true)
+        );
         return http.build();
-        /* @formatter:on */
     }
 
     @Autowired

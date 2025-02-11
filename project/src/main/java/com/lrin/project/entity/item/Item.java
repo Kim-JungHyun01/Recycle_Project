@@ -19,7 +19,14 @@ public class Item {
     @Column(name="item_name")
     private String itemName; //상품명
 
+    @Column(name="item_name_kor")
+    private String itemNameKor; // 편의상 한글 이름용
+
     @Column(nullable = false)
     private int price; //가격
+
+
+
+
 
 }

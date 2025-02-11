@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}"
+      layout:fragment="content">
+
+<div class="index_whole">
+  <p class="bold_title">공지사항 수정</p>
+</div>
+<div>
+  <form th:action="@{/admin/board/update/{id}(id=${board.id})}" method="post">
+    <div class="mb-3">
+      <label for="title" class="form-label">제목</label>
+      <input type="text" id="title" name="title" th:value="${board.title}" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">내용</label>
+      <textarea id="content" name="content" rows="10" class="form-control" required
+                th:text="${board.content}"></textarea>
+    </div>
+    <div class="mb-3">
+      <input type="hidden" id="writer" name="writer" th:value="${board.writer}" class="form-control" required readonly>
+    </div>
+    <input type="submit" value="수정 완료" class="btn btn-primary my-2">
+    <a href="javascript:history.back()" class="btn btn-secondary my-2">취소</a>
+  </form>
+</div>
+
+</html>

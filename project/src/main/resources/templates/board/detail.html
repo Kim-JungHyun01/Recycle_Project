@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{common/layout}"
+      layout:fragment="content">
+
+    <div class="board_whole">
+        <div class="board_inner">
+            <p class="bold_title" th:text="${board.title}"></p>
+            <div class="board_info display_flex flex_wrap flex_start flex_align_c">
+                <p><img src="/img/icon/board/writer_dyl.png" alt="작성자"><span th:text="${board.writer}"></span></p>
+                <p><img src="/img/icon/board/calendar_dyl.png" alt="작성일"><span th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd HH:mm')}"></span></p>
+            </div>
+            <p class="board_content" th:text="${board.content}"></p>
+
+            <!-- 파일이 존재하면 이미지 출력 -->
+            <div th:if="${board.fileEntity != null}">
+                <img th:if="${board.fileUrl}" th:src="${board.fileUrl}" alt="게시글 이미지">
+            </div>
+        </div>
+        <form th:action="@{/admin/board/delete/{id}(id=${board.id})}" method="post" id="deleteForm">
+            <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
+            <input type="hidden" name="_method" value="delete">
+            <div class="btn_flex">
+                <button type="button" onclick="goBack()" class="btn_prev">뒤로</button>
+                <button type="button" class="btn_change"
+                        th:onclick="|location.href='/admin/board/update/${board.id}'|"
+                        sec:authorize="hasAuthority('ADMIN')">수정</button>
+                <button type="button" class="btn_update" onclick="boardDelete()"
+                        sec:authorize="hasAuthority('ADMIN')">삭제</button>
+            </div>
+        </form>
+    </div>
+</html>

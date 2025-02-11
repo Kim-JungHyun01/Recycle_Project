@@ -17,7 +17,6 @@
     color: rgb(var(--lite-black));
     font-style: normal;
     text-decoration: none;
-    outline: 0;
     word-break: auto-phrase;
     background-color: var(--bg-none);
 }
@@ -34,6 +33,7 @@ input[type="date"]{
     background: rgb(var(--real-white))!important;
     background-color: rgb(var(--real-white))!important;
     caret-color: rgb(215,172,52);
+    outline: none;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -70,6 +70,8 @@ input:focus{
 }
 input:read-only{
     opacity: 0.7;
+    background-color: rgba(var(--lite-yellow), 0.1)!important;
+    cursor: default;
 }
 input:read-only:focus{
     border-color: rgb(var(--lite-gray));
@@ -193,6 +195,17 @@ input:read-only:focus{
     height: auto;
     background-size: contain;
 }
+.link_flex{
+    margin-top: 10px;
+}
+.link_flex a{
+    font-size: 14px;
+    line-height: 20px;
+    color: rgb(var(--lite-black));
+}
+.link_flex a:hover{
+    font-weight: bold;
+}
 /*input number 화살표 없애기*/
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -203,4 +216,8 @@ input::-webkit-inner-spin-button {
 /* Firefox  */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+.common_input.focus_on,
+.member_row div.member_pw.common_input.focus_on{
+    border-color: rgb(var(--origin-yellow));
 }
