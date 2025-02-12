@@ -65,4 +65,11 @@ public class FileService {
         return fileRepository.save(fileEntity);  // 저장된 파일 정보 반환
     }
 
+    public void deleteFile(String filePath) {
+        File file = new File(filePath);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
 }

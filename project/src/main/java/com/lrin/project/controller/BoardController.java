@@ -128,10 +128,12 @@ public class BoardController {
     @PostMapping("/admin/board/update/{id}")
     public String boardUpdateSubmit(@PathVariable("id") Long id,
                                     @RequestParam("title") String title,
-                                    @RequestParam("content") String content) {
-        boardService.updateBoard(id, title, content);
-        return "redirect:/board/detail/" + id; // 수정 후 상세 페이지로 이동
+                                    @RequestParam("content") String content,
+                                    @RequestParam(value = "file", required = false) MultipartFile file) {
+        boardService.updateBoard(id, title, content, file);
+        return "redirect:/board/detail/" + id;
     }
+
 
     // 게시글 삭제 기능
     @PostMapping("/admin/board/delete/{id}")
