@@ -208,13 +208,19 @@ $(document).ready(function() {
                 if (resultValues.length === 0) {
                     $("#responseData").html('<p style="font-size: 18px; text-align: center;">탐지된 품목이 없습니다.</p>');
                 } else {
+                    // 현재 HTML에 있는 품목 목록 가져오기
+                    var availableItems = {};
+                    $(".item-btn").each(function() {
+                        availableItems[$(this).attr("id")] = $(this).text(); // {itemId: itemNameKor}
+                    });
+
                     resultValues.forEach(function(item) {
                         items.push(item);
                     });
 
                     var resultHtml = '';
                     items.forEach(function(item) {
-                        resultHtml += '<input type="text" class="form-control mb-2" value="' + item + '" readonly style="text-align: center;">';
+                        resultHtml += '<input type="text" class="form-control mb-2" value="' + availableItems[item] + '" readonly style="text-align: center;" data-id="' + item + '">';
                     });
 
                     $("#responseData").html(resultHtml);
@@ -274,13 +280,19 @@ $(document).ready(function() {
                 if (resultValues.length === 0) {
                     $("#responseData").html('<p style="font-size: 18px; text-align: center;">탐지된 품목이 없습니다.</p>');
                 } else {
+                    // 현재 HTML에 있는 품목 목록 가져오기
+                    var availableItems = {};
+                    $(".item-btn").each(function() {
+                        availableItems[$(this).attr("id")] = $(this).text(); // {itemId: itemNameKor}
+                    });
+
                     resultValues.forEach(function(item) {
                         items.push(item);
                     });
 
                     var resultHtml = '';
                     items.forEach(function(item) {
-                        resultHtml += '<input type="text" class="form-control mb-2" value="' + item + '" readonly style="text-align: center;">';
+                        resultHtml += '<input type="text" class="form-control mb-2" value="' + availableItems[item] + '" readonly style="text-align: center;" data-id="' + item + '">';
                     });
 
                     $("#responseData").html(resultHtml);
@@ -299,7 +311,7 @@ $(document).ready(function() {
     $("#addItemBtn").click(function() {
         // 모달에서 추가된 품목 가져오기
         var items = $("#responseData input").map(function() {
-            return $(this).val();
+            return $(this).data('id');
         }).get();
 
         // 모달에서 품목이 선택되었을 경우, 각 품목을 처리
