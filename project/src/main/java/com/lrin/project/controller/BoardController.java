@@ -70,7 +70,7 @@ public class BoardController {
         BoardEntity board = this.boardService.getListById(id);
 
         if (board.getFileEntity() != null) {
-            String fileUrl = "/uploads/" + board.getFileEntity().getFileName();
+            String fileUrl = "/img/uploads/" + board.getFileEntity().getFileName();
             model.addAttribute("fileUrl", fileUrl);
         }
 
