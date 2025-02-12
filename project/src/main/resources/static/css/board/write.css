@@ -45,9 +45,14 @@ textarea.form-control{
     margin-top: 5px;
 }
 .board_row img{
-    width: 200px;
+    max-width: 300px;
     height: auto;
     background-size: contain;
+    padding: .25rem;
+    background-color: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    margin-top: 10px;
 }
 .btn-primary{
     display: inline-block;
