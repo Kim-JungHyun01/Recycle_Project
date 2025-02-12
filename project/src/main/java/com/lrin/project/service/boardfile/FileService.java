@@ -68,7 +68,15 @@ public class FileService {
     public void deleteFile(String filePath) {
         File file = new File(filePath);
         if (file.exists()) {
-            file.delete();
+            // 파일 시스템에서 파일 삭제
+            boolean deleted = file.delete();
+            if (deleted) {
+                logger.info("파일 삭제 성공: " + filePath);
+            } else {
+                logger.error("파일 삭제 실패: " + filePath);
+            }
+        } else {
+            logger.error("파일이 존재하지 않음: " + filePath);
         }
     }
 
