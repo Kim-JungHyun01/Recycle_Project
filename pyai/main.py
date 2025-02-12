@@ -1,3 +1,5 @@
+import os
+
 from starlette.responses import JSONResponse
 
 from function import *
@@ -22,7 +24,7 @@ async def read_root():
 @app.post("/image_service", response_model=DetectionResult)
 async def image_service(file:UploadFile = File(...)):
     # 결과 임시저장
-    image_result_prev ={"prev": []}
+    image_result_prev = {"prev": []}
 
     # 이미지를 읽어서 PIL 이미지로 반환
     image = Image.open(io.BytesIO(await file.read()))
@@ -41,7 +43,7 @@ async def image_service(file:UploadFile = File(...)):
 
     return DetectionResult(json_data=result_json)
 
-#비디오 처리
+
 @app.post("/video_service", response_model=DetectionResult)
 async def video_service(video_file: UploadFile = File(...)):
     # 결과 json 저장
@@ -80,8 +82,11 @@ async def video_service(video_file: UploadFile = File(...)):
 
     # 결과 중복 제거
     result_json = remove_result_duplicate(frame_result_prev)
-    return DetectionResult(json_data=result_json)
 
+    # 임시 파일 삭제
+    os.remove(temp_file_path)
+
+    return DetectionResult(json_data=result_json)
 
 
 ########################################################################
