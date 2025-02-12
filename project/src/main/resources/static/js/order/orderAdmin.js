@@ -29,7 +29,6 @@ function changeOrderStatus(selectElement) {
         dataType : "json",
         cache   : false,
         success  : function(result, status){
-            alert("주문 상태가 변경되었습니다.");
             var page = order_num;  // Thymeleaf에서 현재 페이지 정보를 가져옵니다
             var status = new URLSearchParams(window.location.search).get('status');
             if (status) {
