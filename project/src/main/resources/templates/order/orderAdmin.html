@@ -48,13 +48,13 @@
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item" th:each="orderItem : ${order.orderItemList}">
                         <span class="product-name" th:text="${orderItem.item.itemNameKor}"></span>
-                        <span class="badge badge-secondary" th:text="'₩' + ${orderItem.item.price}"></span>
+                        <span class="badge badge-secondary" th:text="'₩' + ${#numbers.formatInteger(orderItem.item.price, 3, 'COMMA')}"></span>
                         <span class="quantity" th:text="'수량: ' + ${orderItem.count}"></span>
                       </li>
                     </ul>
                   </div>
                 </td>
-                <td th:text="'총 ' + ${order.orderPrice} + '원'" rowspan="${#lists.size(order.orderItemList) + 1}" class="order-price-cell"></td>
+                <td th:text="'총 ' + ${#numbers.formatInteger(order.orderPrice, 3, 'COMMA')} + '원'" rowspan="${#lists.size(order.orderItemList) + 1}" class="order-price-cell"></td>
                 <td rowspan="${#lists.size(order.orderItemList) + 1}">
                   <select class="form-control" th:attr="data-order-id=${order.orderId}" onchange="changeOrderStatus(this)">
                     <option th:value="${T(com.lrin.project.constant.OrderStatus).ORDER}" th:text="'주문 중'"
