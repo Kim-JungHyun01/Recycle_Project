@@ -206,7 +206,7 @@ $(document).ready(function() {
                 var items = [];
 
                 if (resultValues.length === 0) {
-                    $("#responseData").html('<p style="font-size: 18px; text-align: center;">탐지된 품목이 없습니다.</p>');
+                    alertShow("AI 탐지 결과", "😢 탐지된 품목이 없습니다.");
                 } else {
                     // 현재 HTML에 있는 품목 목록 가져오기
                     var availableItems = {};
@@ -224,8 +224,8 @@ $(document).ready(function() {
                     });
 
                     $("#responseData").html(resultHtml);
+                    $('#responseModal').modal('show');
                 }
-                $('#responseModal').modal('show');
             },
             error: function(xhr, status, error) {
                 console.error("ERROR: " + error);
@@ -278,7 +278,7 @@ $(document).ready(function() {
                 var items = [];
 
                 if (resultValues.length === 0) {
-                    $("#responseData").html('<p style="font-size: 18px; text-align: center;">탐지된 품목이 없습니다.</p>');
+                    alertShow("AI 탐지 결과", "😢 탐지된 품목이 없습니다.");
                 } else {
                     // 현재 HTML에 있는 품목 목록 가져오기
                     var availableItems = {};
@@ -296,8 +296,8 @@ $(document).ready(function() {
                     });
 
                     $("#responseData").html(resultHtml);
+                    $('#responseModal').modal('show');
                 }
-                $('#responseModal').modal('show');
             },
             error: function(xhr, status, error) {
                 console.error("ERROR: " + error);
