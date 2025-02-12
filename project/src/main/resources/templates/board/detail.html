@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{common/layout}"
       layout:fragment="content">
 
@@ -15,7 +15,7 @@
 
             <!-- 파일이 존재하면 이미지 출력 -->
             <div th:if="${board.fileEntity != null}">
-                <img th:if="${board.fileUrl}" th:src="${board.fileUrl}" alt="게시글 이미지">
+                <img th:if="${board.fileUrl}" th:src="${board.fileUrl} + '?t=' + ${#dates.createNow().getTime()}" alt="게시글 이미지">
             </div>
         </div>
         <form th:action="@{/admin/board/delete/{id}(id=${board.id})}" method="post" id="deleteForm">

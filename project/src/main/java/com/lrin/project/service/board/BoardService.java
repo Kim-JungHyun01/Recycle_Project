@@ -61,13 +61,16 @@ public class BoardService {
 
     // 게시글 수정
     public void updateBoard(Long id, String title, String content, MultipartFile file) {
+        // 게시글 찾기
         BoardEntity board = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
+        // 게시글 제목, 내용 수정
         board.setTitle(title);
         board.setContent(content);
         board.setUpdateTime(LocalDateTime.now());
 
+        // 새 파일 업로드 된 경우
         if (file != null && !file.isEmpty()) {
             // 기존 파일 삭제
             if (board.getFileEntity() != null) {
@@ -83,6 +86,7 @@ public class BoardService {
             }
         }
 
+        // 수정된 게시글 저장하기
         boardRepository.save(board);
     }
 

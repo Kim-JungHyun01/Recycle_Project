@@ -21,8 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 public class BoardController {
+
+    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
     @Autowired
     private FileService fileService;
@@ -130,8 +135,26 @@ public class BoardController {
                                     @RequestParam("title") String title,
                                     @RequestParam("content") String content,
                                     @RequestParam(value = "file", required = false) MultipartFile file) {
-        boardService.updateBoard(id, title, content, file);
-        return "redirect:/board/detail/" + id;
+
+        // 로그 출력해보기
+        logger.info("Title: " + title);
+        logger.info("Content: " + content);
+        if (file != null) {
+            logger.info("File received: " + file.getOriginalFilename());
+        }
+
+        try {
+            // 해당 게시글 조회
+            BoardEntity board = boardService.getListById(id);
+
+            // 게시글 수정
+            boardService.updateBoard(id, title, content, file);  // 파일을 포함한 게시글 수정
+
+            return "redirect:/board/detail/" + id;  // 수정 후 상세 페이지로 리디렉션
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";  // 오류 발생 시 에러 페이지
+        }
     }
 
 
