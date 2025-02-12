@@ -9,10 +9,11 @@
     }
 
     function confirmCancel(orderId) {
-        var confirmed = confirm("주문을 취소하시겠습니까?");
-        if (confirmed) {
-            cancelOrder(orderId);
-        }
+        confirmShow('취소 확인', '주문을 취소하시겠습니까?', orderId);
+    }
+
+    function confirmOk(orderId){
+        cancelOrder(orderId);
     }
 
     function cancelOrder(orderId) {
@@ -37,9 +38,7 @@
             dataType : "json",
             cache   : false,
             success  : function(result, status){
-                alert("주문이 취소되었습니다.");
 
-//                var page = [[${orders.number}]];  // Thymeleaf에서 현재 페이지 정보를 가져옵니다
                 var page = order_num;  // Thymeleaf에서 현재 페이지 정보를 가져옵니다
                 var status = new URLSearchParams(window.location.search).get('status');
                 if (status) {

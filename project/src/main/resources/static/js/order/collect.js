@@ -152,10 +152,12 @@ $(document).ready(function() {
 
     $("#uploadImageLogin").click(function(event) {
         event.preventDefault();
+        alertShow("이용 안내", "❌ 로그인이 필요한 기능입니다.")
+    });
 
-        if (confirm("❌ 로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?")) {
-            window.location.href = "/login";
-        }
+    $("#uploadVideoLogin").click(function(event) {
+        event.preventDefault();
+        alertShow("이용 안내", "❌ 로그인이 필요한 기능입니다.")
     });
 
     $("#uploadImage").click(function() {
