@@ -114,7 +114,7 @@ $(document).ready(function() {
     $('#collectBtn').on('click', function() {
 
             if ($('.selected-item').length === 0) {
-                alert("선택된 품목이 없습니다. 품목을 선택해주세요.");
+                alertShow("안내", "선택된 품목이 없습니다. 품목을 선택해주세요.");
                 return; // 품목이 없으면 함수를 종료
             }
 
@@ -168,9 +168,11 @@ $(document).ready(function() {
         const file = this.files[0];
         const allowedTypes = ["image/png", "image/jpeg"];
         if (!allowedTypes.includes(file.type)) {
-          alert("❌ PNG 또는 JPEG 파일만 업로드 가능합니다.");
+          alertShow("안내", "❌ PNG 또는 JPEG 파일만 업로드 가능합니다.");
           return;
         }
+
+        standbyShow("AI 탐지 중", "이미지를 분석 중입니다. 잠시만 기다려 주세요.");
 
         var formData = new FormData();
         formData.append("file", file);
@@ -187,6 +189,7 @@ $(document).ready(function() {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
             success: function(response) {
+                standbyHide();
                 console.log(response);
                 if (typeof response === "string") {
                     response = JSON.parse(response);
@@ -213,7 +216,10 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 console.error("ERROR: " + error);
-            }
+            },
+             complete: function() {
+                 standbyHide();
+             }
         });
     });
 
