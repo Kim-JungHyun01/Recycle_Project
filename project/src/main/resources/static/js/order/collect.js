@@ -165,12 +165,17 @@ $(document).ready(function() {
         $("#responseData").html("");
     });
 
+    $("#uploadVideo").click(function() {
+        $("#uploadVideo").val('');
+        $("#responseData").html("");
+    });
+
     $("#uploadImage").change(function(){
 
         const file = this.files[0];
         const allowedTypes = ["image/png", "image/jpeg"];
         if (!allowedTypes.includes(file.type)) {
-          alertShow("안내", "❌ PNG 또는 JPEG 파일만 업로드 가능합니다.");
+          alertShow("이용 안내", "❌ PNG 또는 JPEG 파일만 업로드 가능합니다.");
           return;
         }
 
@@ -181,6 +186,74 @@ $(document).ready(function() {
 
         $.ajax({
             url: "/image_service",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function(xhr) {
+                var csrfToken = $("meta[name='_csrf']").attr("content");
+                var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function(response) {
+                standbyHide();
+                console.log(response);
+                if (typeof response === "string") {
+                    response = JSON.parse(response);
+                }
+
+                var resultValues = response.json_data.result;
+                var items = [];
+
+                if (resultValues.length === 0) {
+                    $("#responseData").html('<p style="font-size: 18px; text-align: center;">탐지된 품목이 없습니다.</p>');
+                } else {
+                    resultValues.forEach(function(item) {
+                        items.push(item);
+                    });
+
+                    var resultHtml = '';
+                    items.forEach(function(item) {
+                        resultHtml += '<input type="text" class="form-control mb-2" value="' + item + '" readonly style="text-align: center;">';
+                    });
+
+                    $("#responseData").html(resultHtml);
+                }
+                $('#responseModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error("ERROR: " + error);
+            },
+             complete: function() {
+                 standbyHide();
+             }
+        });
+    });
+
+    $("#uploadVideo").change(function(){
+
+        const file = this.files[0];
+        const allowedTypes = ["video/mp4", "video/avi", "video/mov"];
+        // const allowedTypes = ["video/mp4", "video/webm", "video/ogg"];
+        const maxFileSize = 50 * 1024 * 1024; // 50MB
+
+        if (!allowedTypes.includes(file.type)) {
+            alertShow("이용 안내", "❌ MP4, AVI, MOV 형식의 동영상 파일만 업로드 가능합니다.");
+            // alertShow("이용 안내", "❌ MP4, WebM, OGG 형식의 동영상 파일만 업로드 가능합니다.");
+            return;
+        }
+        if (file.size > maxFileSize) {
+            alertShow("이용 안내", "❌ 파일 크기가 50MB를 초과합니다.");
+            return;
+        }
+
+        standbyShow("AI 탐지 중", "동영상을 분석 중입니다. 잠시만 기다려 주세요.");
+
+        var formData = new FormData();
+        formData.append("file", file);
+
+        $.ajax({
+            url: "/video_service",
             type: "POST",
             data: formData,
             processData: false,
