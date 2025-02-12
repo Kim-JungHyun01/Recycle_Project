@@ -17,12 +17,17 @@
             <div th:if="${board.fileEntity != null}">
                 <img th:if="${board.fileUrl}" th:src="${board.fileUrl} + '?t=' + ${#dates.createNow().getTime()}" alt="게시글 이미지">
             </div>
+
+            <div th:if="${board.fileEntity != null}">
+                <a th:href="@{/board/file/download/{id}(id=${board.id})}" class="btn_download">파일 다운로드</a>
+            </div>
+
         </div>
         <form th:action="@{/admin/board/delete/{id}(id=${board.id})}" method="post" id="deleteForm">
             <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
             <input type="hidden" name="_method" value="delete">
             <div class="btn_flex">
-                <button type="button" onclick="goBack()" class="btn_prev">뒤로</button>
+                <button type="button" onclick="window.location.href='/board/list'" class="btn_prev">뒤로</button>
                 <button type="button" class="btn_change"
                         th:onclick="|location.href='/admin/board/update/${board.id}'|"
                         sec:authorize="hasAuthority('ADMIN')">수정</button>
