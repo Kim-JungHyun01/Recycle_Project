@@ -60,8 +60,8 @@ $(document).ready(function() {
             $(this).val(1);
         }
         var itemPrice = $(this).closest('.selected-item').data('price');  // 고유 가격 가져오기
-        itemPrice = parseInt(itemPrice);  // 값이 문자열일 수 있으므로 숫자로 변환
-        updatePrice($(this).closest('.selected-item'), itemPrice); // 가격 업데이트
+        itemPrice = parseInt(itemPrice);
+        updatePrice($(this).closest('.selected-item'), itemPrice);
     });
 
     // 삭제 버튼 기능
@@ -233,24 +233,22 @@ $(document).ready(function() {
     $("#uploadVideo").change(function(){
 
         const file = this.files[0];
-        const allowedTypes = ["video/mp4", "video/avi", "video/mov"];
-        // const allowedTypes = ["video/mp4", "video/webm", "video/ogg"];
-        const maxFileSize = 50 * 1024 * 1024; // 50MB
+        const allowedTypes = ["video/mp4"];
+        const maxFileSize = 20 * 1024 * 1024; // 20MB
 
         if (!allowedTypes.includes(file.type)) {
-            alertShow("이용 안내", "❌ MP4, AVI, MOV 형식의 동영상 파일만 업로드 가능합니다.");
-            // alertShow("이용 안내", "❌ MP4, WebM, OGG 형식의 동영상 파일만 업로드 가능합니다.");
+            alertShow("이용 안내", "❌ MP4 형식의 동영상 파일만 업로드 가능합니다.");
             return;
         }
         if (file.size > maxFileSize) {
-            alertShow("이용 안내", "❌ 파일 크기가 50MB를 초과합니다.");
+            alertShow("이용 안내", "❌ 파일 크기가 20MB를 초과합니다.");
             return;
         }
 
         standbyShow("AI 탐지 중", "동영상을 분석 중입니다. 잠시만 기다려 주세요.");
 
         var formData = new FormData();
-        formData.append("file", file);
+        formData.append("video_file", file);
 
         $.ajax({
             url: "/video_service",
@@ -306,11 +304,10 @@ $(document).ready(function() {
 
         // 모달에서 품목이 선택되었을 경우, 각 품목을 처리
         items.forEach(function(item) {
-            // 품목 클릭 시 선택된 품목 표시
+
             var selectedItem = item;  // 모달에서 추가된 품목의 itemName (아이디)
 
-            // 품목에 대한 가격 가져오기 (여기서 item은 itemName)
-            var itemPrice = $('#' + selectedItem).data('price');  // 'data-price'에서 가격 가져오기
+            var itemPrice = $('#' + selectedItem).data('price');
             var existingItem = $('#selectedItemsContainer .selected-item[data-item-id="' + selectedItem + '"]');
 
             if (existingItem.length > 0) {
@@ -321,7 +318,6 @@ $(document).ready(function() {
             } else {
                 // 품목이 없으면 새로운 품목 추가
                 var selectBox = $('<select class="form-select"></select>');
-                // 품목 리스트를 셀렉트박스 옵션에 추가
                 $('.item-btn').each(function() {
                     var itemOption = $('<option></option>');
                     itemOption.val($(this).attr('id')).text($(this).text());
