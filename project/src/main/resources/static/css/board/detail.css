@@ -44,11 +44,20 @@ p.board_content{
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
-    min-height: 200px;
-    height: calc(100vh - 300px);
+    min-height: 300px;
     padding-bottom: 20px;
     margin: 0 auto 20px auto;
     border-bottom: 1px solid rgb(var(--lite-gray));
+}
+p.board_content + div > img{
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    background-size: contain;
+    padding: .25rem;
+    background-color: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
 }
 .btn_flex button.btn_change{
     color: rgb(var(--origin-red));

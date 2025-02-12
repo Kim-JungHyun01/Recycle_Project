@@ -20,6 +20,7 @@ input[type="file"]{
     border: none;
     outline: none!important;
     cursor: pointer;
+    padding-left: 12px;
 }
 input[type="file"]::file-selector-button{
     display: inline-block;
@@ -36,6 +37,16 @@ input[type="file"]::file-selector-button{
 input[type="file"]::file-selector-button:hover{
     color: rgb(var(--real-white));
     background-color: rgb(var(--origin-yellow));
+}
+.main_inner label{
+    width: 100%;
+}
+.img-thumbnail{
+    display: inline-block!important;
+    width: 100%;
+    max-width: 300px!important;
+    height: auto;
+    background-size: contain;
 }
 textarea.form-control{
     resize: none;
