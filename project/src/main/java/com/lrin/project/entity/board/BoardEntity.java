@@ -39,7 +39,7 @@ public class BoardEntity {
 
     private LocalDateTime updateTime;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "file_id")
     private FileEntity fileEntity;
 
