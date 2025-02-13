@@ -19,14 +19,17 @@ public class ErrorCustom implements ErrorController {
                 return "error/403";
             }
             else if(statusCode == HttpStatus.NOT_FOUND.value()) {
-                //경로가 지정되어 있지 않은 '없는 페이지'일 경우 띄워줌.
+                //'페이지를 찾을 수 없음'일 경우 띄워줌.
                 return "error/404";
             }
             else if(statusCode == HttpStatus.METHOD_NOT_ALLOWED.value()) {
-                //'메소드가 일치하지 않는' 경우 띄워줌.(POST/GET에서 많이 발생.)
+                //'허용되지 않은 메소드'일 경우 띄워줌.
+                //(주로 POST/GET에서 많이 발생.)
                 return "error/405";
             }
             else{
+                //'내부 서버 오류'인 경우 띄워줌.
+                //(자주 발생하는 오류로 서버 내부에서 문제가 생겼지만 알 수 없을 때 발생.)
                 return "error/500";
             }
         }
