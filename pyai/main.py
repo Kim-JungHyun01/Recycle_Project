@@ -12,7 +12,7 @@ app = FastAPI()
 import shutil
 
 #적용할 모델 이름
-model_name = "tmp05"
+model_name = "yo9_01"
 model = "model/pt/" + model_name + ".pt"
 
 # 메인화면이동
@@ -79,12 +79,10 @@ async def video_service(video_file: UploadFile = File(...)):
 
     cap.release()  # 메모리 해제
     cv2.destroyAllWindows()
+    os.remove(temp_file_path)# 임시 파일 삭제
 
     # 결과 중복 제거
     result_json = remove_result_duplicate(frame_result_prev)
-
-    # 임시 파일 삭제
-    os.remove(temp_file_path)
 
     return DetectionResult(json_data=result_json)
 
