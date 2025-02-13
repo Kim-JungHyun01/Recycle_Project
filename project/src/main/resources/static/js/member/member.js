@@ -6,7 +6,7 @@ if(win_href.includes('/signup')
 
 //유효성코드 모음
 //이름
-let korEng = /^[가-힣ㄱ-ㅎA-Za-z]{2,10}$/;
+let korEng = /^[가-힣A-Za-z]{2,10}$/;
 //아이디
 let checkId = /^[A-Za-z0-9]{5,12}$/;
 //비밀번호
@@ -161,16 +161,44 @@ function telWrite(){
     let tel_val1 = $('#tel1').val();
     let tel_val2 = $('#tel2').val();
     let tel_val3 = $('#tel3').val();
-    let tel_whole = tel_val1 + '-' + tel_val2 + '-' + tel_val3;
-    if(checkTel.test(tel_whole)){
-        $('#telchk').hide();
-        $('#tel_whole').attr('value', tel_whole);
-        $("#telcheck").attr('value', "ok");
+    if(tel_val1 == '' && tel_val2 == '' && tel_val3 == ''){
+        $('#telchk1').show();
+        $('#telchk2').hide();
+        $('#telchk3').hide();
+        $('#telchk4').hide();
     }
     else{
-        $('#telchk').show();
+        $('#telchk1').hide();
+        if(tel_val1 == '' || tel_val1.length < 2){
+            $('#telchk2').show();
+        }
+        else{
+            $('#telchk2').hide();
+        }
+        if(tel_val2 == '' || tel_val2.length < 3){
+            $('#telchk3').show();
+        }
+        else{
+            $('#telchk3').hide();
+        }
+        if(tel_val3 == '' || tel_val3.length < 4){
+            $('#telchk4').show();
+        }
+        else{
+            $('#telchk4').hide();
+        }
+    }
+
+    let tel_whole = tel_val1 + '-' + tel_val2 + '-' + tel_val3;
+    if(checkTel.test(tel_whole)){
+        $('#tel_whole').attr('value', tel_whole);
+        $("#telcheck").attr('value', "ok");
+        $('#telchk5').hide();
+    }
+    else{
         $('#tel_whole').attr('value', '');
         $("#telcheck").attr('value', "no");
+        $('#telchk5').show();
     }
 }
 /*확인 버튼 클릭시 */
