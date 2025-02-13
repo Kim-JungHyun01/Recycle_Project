@@ -41,13 +41,13 @@
         <div class="product__pagination" th:if="${boardPage.totalPages > 0}">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:if="${currentPage > 1}">
-                    <a th:href="@{/board/list(page=${boardPage.number-1})}" class="page-link">⬅</a>
+                    <a th:href="@{/board/list(page=${currentPage-1})}" class="page-link">⬅</a>
                 </li>
                 <li th:each="i : ${#numbers.sequence(1, boardPage.totalPages)}" th:class="${i == currentPage} ? 'page-item active' : 'page-item'">
                     <a class="page-link" th:href="@{/board/list(page=${i})}" th:text="${i}"></a>
                 </li>
                 <li class="page-item" th:if="${currentPage < boardPage.totalPages}">
-                    <a th:href="@{/board/list(page=${boardPage.number+1})}" class="page-link">➡</a>
+                    <a th:href="@{/board/list(page=${currentPage+1})}" class="page-link">➡</a>
                 </li>
             </ul>
         </div>
