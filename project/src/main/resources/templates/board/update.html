@@ -24,11 +24,14 @@
       <input type="file" id="file" name="file" class="form-control" accept="image/*" onchange="previewImage(event)">
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3" id="previewContainer" th:if="${board.fileEntity != null}">
       <label>현재 업로드된 파일:</label>
-      <img id="preview" th:src="${board.fileEntity != null ? '/uploads/' + board.fileEntity.fileName : ''}"
+      <img id="preview" th:src="${'/uploads/' + board.fileEntity.fileName}"
            class="img-thumbnail" style="max-width: 200px; display: block;">
+      <button type="button" id="deleteButton" class="btn btn-danger" onclick="removeImage()" style="display: block; margin-top: 10px;">파일 삭제</button>
     </div>
+
+    <p id="noFileText" th:if="${board.fileEntity == null}">현재 업로드된 파일이 없습니다.</p>
 
     <div class="mb-3">
       <input type="hidden" id="writer" name="writer" th:value="${board.writer}" class="form-control" required readonly>
@@ -42,12 +45,109 @@
 
 <script>
   function previewImage(event) {
-      const reader = new FileReader();
-      reader.onload = function(){
-          document.getElementById('preview').src = reader.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
+    const reader = new FileReader();
+    reader.onload = function() {
+        let preview = document.getElementById('preview');
+        let previewContainer = document.getElementById('previewContainer');
+        let deleteButton = document.getElementById('deleteButton');
+        let noFileText = document.getElementById('noFileText');
+
+        // "현재 업로드된 파일이 없습니다." 문구 제거
+        if (noFileText) {
+            noFileText.remove();
+        }
+
+        // 이미지 태그가 없으면 새로 추가
+        if (!preview) {
+            preview = document.createElement('img');
+            preview.id = 'preview';
+            preview.className = 'img-thumbnail';
+            preview.style.maxWidth = '200px';
+            preview.style.display = 'block'; // block으로 설정하여 아래에 추가
+
+            // div 생성 후 추가
+            previewContainer = document.createElement('div');
+            previewContainer.id = 'previewContainer';
+            previewContainer.className = 'mb-3';
+            previewContainer.style.clear = 'both';  // 부모 요소에 clear 적용
+            previewContainer.appendChild(preview);
+
+            // 파일 업로드 라벨 아래에 추가
+            const label = document.querySelector("label[for='file']");
+            label.parentNode.appendChild(previewContainer);
+        }
+
+        // 이미지 미리보기 업데이트
+        preview.src = reader.result;
+
+        // "파일 삭제" 버튼 보이기
+        if (!deleteButton) {
+            const newDeleteButton = document.createElement('button');
+            newDeleteButton.type = 'button';
+            newDeleteButton.id = 'deleteButton';
+            newDeleteButton.className = 'btn btn-danger';
+            newDeleteButton.innerText = '파일 삭제';
+            newDeleteButton.onclick = removeImage;
+            newDeleteButton.style.display = 'block'; // 삭제 버튼이 아래에 보이도록 block 설정
+
+            // 삭제 버튼을 previewContainer의 이미지 아래에 추가
+            previewContainer.appendChild(newDeleteButton);
+        }
+    };
+    reader.readAsDataURL(event.target.files[0]);
+
+    // 파일 선택 시, 기존 버튼이 있으면 숨김 처리
+    const deleteButton = document.getElementById('deleteButton');
+    if (deleteButton) {
+        deleteButton.style.display = 'none';
+    }
+  }
+
+  function removeImage() {
+      // 파일 입력 초기화
+      document.getElementById('file').value = '';
+
+      // 미리보기 이미지 제거
+      const previewContainer = document.getElementById('previewContainer');
+      if (previewContainer) {
+          // 삭제 버튼을 먼저 제거
+          const deleteButton = document.getElementById('deleteButton');
+          if (deleteButton) {
+              deleteButton.remove();
+          }
+
+          // 미리보기 이미지 제거
+          previewContainer.remove();
+      }
+
+      // "현재 업로드된 파일이 없습니다." 문구 다시 표시
+      if (!document.getElementById('noFileText')) {
+          const noFileText = document.createElement('p');
+          noFileText.id = 'noFileText';
+          noFileText.innerText = '현재 업로드된 파일이 없습니다.';
+          const label = document.querySelector("label[for='file']");
+          label.parentNode.appendChild(noFileText);
+      }
+  }
+
+  function previewFile(event) {
+    const file = event.target.files[0];
+    const previewContainer = document.getElementById('previewContainer');
+    previewContainer.innerHTML = '';  // 이전 미리보기 제거
+
+    if (file) {
+      const fileType = file.type;
+
+      // 이미지 미리보기
+      if (fileType.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.className = 'img-thumbnail';
+        img.style.maxWidth = '200px';
+        img.style.display = 'block';
+        img.src = URL.createObjectURL(file);
+        previewContainer.appendChild(img);
+      }
+    }
   }
 </script>
-
 </html>

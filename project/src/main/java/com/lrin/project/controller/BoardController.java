@@ -6,10 +6,16 @@ import com.lrin.project.repository.board.BoardRepository;
 import com.lrin.project.service.board.BoardService;
 import com.lrin.project.service.boardfile.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -26,6 +35,9 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 public class BoardController {
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
@@ -157,6 +169,16 @@ public class BoardController {
         }
     }
 
+    @GetMapping("/admin/board/delete/{id}")
+    public String deleteBoard(@PathVariable Long id) {
+        try {
+            boardService.deleteBoard(id);  // 게시글 삭제 서비스 호출
+            return "redirect:/board/list"; // 삭제 후 게시판 목록 페이지로 리디렉션
+        } catch (Exception e) {
+            e.printStackTrace();  // 예외 발생 시 로그 출력
+            return "error";  // 오류 발생 시 에러 페이지
+        }
+    }
 
     // 게시글 삭제 기능
     @PostMapping("/admin/board/delete/{id}")
@@ -165,4 +187,37 @@ public class BoardController {
         return "redirect:/board/list"; //
     }
 
+    // 파일 다운로드 처리
+    @GetMapping("/board/file/download/{id}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable("id") Long id) {
+        BoardEntity board = boardService.getListById(id);  // 게시글 조회
+        if (board != null && board.getFileEntity() != null) {
+            FileEntity fileEntity = board.getFileEntity();
+            Path filePath = Paths.get(fileEntity.getFilePath());
+
+            try {
+                Resource resource = new UrlResource(filePath.toUri());  // 파일 리소스 생성
+                if (resource.exists()) {
+                    String fileName = fileEntity.getFileName();
+
+                    // 한글 파일 이름을 URL 인코딩 처리
+                    String encodedFileName = URLEncoder.encode(fileName, "UTF-8")
+                            .replaceAll("\\+", "%20");  // 공백을 %20으로 변경
+
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodedFileName + "\"");
+                    return ResponseEntity.ok()
+                            .headers(headers)
+                            .body(resource);
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  // 파일 없음 처리
+                }
+            } catch (Exception e) {
+                e.printStackTrace();  // 로그로 예외 출력
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);  // 500 오류 처리
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  // 게시글 없거나 파일 없음
+        }
+    }
 }
