@@ -1,6 +1,7 @@
 package com.lrin.project.config;
 
 import jakarta.servlet.Filter;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -42,7 +43,6 @@ public class SecurityConfiguration {
             "/signup",
             "/find",
             "/js/**",
-            "/error",
             "/memberChk",
             "/memberSave",
             "/idpwChk",
@@ -52,8 +52,10 @@ public class SecurityConfiguration {
             "/pwSetting",
             "/mypage",
             "/price",
-            "/collect",
-            "/board/list"
+            "/board/list",
+            "/board/detail/**",
+            "/error",
+            "/error/**"
         };
 
         /*한글 깨짐 방지*/
@@ -67,9 +69,16 @@ public class SecurityConfiguration {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         );
         http.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/error", "/error/**").permitAll()
                 .requestMatchers(urlsToBePermittedAll).permitAll()
                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
+        );
+        http.exceptionHandling(exception -> exception
+                .accessDeniedPage("/error/403") // 권한 문제 발생 시 에러 페이지 이동
+                .authenticationEntryPoint((request, response, authException) -> {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "접근이 제한되었습니다.");
+                })
         );
         http.formLogin(form -> form
                 .loginPage("/login")

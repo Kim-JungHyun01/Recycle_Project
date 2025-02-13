@@ -18,8 +18,8 @@
             <textarea id="content" name="content" rows="10" class="form-control" placeholder="내용 입력" contenteditable="true"></textarea>
             <div id="contentError" class="text-danger" style="display:none;">내용을 입력하세요.</div>
         </div>
-        <div class="board_row">
-            <input type="file" name="file" accept="image/*" onchange="previewImage(event)"/>
+        <div class="board_row" id="previewInner">
+            <input type="file" name="file" accept="image/*" onchange="previewImage(this, event)"/>
             <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
             <img id="imagePreview" src="#" alt="이미지 미리보기" style="display: none;" />
         </div>
@@ -31,12 +31,28 @@
 </div>
 
 <script>
-    function previewImage(event) {
+    function previewImage(object, event) {
+      let extension = object.files[0].name.split('.').pop().toLowerCase();//파일 확장자
         var reader = new FileReader();
         reader.onload = function() {
+          if(extension == 'jpg'
+          || extension == 'jpeg'
+          || extension == 'png'
+          || extension == 'svg'
+          || extension == 'tiff'
+          || extension == 'jfif'
+          ){
             var imagePreview = document.getElementById('imagePreview');
             imagePreview.src = reader.result;
             imagePreview.style.display = 'block';
+            $('#preview_txt').hide();
+          }
+          else{
+            $('#imagePreview').hide();
+            preview_txt = '';
+            preview_txt += '<p id="preview_txt">' + object.files[0].name + '</p>';
+            $('#previewInner').append(preview_txt);
+          }
         };
         reader.readAsDataURL(event.target.files[0]);
     }

@@ -59,6 +59,27 @@ p.board_content + div > img{
     border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: var(--bs-border-radius);
 }
+/*공지사항 파일*/
+.board_file{
+    margin: 0 auto 10px auto;
+}
+.board_file p{
+    margin-bottom: 10px;
+}
+a.btn_download{
+    display: inline-block;
+    width: 100%;
+    max-width: 120px;
+    height: 40px;
+    line-height: 40px;
+    color: rgb(var(--lite-black));
+    text-align: center;
+    background-color: rgba(var(--origin-yellow),0.2);
+    border: 1px solid rgb(var(--origin-yellow));
+    border-radius: 5px;
+    text-decoration: none;
+}
+/*버튼*/
 .btn_flex button.btn_change{
     color: rgb(var(--origin-red));
     border-color: rgb(var(--origin-red));

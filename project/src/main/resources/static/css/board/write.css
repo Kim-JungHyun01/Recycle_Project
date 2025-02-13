@@ -54,6 +54,9 @@ textarea.form-control{
     border-radius: var(--bs-border-radius);
     margin-top: 10px;
 }
+p#preview_txt{
+    margin: 10px auto 0 auto;
+}
 .btn-primary{
     display: inline-block;
     min-width: 100px;

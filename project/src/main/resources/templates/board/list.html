@@ -3,53 +3,53 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{common/layout}"
       layout:fragment="content">
-<div class="board_whole">
-    <div class="board_title_txt">
-        <p class="bold_title">공지사항(<span th:text="${boardEntityList.size()}"></span>)</p>
-        <div>
-            <a href="/admin/board/write" class="btn" sec:authorize="hasAuthority('ADMIN')">공지사항 작성</a>
+    <div class="board_whole">
+        <div class="board_title_txt">
+            <p class="bold_title">공지사항(<span th:text="${boardEntityList.size()}"></span>)</p>
+            <div>
+                <a href="/admin/board/write" class="btn" sec:authorize="hasAuthority('ADMIN')">공지사항 작성</a>
+            </div>
+        </div>
+        <div class="board_inner">
+            <table class="board_table">
+                <thead class="board_title">
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성일</th>
+                    <th>수정일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="board :  ${boardPage.content}" th:onclick="'goBoardDetail('+${board.id}+')'">
+                    <td><span></span><p th:text="${board.id}"></p></td>
+                    <td th:text="${board.title}"></td>
+                    <td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
+                    <td th:if="${board.updateTime == null}">-</td>
+                    <td th:if="${board.updateTime != null}" th:text="${#temporals.format(board.updateTime, 'yyyy-MM-dd')}"></td>
+                </tr>
+                <tr th:if="${boardEntityList == null} or ${boardEntityList.size() == 0}">
+                    <td colspan="5">
+                        <p class="no_data_txt">등록된 공지사항이 없습니다.</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 페이징 처리 -->
+        <div class="product__pagination" th:if="${boardPage.totalPages > 0}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${currentPage > 1}">
+                    <a th:href="@{/board/list(page=${boardPage.number-1})}" class="page-link">⬅</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(1, boardPage.totalPages)}" th:class="${i == currentPage} ? 'page-item active' : 'page-item'">
+                    <a class="page-link" th:href="@{/board/list(page=${i})}" th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:if="${currentPage < boardPage.totalPages}">
+                    <a th:href="@{/board/list(page=${boardPage.number+1})}" class="page-link">➡</a>
+                </li>
+            </ul>
         </div>
     </div>
-    <div class="board_inner">
-        <table class="board_table">
-            <thead class="board_title">
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성일</th>
-                <th>수정일</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="board :  ${boardPage.content}" th:onclick="'goBoardDetail('+${board.id}+')'">
-                <td><span></span><p th:text="${board.id}"></p></td>
-                <td th:text="${board.title}"></td>
-                <td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
-                <td th:if="${board.updateTime == null}">-</td>
-                <td th:if="${board.updateTime != null}" th:text="${#temporals.format(board.updateTime, 'yyyy-MM-dd')}"></td>
-            </tr>
-            <tr th:if="${boardEntityList == null} or ${boardEntityList.size() == 0}">
-                <td colspan="5">
-                    <p class="no_data_txt">등록된 공지사항이 없습니다.</p>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- 페이징 처리 -->
-    <div class="pagination" th:if="${boardPage.totalPages > 0}">
-        <!-- 최신 글 보여주기 버튼 -->
-        <strong><a th:if="${currentPage > 1}" th:href="@{/board/list(page=1)}">최신 글</a></strong>&nbsp;&nbsp;
-
-        <!-- 페이지 번호 -->
-        <span th:each="i : ${#numbers.sequence(1, boardPage.totalPages)}">
-            <a th:href="@{/board/list(page=${i})}" th:text="${i}"
-               th:class="${i == currentPage} ? 'active' : ''"></a>
-        </span>
-
-        <!-- 첫 글 보여주기 버튼 -->
-        &nbsp;&nbsp;<strong><a th:if="${currentPage < boardPage.totalPages}" th:href="@{/board/list(page=${boardPage.totalPages})}">첫 글</a></strong>
-    </div>
-</div>
 </html>

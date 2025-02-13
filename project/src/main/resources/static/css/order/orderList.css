@@ -178,8 +178,10 @@
 }
 
 .quantity {
-    color: #888;
+    min-width: 50px;
     font-size: 14px;
+    color: #888;
+    text-align: start;
 }
 
 .badge-secondary {
@@ -212,6 +214,7 @@
 
 .pagination .active .page-link {
     background-color: #FFC107;
+    font-weight: bold;
     color: white;
 }
 
