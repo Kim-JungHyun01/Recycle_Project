@@ -53,3 +53,20 @@
         </div>
     </div>
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // 저장된 스크롤 위치 복원
+        if (sessionStorage.getItem("scrollPosition")) {
+            window.scrollTo(0, sessionStorage.getItem("scrollPosition"));
+        }
+    });
+
+    function goBoardDetail(id) {
+        // 현재 페이지 번호와 스크롤 위치 저장
+        sessionStorage.setItem("scrollPosition", window.scrollY);
+        sessionStorage.setItem("currentPage", new URLSearchParams(window.location.search).get("page") || 1);
+
+        location.href = '/board/detail/' + id + '?page=' + sessionStorage.getItem("currentPage");
+    }
+</script>
