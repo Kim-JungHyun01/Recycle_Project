@@ -77,20 +77,38 @@ function pwTxtPw(ths){
 /*비밀번호 일치 여부*/
 function pwChange(){
     let pw_val = $('#pw').val();
-    if(checkPw.test(pw_val)){
+    let pw_val2 = $('#pw2').val();
+    //유효성 검사
+    if(!checkPw.test(pw_val)){
+        $('#pwchk1').show();
+        $("#pwcheck").attr('value', "no");
+    }
+    else{
         $('#pwchk1').hide();
-        if(checkPw.test(pw_val) &&
-        $('#pw').val() == $('#pw2').val()){
-            $('#pwchk2').hide();
+    }
+    //빈 값인지 아닌지
+    if(pw_val == ''
+    || pw_val2 == ''){
+        $('#pwchk3').show();
+        $("#pwcheck").attr('value', "no");
+    }
+    else{
+        $('#pwchk3').hide();
+    }
+    //유효성 검사 통과 및 비밀번호 / 비밀번호 확인이 일치하는지
+    if(pw_val == pw_val2){
+        if(checkPw.test(pw_val)){
+            $('#pwchk1').hide();
             $("#pwcheck").attr('value', "ok");
         }
         else{
-            $('#pwchk2').show();
+            $('#pwchk1').show();
             $("#pwcheck").attr('value', "no");
         }
+        $('#pwchk2').hide();
     }
     else{
-        $('#pwchk1').show();
+        $('#pwchk2').show();
         $("#pwcheck").attr('value', "no");
     }
 }
