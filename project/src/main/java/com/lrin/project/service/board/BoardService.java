@@ -70,7 +70,7 @@ public class BoardService {
 
     // 게시글 수정
     @Transactional
-    public void updateBoard(Long id, String title, String content, MultipartFile file) {
+    public void updateBoard(Long id, String title, String content, MultipartFile file) throws IOException {
         // 게시글 찾기
         BoardEntity board = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
@@ -80,31 +80,26 @@ public class BoardService {
         board.setContent(content);
         board.setUpdateTime(LocalDateTime.now());
 
-        // 기존 파일 삭제 (DB와 파일 시스템에서 삭제)
-        if (board.getFileEntity() != null) {
-            // 파일 시스템에서 파일 데이터 삭제
-            fileService.deleteFile(board.getFileEntity().getFilePath());
-
-            // DB에서 파일 엔티티 삭제
-            fileRepository.delete(board.getFileEntity());
-            logger.info("파일 삭제 완료: " + board.getFileEntity().getFileName());
-
-            board.setFileEntity(null);  // 삭제 후 FileEntity 제거
-        }
-
         // 새 파일 업로드 된 경우
         if (file != null && !file.isEmpty()) {
-            // 새 파일 저장
-            try {
-                FileEntity newFile = fileService.saveFile(file);
-                board.setFileEntity(newFile);
-            } catch (IOException e) {
-                throw new RuntimeException("파일 저장 실패", e);
+            // 새 파일 있으면 기존 파일 삭제 후 새로운 파일 저장
+            if (board.getFileEntity() != null) {
+                fileService.deleteFile(board.getFileEntity().getFilePath());
+
+                fileRepository.delete(board.getFileEntity());
+
+                board.setFileEntity(null);
             }
+            FileEntity newFile = fileService.saveFile(file);
+            board.setFileEntity(newFile);
+        } else {
+            // 새 파일 없을 경우 기존 파일 유지
+            board.setFileEntity(board.getFileEntity());
         }
 
         // 수정된 게시글 저장하기
         boardRepository.save(board);
+
     }
 
     // 게시글 삭제

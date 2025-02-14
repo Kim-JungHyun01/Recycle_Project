@@ -57,7 +57,7 @@ public class BoardController {
     // 게시글 목록 페이지
     @GetMapping(value = "/board/list")
     public String boardList(Model model, @RequestParam(defaultValue = "1") int page) {
-        int pageSize = 15; // 한 페이지당 보여줄 갯수
+        int pageSize = 2; // 한 페이지당 보여줄 갯수
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Order.desc("id"))); // id 기준 내림차순 정렬
         Page<BoardEntity> boardPage = boardService.getBoardList(pageable);
 
@@ -107,8 +107,7 @@ public class BoardController {
 
     // 게시글 추가 기능
     @PostMapping(value = "/admin/board/write")
-    public String boardCreate(@RequestParam("file") MultipartFile file, @RequestParam(value="title") String title,
-                              @RequestParam(value="content") String content, @RequestParam(value="writer") String writer, Model model) {
+    public String boardCreate(@RequestParam("file") MultipartFile file, @RequestParam(value="title") String title, @RequestParam(value="content") String content, @RequestParam(value="writer") String writer, Model model) {
 
         try {
             // 파일 저장
@@ -149,17 +148,9 @@ public class BoardController {
                                     @RequestParam("content") String content,
                                     @RequestParam(value = "file", required = false) MultipartFile file) {
 
-        // 로그 출력해보기
-        logger.info("Title: " + title);
-        logger.info("Content: " + content);
-        if (file != null) {
-            logger.info("File received: " + file.getOriginalFilename());
-        }
-
         try {
             // 해당 게시글 조회
             BoardEntity board = boardService.getListById(id);
-
             // 게시글 수정
             boardService.updateBoard(id, title, content, file);  // 파일을 포함한 게시글 수정
 
