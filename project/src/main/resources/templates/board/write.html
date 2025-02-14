@@ -35,6 +35,7 @@
       let extension = object.files[0].name.split('.').pop().toLowerCase();//파일 확장자
         var reader = new FileReader();
         reader.onload = function() {
+            $('#preview_txt').html('');
           if(extension == 'jpg'
           || extension == 'jpeg'
           || extension == 'png'
@@ -57,28 +58,28 @@
         reader.readAsDataURL(event.target.files[0]);
     }
 
-function validateForm() {
-    let title = document.getElementById("title").value.trim();
-    let content = document.getElementById("content").value.trim();
-    let isValid = true;
+    function validateForm() {
+        let title = document.getElementById("title").value.trim();
+        let content = document.getElementById("content").value.trim();
+        let isValid = true;
 
-    // 제목 검사
-    if (title === "") {
-        document.getElementById("titleError").style.display = "block";
-        isValid = false;
-    } else {
-        document.getElementById("titleError").style.display = "none";
+        // 제목 검사
+        if (title === "") {
+            document.getElementById("titleError").style.display = "block";
+            isValid = false;
+        } else {
+            document.getElementById("titleError").style.display = "none";
+        }
+
+        // 내용 검사
+        if (content === "") {
+            document.getElementById("contentError").style.display = "block";
+            isValid = false;
+        } else {
+            document.getElementById("contentError").style.display = "none";
+        }
+
+        return isValid;
     }
-
-    // 내용 검사
-    if (content === "") {
-        document.getElementById("contentError").style.display = "block";
-        isValid = false;
-    } else {
-        document.getElementById("contentError").style.display = "none";
-    }
-
-    return isValid;
-}
 </script>
 </html>

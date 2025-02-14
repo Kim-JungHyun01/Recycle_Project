@@ -24,7 +24,7 @@
             <input type="hidden" id="writer" name="writer" th:value="${#authentication.name}" class="form-control" required readonly>
             <input type="hidden" name="_method" value="delete">
             <div class="btn_flex">
-                <button type="button" onclick="window.location.href='/board/list'" class="btn_prev">뒤로</button>
+                <button type="button" onclick="goBack()" class="btn_prev">뒤로</button>
                 <button type="button" class="btn_change"
                         th:onclick="|location.href='/admin/board/update/${board.id}'|"
                         sec:authorize="hasAuthority('ADMIN')">수정</button>
@@ -34,3 +34,11 @@
         </form>
     </div>
 </html>
+
+<script>
+    function goBack() {
+        // 저장된 페이지 정보 가져오기 (없으면 기본값 1)
+        let page = sessionStorage.getItem("currentPage") || 1;
+        location.href = "/board/list?page=" + page;
+    }
+</script>

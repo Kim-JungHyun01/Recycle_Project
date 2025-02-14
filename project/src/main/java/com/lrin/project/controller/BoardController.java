@@ -107,7 +107,8 @@ public class BoardController {
 
     // 게시글 추가 기능
     @PostMapping(value = "/admin/board/write")
-    public String boardCreate(@RequestParam("file") MultipartFile file, @RequestParam(value="title") String title, @RequestParam(value="content") String content, @RequestParam(value="writer") String writer, Model model) {
+    public String boardCreate(@RequestParam("file") MultipartFile file, @RequestParam(value="title") String title,
+                              @RequestParam(value="content") String content, @RequestParam(value="writer") String writer, Model model) {
 
         try {
             // 파일 저장
