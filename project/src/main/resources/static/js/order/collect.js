@@ -112,14 +112,20 @@ $(document).ready(function() {
 
     // 수거 신청 버튼 - order 데이터베이스에 넣기
     $('#collectBtn').on('click', function() {
+        if ($('.selected-item').length === 0) {
+            alertShow("안내", "선택된 품목이 없습니다. 품목을 선택해주세요.");
+            return; // 품목이 없으면 함수를 종료
+        }
+        confirmShow("수거 신청", "선택한 품목을 확인하고 신청하시겠습니까?", "confirm");
+    });
 
-            if ($('.selected-item').length === 0) {
-                alertShow("안내", "선택된 품목이 없습니다. 품목을 선택해주세요.");
-                return; // 품목이 없으면 함수를 종료
-            }
-
-        confirmShow("수거 신청", "선택한 품목을 확인하고 신청하시겠습니까?", "confirm")
-
+    // 수거 신청 버튼 로그인 필요
+    $('#collectBtnLogin').on('click', function() {
+        if ($('.selected-item').length === 0) {
+            alertShow("안내", "선택된 품목이 없습니다. 품목을 선택해주세요.");
+            return; // 품목이 없으면 함수를 종료
+        }
+        alertShow("이용 안내", "❌ 로그인이 필요한 기능입니다.");
     });
 
     // confirmOk 함수
@@ -152,12 +158,12 @@ $(document).ready(function() {
 
     $("#uploadImageLogin").click(function(event) {
         event.preventDefault();
-        alertShow("이용 안내", "❌ 로그인이 필요한 기능입니다.")
+        alertShow("이용 안내", "❌ 로그인이 필요한 기능입니다.");
     });
 
     $("#uploadVideoLogin").click(function(event) {
         event.preventDefault();
-        alertShow("이용 안내", "❌ 로그인이 필요한 기능입니다.")
+        alertShow("이용 안내", "❌ 로그인이 필요한 기능입니다.");
     });
 
     $("#uploadImage").click(function() {
