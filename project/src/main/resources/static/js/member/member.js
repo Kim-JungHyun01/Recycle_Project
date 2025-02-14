@@ -13,6 +13,8 @@ let checkId = /^[A-Za-z0-9]{5,12}$/;
 let checkPw = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+~`\-={}[\]:;"'<>,.?/\\]).{8,16}$/;
 //전화번호
 let checkTel = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+//상세주소
+let korEngNum = /^[가-힣A-Za-z0-9\s]+$/;
 
 /*아이디 중복 확인*/
 function idChk(){
@@ -140,6 +142,7 @@ function execDaumPostcode(){
             $('#detailaddr').val('');
             $("#detailaddr").prop('readonly', false);
             $('#addresscheck').attr('value', 'no');
+            $('#addresschk1').show();
         }
     }).open();
 }
@@ -147,13 +150,26 @@ function detailAddrWrite(){
     let addr_val = $('#addr').val();
     let streetaddr_val = $('#streetaddr').val();
     let detailaddr_val = $('#detailaddr').val();
-    if(addr_val != null
-    && streetaddr_val != null
-    && detailaddr_val != null){
-        $("#addresscheck").attr('value', "ok");
+    if(addr_val == null
+    || addr_val == ''
+    || streetaddr_val == null
+    || streetaddr_val == ''
+    || detailaddr_val == null
+    || detailaddr_val == ''
+    ){
+        $("#addresscheck").attr('value', "no");
+        $('#addresschk1').show();
     }
     else{
-        $("#addresscheck").attr('value', "no");
+        $('#addresschk1').hide();
+        if(korEngNum.test(detailaddr_val)){
+            $("#addresscheck").attr('value', "ok");
+            $('#addresschk2').hide();
+        }
+        else{
+            $("#addresscheck").attr('value', "no");
+            $('#addresschk2').show();
+        }
     }
 }
 /*전화번호 유효성 검사*/

@@ -56,15 +56,20 @@
                         <input type="text" id="detailaddr" name="detailaddr" th:value="${member.detailaddr}" maxlength="40" onkeyup="detailAddrWrite()" placeholder="상세 주소를 입력하세요" required readonly>
                         <input type="hidden" id="addresscheck" value="ok">
                     </div>
+                    <span id="addresschk1"><span><img src="/img/icon/member/id_no.png">주소를 모두 적어주세요.</span></span>
+                    <span id="addresschk2"><span><img src="/img/icon/member/id_no.png">상세 주소를 제대로 적어주세요.</span></span>
                 </div>
                 <div class="member_row">
                     <p>전화번호</p>
                     <div class="tel_row display_flex flex_align_c">
-                        <input type="number" id="tel1" onkeyup="telWrite()" maxlength="4" placeholder="전화번호 앞자리">
+                        <input type="text" id="tel1" onkeyup="telWrite()" maxlength="3" placeholder="전화번호 앞자리"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                         <p>-</p>
-                        <input type="number" id="tel2" onkeyup="telWrite()" maxlength="4" placeholder="전화번호 중간자리">
+                        <input type="text" id="tel2" onkeyup="telWrite()" maxlength="4" placeholder="전화번호 중간자리"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                         <p>-</p>
-                        <input type="number" id="tel3" onkeyup="telWrite()" maxlength="4" placeholder="전화번호 뒷자리">
+                        <input type="text" id="tel3" onkeyup="telWrite()" maxlength="4" placeholder="전화번호 뒷자리"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     </div>
                     <span id="telchk1" class="telchk"><span><img src="/img/icon/member/id_no.png">전화번호를 모두 입력해주세요.</span></span>
                     <span id="telchk2" class="telchk"><span><img src="/img/icon/member/id_no.png">전화번호 앞자리를 입력해주세요.</span></span>
