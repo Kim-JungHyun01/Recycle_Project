@@ -386,11 +386,6 @@ p.index_subtitle span{
         max-width: 150px;
     }
 }
-@media (min-width: 1024px){
-    .header_a{
-        display: none;
-    }
-}
 @media (max-width: 899px){
     .pic_btn{
         width: 100%;
