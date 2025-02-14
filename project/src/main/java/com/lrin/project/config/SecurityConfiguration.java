@@ -30,6 +30,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         String[] urlsToBePermittedAll = {
+            "/collect",
             "/contact/**",
             "/notices/**",
             "/register/**",

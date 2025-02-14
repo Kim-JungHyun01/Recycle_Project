@@ -33,7 +33,8 @@
 
     <div class="total-price-container mt-4 text-end d-flex justify-content-end">
       <p class="fw-bold mb-0 mr-3" style="font-size:24px; margin-right:20px;">총 금액: <span id="orderTotalPrice">0원</span></p>
-      <button class="btn btn-primary fw-bold" id="collectBtn">수거 신청</button>
+      <button class="btn btn-primary fw-bold" id="collectBtn" sec:authorize="isAuthenticated()">수거 신청</button>
+      <button class="btn btn-primary fw-bold" id="collectBtnLogin" sec:authorize="!isAuthenticated()">수거 신청</button>
     </div>
 
   </div>
@@ -53,7 +54,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary" id="addItemBtn">품목 추가</button> <!-- 품목 추가 버튼 -->
+        <button type="button" class="btn btn-primary" id="addItemBtn">품목 추가</button>
       </div>
     </div>
   </div>
