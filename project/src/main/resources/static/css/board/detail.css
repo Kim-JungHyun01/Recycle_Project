@@ -40,24 +40,21 @@
     background-size: contain;
     margin-right: 5px;
 }
-p.board_content{
+.board_content{
+    display: inline-block;
+    width: 100%;
+    min-height: 300px;
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
-    min-height: 300px;
     padding-bottom: 20px;
     margin: 0 auto 20px auto;
+    border: none;
     border-bottom: 1px solid rgb(var(--lite-gray));
-}
-p.board_content + div > img{
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    background-size: contain;
-    padding: .25rem;
-    background-color: var(--bs-body-bg);
-    border: var(--bs-border-width) solid var(--bs-border-color);
-    border-radius: var(--bs-border-radius);
+    outline: none;
+    resize: none;
+    background-color: rgb(var(--real-white));
+    cursor: default;
 }
 /*공지사항 파일*/
 .board_file{
