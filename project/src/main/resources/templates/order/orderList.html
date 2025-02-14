@@ -51,7 +51,7 @@
                             <td th:text="'총 ' + ${#numbers.formatInteger(order.orderPrice, 3, 'COMMA')} + '원'" rowspan="${#lists.size(order.orderItemList) + 1}" class="order-price-cell"></td>
                             <td rowspan="${#lists.size(order.orderItemList) + 1}">
                                 <th:block th:if="${order.orderStatus == T(com.lrin.project.constant.OrderStatus).ORDER}">
-                                    <button class="btn btn-outline-warning" th:attr="value=${order.orderId}" onclick="confirmCancel(this.value)">취 소</button>
+                                    <button class="btn btn-outline-warning" th:attr="value=${order.orderId}" onclick="confirmCancel(this.value)">주문 중</button>
                                 </th:block>
                                 <th:block th:if="${order.orderStatus == T(com.lrin.project.constant.OrderStatus).CANCEL}">
                                     <button class="btn btn-outline-secondary" th:attr="value=${order.orderId}" disabled>취소 완료</button>
