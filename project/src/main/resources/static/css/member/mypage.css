@@ -77,10 +77,11 @@ input:focus{
 input:read-only{
     opacity: 0.7;
     background-color: rgba(var(--lite-yellow), 0.1)!important;
-    cursor: default;
+    cursor: default!important;
 }
 input:read-only:focus{
-    border-color: rgb(var(--lite-gray));
+    border-color: rgb(var(--lite-gray))!important;
+    outline: none;
 }
 .btn_flex{
     margin-top: 50px;

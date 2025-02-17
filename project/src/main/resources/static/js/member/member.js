@@ -278,16 +278,14 @@ function idPwChk(){
         async: true,
         data: {"id":id_val,"pw":pw_val},
         success:function(data){
-            if(data){
-                if(data=='true'){
-                    standbyShow("로그인 성공", "성공적으로 로그인 되었습니다.<br/>잠시만 기다려주세요.");
-                    setTimeout(function(){
-                        $('#memberLogin').submit();
-                    },1500);
-                }else{
-                    alertShow("로그인 실패","아이디 혹은 비밀번호가 다릅니다.");
-                    return false;
-                }
+            if(data=='true'){
+                standbyShow("로그인 성공", "성공적으로 로그인 되었습니다.<br/>잠시만 기다려주세요.");
+                setTimeout(function(){
+                    $('#memberLogin').submit();
+                },1500);
+            }else{
+                alertShow("로그인 실패","아이디 혹은 비밀번호가 다릅니다.");
+                return false;
             }
         },
         error:function(data){
@@ -320,16 +318,14 @@ function mypageGo(){
         async: true,
         data: {"id":my_id,"pw":my_pw},
         success:function(data){
-            if(data){
-                if(data=='true'){
-                    standbyShow("확인 성공", "정보 수정 페이지로 이동합니다.<br/>잠시만 기다려주세요.");
-                    setTimeout(function(){
-                        window.location.href='/mypage';
-                    },1500);
-                }else{
-                    alertShow("확인 실패","비밀번호가 다릅니다.");
-                    return false;
-                }
+            if(data=='true'){
+                standbyShow("확인 성공", "정보 수정 페이지로 이동합니다.<br/>잠시만 기다려주세요.");
+                setTimeout(function(){
+                    window.location.href='/mypage';
+                },1500);
+            }else{
+                alertShow("확인 실패","비밀번호가 다릅니다.");
+                return false;
             }
         },
         error:function(data){
@@ -344,6 +340,7 @@ function mypageGo(){
 function mypagePwShow(){
     $('body').css('overflow', 'hidden');
     $('.pwchkpop_whole').show();
+    $('#pw').focus();
 }
 function mypagePwHide(){
     $('body').css('overflow', 'auto');
@@ -394,7 +391,9 @@ function myAllChk(){
         }
     }
     standbyShow("정보 수정 중", "정보를 수정 중입니다.<br/>잠시만 기다려주세요.");
-    $('#myForm').submit();
+    setTimeout(function(){
+        $('#myForm').submit();
+    },1000);
 }
 //아이디/비밀번호 찾기
 function memFindChk(){
