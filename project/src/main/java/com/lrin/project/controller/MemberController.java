@@ -88,7 +88,7 @@ public class MemberController {
         else{
             memberService.memberSave(memberEntity);
         }
-        return "redirect:/";
+        return "redirect:/mypage";
     }
     @GetMapping(value = "/find")
     public String find(Model model) {
