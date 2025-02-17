@@ -44,7 +44,7 @@
                 </div>
                 <div class="member_row">
                     <p>이름</p>
-                    <input type="text" id="name" name="name" th:value="${member.name}" maxlength="10" onkeyup="nameChk()" placeholder="이름 입력" readonly>
+                    <input type="text" id="name" name="name" th:value="${member.name}" maxlength="10" onkeyup="nameChk()" readonly>
                 </div>
                 <div class="member_row">
                     <p>주소</p>
@@ -63,13 +63,13 @@
                 <div class="member_row">
                     <p>전화번호</p>
                     <div class="tel_row display_flex flex_align_c">
-                        <input type="text" id="tel1" onkeyup="telWrite()" maxlength="3" placeholder="전화번호 앞자리"
+                        <input type="text" id="tel1" onkeyup="telWrite()" maxlength="3"
                                oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                         <p>-</p>
-                        <input type="text" id="tel2" onkeyup="telWrite()" maxlength="4" placeholder="전화번호 중간자리"
+                        <input type="text" id="tel2" onkeyup="telWrite()" maxlength="4"
                                oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                         <p>-</p>
-                        <input type="text" id="tel3" onkeyup="telWrite()" maxlength="4" placeholder="전화번호 뒷자리"
+                        <input type="text" id="tel3" onkeyup="telWrite()" maxlength="4"
                                oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     </div>
                     <span id="telchk1" class="telchk"><span><img src="/img/icon/member/id_no.png">전화번호를 모두 입력해주세요.</span></span>
@@ -82,7 +82,7 @@
                 </div>
                 <input type="hidden" name="role" th:value="${member.role}">
                 <div class="btn_flex">
-                    <button type="button" class="btn_prev" onclick="goBack()">뒤로</button>
+                    <button type="button" class="btn_prev" onclick="location.href='/mypage/list'">뒤로</button>
                     <button type="button" class="btn_submit" onclick="myAllChk()">정보 수정</button>
                 </div>
             </form>
