@@ -45,13 +45,27 @@ table.price_table td:nth-child(2){
     border-right: 1px solid rgb(var(--lite-gray));
 }
 table.price_table tbody tr:nth-child(2n){
-    background-color: rgba(var(--lite-gray),0.15);
+    background-color: rgba(var(--lite-gray),0.1);
 }
 table.price_table th:nth-child(1),
 table.price_table td:nth-child(1){
     border-left: 1px solid rgb(var(--lite-gray));
 }
+table.price_table th:nth-child(1){
+    border-right: 1px solid rgb(var(--lite-gray));
+}
 table.price_table th:nth-child(3),
 table.price_table td:nth-child(3){
     border-right: 1px solid rgb(var(--lite-gray));
+}
+.main_inner table thead th{
+    background-color: rgba(var(--lite-yellow),0.3);
+    border-top: 1px solid rgb(var(--lite-gray));
+    border-bottom: 1px solid rgb(var(--lite-gray));
+}
+.main_inner table thead tr:nth-child(2) th{
+    background-color: rgba(var(--lite-yellow),0.1);
+}
+.main_inner table td{
+    color: rgb(var(--lite-black));
 }
