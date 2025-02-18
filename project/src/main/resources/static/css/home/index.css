@@ -140,7 +140,7 @@ p.index_subtitle span{
     background-size: contain;
     border: 7px solid #fff9e9;
     border-radius: 5px;
-    box-shadow: 0 0 5px rgba(var(--real-black),0.05);
+    box-shadow: 0 0 10px rgba(var(--real-black),0.15);
 }
 .pic_box img + img{
     position: absolute;

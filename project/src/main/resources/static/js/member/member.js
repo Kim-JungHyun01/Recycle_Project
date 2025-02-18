@@ -260,11 +260,12 @@ function loginWrite(object, e){
     let object_val = $('#'+object_id).val();
     if(object_val != ''){
         $('#'+object_type).addClass('keyon');
+        $('#'+object_id).parents('.member_row').find('.common_input').addClass('focus_on');
     }
     else{
         $('#'+object_type).removeClass('keyon');
+        $('#'+object_id).parents('.member_row').find('.common_input').removeClass('focus_on');
     }
-    $('#'+object_id).parents('.member_row').find('.common_input').addClass('focus_on');
     if(e.keyCode == '13'){
         $('.btn_submit').click();
     }
@@ -477,6 +478,15 @@ function pwOkChk(){
     }
     standbyShow("비밀번호 재설정 중", "비밀번호를 재설정 중입니다.<br/>잠시만 기다려주세요.");
     $('#pwSetting').submit();
+}
+//모든 비밀번호 입력 시 input outline 대신 상위 div border 색상 변하도록
+function pwWholeKeyup(ths){
+    let pw_common_id = ths.dataset.id;
+    $('#'+pw_common_id).parents('.member_pw').css('border-color','rgb(var(--lite-yellow))');
+}
+function pwWholeKeydw(ths){
+    let pw_common_id = ths.dataset.id;
+    $('#'+pw_common_id).parents('.member_pw').css('border-color','rgb(var(--lite-gray))');
 }
 $(document).ready(function(){
     if(win_path.includes('/mypage') && win_path != ('/mypage/list')){

@@ -353,7 +353,7 @@ a.link_on{
     .header_a{
         position: absolute;
         margin: 0;
-        bottom: 1px;
+        bottom: 0;
         left: 50%;
         transform: translateX(-50%);
     }
