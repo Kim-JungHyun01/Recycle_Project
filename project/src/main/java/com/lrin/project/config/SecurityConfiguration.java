@@ -56,7 +56,8 @@ public class SecurityConfiguration {
             "/board/list",
             "/board/detail/**",
             "/error",
-            "/error/**"
+            "/error/**",
+            "/uploads/**"
         };
 
         /*한글 깨짐 방지*/
