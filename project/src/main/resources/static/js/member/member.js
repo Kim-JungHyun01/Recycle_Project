@@ -247,7 +247,15 @@ function memWholeChk(){
     && namecheck == 'ok'
     && addresscheck == 'ok'
     && telcheck == 'ok'){
-        $('#memberForm').submit();
+        standbyShow("회원가입 중", "회원가입이 진행 중입니다.<br/>잠시만 기다려 주세요.");
+        setTimeout(function(){
+            standbyHide();
+            standbyShow("회원가입 완료", "회원가입이 완료 되었습니다.<br/>로그인 페이지로 이동합니다.");
+        },1000);
+        setTimeout(function(){
+            standbyHide();
+            $('#memberForm').submit();
+        },2000);
     }else{
         alertShow("회원가입 오류", "모든 내용을 적어주세요.");
     }

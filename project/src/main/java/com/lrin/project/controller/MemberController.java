@@ -45,7 +45,7 @@ public class MemberController {
             @ModelAttribute("memberDTO") @Valid MemberDTO memberDTO) {
         MemberEntity memberEntity = memberDTO.toEntity();
         memberService.memberSave(memberEntity);
-        return "redirect:/";
+        return "redirect:/login";
     }
     @PostMapping(value = "/idpwChk")
     public void idpwChk(@RequestParam("id") String id, @RequestParam("pw") String pw, HttpServletResponse response) throws IOException {
